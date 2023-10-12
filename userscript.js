@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      0.92
+// @version      1.0
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -105,7 +105,7 @@ function listHandle() {
                     if (this.getAttribute('checked')) {
 
                     } else {
-                        this.setAttribute('checked','')
+                        this.setAttribute('checked','1')
                     }
                 }, false)
 
@@ -120,7 +120,7 @@ function listHandle() {
                         }
                     }
                     if (id && codeList.includes(id)) {
-                        item.setAttribute('checked','')
+                        item.setAttribute('checked','1')
                     }
                 }
             }
@@ -146,7 +146,7 @@ window.onload = function () {
     }
 
     console.log('tbody', tbody);
-    if (tbody || location.pathname.indexOf('htm_mob') !== -1 || location.pathname.indexOf('thread0806') !== -1) {
+    if (tbody || location.pathname.indexOf('thread0806') !== -1) {
         console.log('123232')
 
         // let tr2_td = document.createElement('td')
