@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -143,7 +143,7 @@ window.onload = function () {
     }
 
     console.log('tbody', tbody);
-    if (tbody || location.pathname.indexOf('htm_mob') !== -1) {
+    if (tbody || location.pathname.indexOf('htm_mob') !== -1 || location.pathname.indexOf('thread0806') !== -1) {
         console.log('123232')
 
         // let tr2_td = document.createElement('td')
