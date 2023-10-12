@@ -363,6 +363,7 @@ app.post('/updateDesignationLog', (req, resp) => {
   if (isChange) {
     const toJson = jsonToString(data, true)
     fs.writeFileSync(path.resolve(__dirname, 'merge.json'), toJson);
+    console.log("updateDesignationLog - 写入完成");
   }
   resp.json(msgResult.msg({status: 200, message: result}));
 })
