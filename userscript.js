@@ -142,7 +142,8 @@ window.onload = function () {
         tbody = document.querySelector('#main .t tbody')
     }
 
-    console.log('tbody', tbody);
+    setTimeout(() => {
+        console.log('tbody', tbody);
     if (tbody || location.pathname.indexOf('htm_mob') !== -1 || location.pathname.indexOf('thread0806') !== -1) {
         console.log('123232')
 
@@ -243,6 +244,9 @@ window.onload = function () {
     } else {
        
     }
+    }, 4000);
+
+    
 
 
 
