@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -13,6 +13,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
+// @downloadURL https://chiens.cn/recordApi/userscript.js
 // ==/UserScript==
 const css = GM_getResourceText("customCSS");
 GM_addStyle(css);
