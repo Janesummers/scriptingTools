@@ -329,6 +329,11 @@ app.post('/updateDesignationLog', (req, resp) => {
               data.read.push(item)
             }
             break;
+          case '2':
+            if (!data.unDown.includes(item)) {
+              data.unDown.push(item)
+            }
+            break;
           case '3':
             if (!data.wm.includes(item)) {
               data.wm.push(item)
@@ -360,7 +365,7 @@ app.post('/updateDesignationLog', (req, resp) => {
       }
     })
   }
-  console.log("updateDesignationLog - 准备写入", isChange, isUpdate, type, code);
+  console.log("updateDesignationLog - 准备写入", isChange, isUpdate, type, code, data);
   if (isChange) {
     const toJson = jsonToString(data, true)
     fs.writeFileSync(path.resolve(__dirname, 'merge.json'), toJson);
