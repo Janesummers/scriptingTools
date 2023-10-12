@@ -370,7 +370,7 @@ app.post('/updateDesignationLog', (req, resp) => {
 app.get('*', (req, resp) => {
   console.log('req', req.params[0])
   resp.writeHead(200, { "Content-Type": "text/plain;charset=utf-8" });
-  if (/[\.js|\.css|\.json]$/.test(req.params[0])) {
+  if (/[\.js|\.css|\.json|\.out]$/.test(req.params[0])) {
     const file = req.params[0].replace(/\/(.*)/, '$1')
     const result = readFileFn(file)
     resp.end(result)
