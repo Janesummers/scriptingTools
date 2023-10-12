@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      0.8
+// @version      0.9
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -142,8 +142,7 @@ window.onload = function () {
         tbody = document.querySelector('#main .t tbody')
     }
 
-    setTimeout(() => {
-        console.log('tbody', tbody);
+    console.log('tbody', tbody);
     if (tbody || location.pathname.indexOf('htm_mob') !== -1 || location.pathname.indexOf('thread0806') !== -1) {
         console.log('123232')
 
@@ -244,9 +243,6 @@ window.onload = function () {
     } else {
        
     }
-    }, 4000);
-
-    
 
 
 
@@ -259,6 +255,6 @@ window.onload = function () {
     //             })
 }
 
-if (document.querySelector('#ajaxtable')) {
-    document.querySelector('#ajaxtable').querySelector('.tr2 td[title="以“最後發表”顺序排列"]').style.width = '135px'
-}
+// if (document.querySelector('#ajaxtable')) {
+//     document.querySelector('#ajaxtable').querySelector('.tr2 td[title="以“最後發表”顺序排列"]').style.width = '135px'
+// }
