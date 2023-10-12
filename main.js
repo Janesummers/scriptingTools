@@ -360,6 +360,7 @@ app.post('/updateDesignationLog', (req, resp) => {
       }
     })
   }
+  console.log("updateDesignationLog - 准备写入", isChange);
   if (isChange) {
     const toJson = jsonToString(data, true)
     fs.writeFileSync(path.resolve(__dirname, 'merge.json'), toJson);
