@@ -14,6 +14,7 @@
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @downloadURL https://chiens.cn/recordApi/userscript.js
+// @updateURL https://chiens.cn/recordApi/userscript.js
 // ==/UserScript==
 const css = GM_getResourceText("customCSS");
 GM_addStyle(css);
