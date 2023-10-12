@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -80,7 +80,7 @@ if (location.pathname.indexOf('htm_data') !== -1 || location.pathname.indexOf('h
 
 function listHandle() {
     let tbody = document.querySelector('#tbody')
-    if (!tbody) {
+    if (!tbody && location.pathname.indexOf('htm_mob') === -1) {
         tbody = document.querySelector('#main .t tbody')
     }
     let child = tbody.querySelectorAll('.t_one')
