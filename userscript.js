@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      0.91
+// @version      0.92
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -90,46 +90,49 @@ function listHandle() {
         child = document.querySelectorAll('.t_one')
     }
     
-    for (let i = 0; i < child.length; i++) {
-        let item = child[i].querySelector('.tal a[id]')
-        if (location.pathname.indexOf('thread0806') !== -1) {
-            item = child[i].querySelector('a')
-        }
-        if (!item) {
-            item = child[i].querySelector('th a')
-        }
-        if (item) {
-            item.addEventListener('click', function(){
-                // console.log('123', this)
-                if (this.getAttribute('checked')) {
+    if (child.length > 0) {
+        for (let i = 0; i < child.length; i++) {
+            let item = child[i].querySelector('.tal a[id]')
+            if (location.pathname.indexOf('thread0806') !== -1) {
+                item = child[i].querySelector('a')
+            }
+            if (!item) {
+                item = child[i].querySelector('th a')
+            }
+            if (item) {
+                item.addEventListener('click', function(){
+                    // console.log('123', this)
+                    if (this.getAttribute('checked')) {
 
-                } else {
-                    this.setAttribute('checked','')
-                }
-            }, false)
-
-            if (codeList.length) {
-                let id = item.getAttribute('id')
-                if (id) {
-                    id = id.replace(/[^\d]*(\d+)/, "$1")
-                } else {
-                    id = item.getAttribute('href').match(/\d{5,}/)
-                    if (id) {
-                        id = id[0]
+                    } else {
+                        this.setAttribute('checked','')
                     }
-                }
-                if (id && codeList.includes(id)) {
-                    item.setAttribute('checked','')
+                }, false)
+
+                if (codeList.length) {
+                    let id = item.getAttribute('id')
+                    if (id) {
+                        id = id.replace(/[^\d]*(\d+)/, "$1")
+                    } else {
+                        id = item.getAttribute('href').match(/\d{5,}/)
+                        if (id) {
+                            id = id[0]
+                        }
+                    }
+                    if (id && codeList.includes(id)) {
+                        item.setAttribute('checked','')
+                    }
                 }
             }
         }
         isLoading = false
         globalHint.close()
         globalHint = Qmsg.success("处理完成", {autoClose: true, onClose: () => {  }});
+    } else {
+        isLoading = false
+        globalHint.close()
+        globalHint = Qmsg.success("未获取到节点", {autoClose: true, onClose: () => {  }});
     }
-    isLoading = false
-    globalHint.close()
-    globalHint = Qmsg.success("未获取到节点", {autoClose: true, onClose: () => {  }});
         // console.log('item', item.getAttribute('id'))
         
 }
