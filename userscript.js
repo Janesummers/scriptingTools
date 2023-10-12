@@ -42,7 +42,7 @@ let globalHint = null
 let isRecord = false
 let isLoading = false
 
-if (location.pathname.indexOf('htm_data') !== -1 || location.pathname.indexOf('htm_data') !== -1) {
+if (location.pathname.indexOf('htm_data') !== -1 || location.pathname.indexOf('htm_mob') !== -1) {
 
     if (isRecord) return
     isRecord = true
@@ -81,18 +81,18 @@ if (location.pathname.indexOf('htm_data') !== -1 || location.pathname.indexOf('h
 function listHandle() {
     let tbody = document.querySelector('#tbody')
     let child = []
-    if (!tbody && location.pathname.indexOf('htm_mob') === -1) {
+    if (!tbody && location.pathname.indexOf('thread0806') === -1) {
         tbody = document.querySelector('#main .t tbody')
         child = tbody.querySelectorAll('.t_one')
     }
-    if (!tbody && location.pathname.indexOf('htm_mob') !== -1) {
+    if (!tbody && location.pathname.indexOf('thread0806') !== -1) {
         // tbody = document.querySelector('#main .t tbody')
         child = document.querySelectorAll('.t_one')
     }
     
     for (let i = 0; i < child.length; i++) {
         let item = child[i].querySelector('.tal a[id]')
-        if (location.pathname.indexOf('htm_mob') !== -1) {
+        if (location.pathname.indexOf('thread0806') !== -1) {
             item = child[i].querySelector('a')
         }
         if (!item) {
