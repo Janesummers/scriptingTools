@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴（GET请求版）
 // @namespace    http://tampermonkey.net/
-// @version      1.16
+// @version      1.17
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -21,7 +21,7 @@ messageScript.src = `https://chiens.cn/recordApi/message.min.js`;
 document.body.appendChild(messageScript);
 
 messageScript.onload = function() {
-
+    Qmsg.success("加载完成", {autoClose: true, onClose: () => { }});
 }
 
 let script = document.createElement('script');
