@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴（GET请求版）
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.11
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -14,6 +14,7 @@
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @run-at       document-end
+// @connect      *
 // @downloadURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // @updateURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // ==/UserScript==
@@ -139,6 +140,8 @@ function listHandle() {
 }
 
 window.onload = function () {
+
+    window.globalHint = Qmsg.info("准备处理", {autoClose: false});
     
     let tbody = document.getElementById('tbody')
 
