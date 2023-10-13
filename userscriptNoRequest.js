@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴（GET请求版）
 // @namespace    http://tampermonkey.net/
-// @version      1.8
+// @version      1.9
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -19,9 +19,9 @@ messageScript.type = 'text/javascript';
 messageScript.src = `https://chiens.cn/recordApi/message.min.js`;
 document.body.appendChild(messageScript);
 
-messageScript.onload = function() {
-    Qmsg.success("加载完成", {autoClose: true, onClose: () => { }});
-}
+// messageScript.onload = function() {
+//     Qmsg.success("加载完成", {autoClose: true, onClose: () => { }});
+// }
 
 let script = document.createElement('script');
 script.type = 'text/javascript';
@@ -120,8 +120,7 @@ function listHandle() {
         
 }
 
-window.onload = function () {
-    
+Promise.all([messageScript.onload, window.onload]).then(() => {
     let tbody = document.getElementById('tbody')
 
     if (!tbody && location.pathname.indexOf('htm_mob') === -1) {
@@ -265,7 +264,12 @@ window.onload = function () {
     //             document.getElementById('tbody').getElementsByClassName('tal')[0].getElementsByTagName('a')[0].addEventListener('click', function(){
     //                 console.log('123', this)
     //             })
-}
+})
+
+// window.onload = function () {
+    
+    
+// }
 
 // if (document.querySelector('#ajaxtable')) {
 //     document.querySelector('#ajaxtable').querySelector('.tr2 td[title="以“最後發表”顺序排列"]').style.width = '135px'
