@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         JSummer - 糖心 - 用户（不发请求版）
+// @name         JSummer - 糖心 - 用户（GET请求版）
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh016.com/user/*
@@ -174,7 +174,7 @@ function recordText(title) {
   if (userCode && title !== '') {
     let script2 = document.createElement('script');
     script2.type = 'text/javascript';
-    script2.src = `https://chiens.cn/recordApi/txLogInScript?userCode=${userCode}&title=${title}`;
+    script2.src = `https://chiens.cn/recordApi/txLog?userCode=${userCode}&title=${title}`;
     document.body.appendChild(script2);
   } else {
     // setTimeout(recordText, 1000)
