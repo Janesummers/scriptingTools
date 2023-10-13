@@ -1,13 +1,12 @@
 // ==UserScript==
 // @name         JSummer - 草榴（GET请求版）
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
 // @match        https://t66y.com/*
 // @resource customCSS https://chiens.cn/recordApi/message.css
-// @require      https://chiens.cn/recordApi/message.min.js
 // @resource source https://chiens.cn/recordApi/log.json
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
@@ -15,19 +14,62 @@
 // @updateURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // ==/UserScript==
 
+let messageScript = document.createElement('script');
+messageScript.type = 'text/javascript';
+messageScript.src = `https://chiens.cn/recordApi/message.min.js`;
+messageScript.onload = function () {
+    let tbody = document.getElementById('tbody')
+
+    if (!tbody && location.pathname.indexOf('htm_mob') === -1) {
+        tbody = document.querySelector('#main .t tbody')
+    }
+
+    console.log('tbody', tbody);
+    if (tbody || location.pathname.indexOf('thread0806') !== -1) {
+        if (window.isLoading) return
+        window.isLoading = true
+        
+        window.globalHint = Qmsg.info("正在处理文件", {autoClose: true});
+
+        let t66y = GM_getResourceText("source")
+        if (t66y) {
+          t66y = JSON.parse(t66y)
+        }
+        codeList = t66y || []
+        listHandle()
+    } else {
+       
+    }
+
+    if (location.pathname.indexOf('htm_data') !== -1 || location.pathname.indexOf('htm_mob') !== -1) {
+
+        if (window.isRecord) return
+        window.isRecord = true
+
+        window.globalHint = Qmsg.info("正在发请求", {autoClose: true});
+
+        let code = location.pathname.match(/(\d{5,})/)
+        if (code) {
+            code = code[0]
+            console.log('发请求')
+            let script2 = document.createElement('script');
+            script2.type = 'text/javascript';
+            script2.src = `https://chiens.cn/recordApi/log?code=${code}`;
+            document.body.appendChild(script2);
+        }
+    }
+}
+document.body.appendChild(messageScript);
+
 let script = document.createElement('script');
 script.type = 'text/javascript';
 script.innerHTML =
 `
   function handleSuccess() {
-    let messageScript = document.createElement('script');
-    messageScript.type = 'text/javascript';
-    messageScript.src = 'https://chiens.cn/recordApi/message.min.js';
-    messageScript.onload = function () {
-        Qmsg.success("成功记录", {autoClose: true, onClose: () => { }});
-        window.isRecord = false
-    }
-    document.body.appendChild(messageScript);
+    console.log(window.globalHint, '123')
+    
+    Qmsg.success("成功记录", {autoClose: true, onClose: () => { }});
+    window.isRecord = false
   };
 `;
 document.body.appendChild(script);
@@ -114,46 +156,4 @@ function listHandle() {
     }
         // console.log('item', item.getAttribute('id'))
         
-}
-
-window.onload = function () {
-    let tbody = document.getElementById('tbody')
-
-    if (!tbody && location.pathname.indexOf('htm_mob') === -1) {
-        tbody = document.querySelector('#main .t tbody')
-    }
-
-    if (tbody || location.pathname.indexOf('thread0806') !== -1) {
-        if (window.isLoading) return
-        window.isLoading = true
-        
-        window.globalHint = Qmsg.info("正在处理文件", {autoClose: true});
-
-        let t66y = GM_getResourceText("source")
-        if (t66y) {
-          t66y = JSON.parse(t66y)
-        }
-        codeList = t66y || []
-        listHandle()
-    } else {
-       
-    }
-
-    if (location.pathname.indexOf('htm_data') !== -1 || location.pathname.indexOf('htm_mob') !== -1) {
-
-        if (window.isRecord) return
-        window.isRecord = true
-
-        window.globalHint = Qmsg.info("正在发请求", {autoClose: true});
-
-        let code = location.pathname.match(/(\d{5,})/)
-        if (code) {
-            code = code[0]
-            console.log('发请求')
-            let script2 = document.createElement('script');
-            script2.type = 'text/javascript';
-            script2.src = `https://chiens.cn/recordApi/log?code=${code}`;
-            document.body.appendChild(script2);
-        }
-    }
 }
