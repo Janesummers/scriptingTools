@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name         JSummer - 草榴（GET请求版）
 // @namespace    http://tampermonkey.net/
-// @version      1.12
+// @version      1.13
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
 // @match        https://t66y.com/*
-// @match        *://cl.6387x.xyz/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=t66y.com
 // @resource customCSS https://chiens.cn/recordApi/message.css
 // @resource source https://chiens.cn/recordApi/log.json
