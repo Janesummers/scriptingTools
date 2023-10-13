@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Jsummer-pornhub
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  try to take over the world!
 // @author       You
 // @match        https://cn.pornhub.com/*
@@ -12,6 +12,8 @@
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @connect      *
+// @downloadURL https://chiens.cn/recordApi/pornhubUserScript.js
+// @updateURL https://chiens.cn/recordApi/pornhubUserScript.js
 // ==/UserScript==
 
 // @connect * 表示允许任何域名的跨域请求

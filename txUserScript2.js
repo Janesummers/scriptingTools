@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 详情
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh016.com/movie/detail/*
@@ -12,6 +12,8 @@
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @connect      *
+// @downloadURL https://chiens.cn/recordApi/txUserScript2.js
+// @updateURL https://chiens.cn/recordApi/txUserScript2.js
 // ==/UserScript==
 
 // @connect * 表示允许任何域名的跨域请求

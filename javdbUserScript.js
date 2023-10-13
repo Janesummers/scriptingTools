@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      1.8
+// @version      1.9
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -12,6 +12,8 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
+// @downloadURL https://chiens.cn/recordApi/javdbUserScript.js
+// @updateURL https://chiens.cn/recordApi/javdbUserScript.js
 // @connect      *
 // ==/UserScript==
 
