@@ -10,30 +10,27 @@
 // @resource source https://chiens.cn/recordApi/log.json
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
-// @run-at       document-end
 // @downloadURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // @updateURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // ==/UserScript==
-
-console.log('等待脚本执行');
-
-let codeList = []
-window.globalHint = null
-window.isRecord = false
-window.isLoading = false
 
 let messageScript = document.createElement('script');
 messageScript.type = 'text/javascript';
 messageScript.src = `https://chiens.cn/recordApi/message.min.js`;
 document.body.appendChild(messageScript);
 
+messageScript.onload = function() {
+
+}
+
 let script = document.createElement('script');
 script.type = 'text/javascript';
 script.innerHTML =
 `
   function handleSuccess() {
-    window.globalHint.close()
-    Qmsg.success("成功记录", {autoClose: true, onClose: () => { window.globalHint.close() }});
+    console.log(window.globalHint, '123')
+    
+    Qmsg.success("成功记录", {autoClose: true, onClose: () => { }});
     window.isRecord = false
   };
 `;
@@ -49,6 +46,14 @@ a[checked]::before {
 `);
 
 
+console.log('等待脚本执行');
+
+let codeList = []
+window.globalHint = null
+window.isRecord = false
+window.isLoading = false
+
+
 var style = document.createElement('style');
 document.head.appendChild(style);
 let sheet = style.sheet;
@@ -57,26 +62,6 @@ sheet.addRule('a[checked]', 'color: #b58226 !important;');
 sheet.addRule('#main a', 'font-size: 14px;font-weight: 800;');
 sheet.addRule('#tbody .tal a[local]', 'color: #9126b5 !important;');
 sheet.addRule('#tbody .tr3 a[btn]', 'padding: 6px 14px;color: #3c3c3c !important;');
-
-window.globalHint = Qmsg.info("等待脚本执行", {autoClose: true});
-
-if (location.pathname.indexOf('htm_data') !== -1 || location.pathname.indexOf('htm_mob') !== -1) {
-
-    if (window.isRecord) return
-    window.isRecord = true
-
-    window.globalHint = Qmsg.info("正在发请求", {autoClose: false});
-
-    let code = location.pathname.match(/(\d{5,})/)
-    if (code) {
-        code = code[0]
-        console.log('发请求')
-        let script2 = document.createElement('script');
-        script2.type = 'text/javascript';
-        script2.src = `https://chiens.cn/recordApi/log?code=${code}`;
-        document.body.appendChild(script2);
-    }
-}
 
 function listHandle() {
     let tbody = document.querySelector('#tbody')
@@ -126,11 +111,9 @@ function listHandle() {
             }
         }
         window.isLoading = false
-        window.globalHint.close()
         window.globalHint = Qmsg.success("处理完成", {autoClose: true, onClose: () => {  }});
     } else {
         window.isLoading = false
-        window.globalHint.close()
         window.globalHint = Qmsg.success("未获取到节点", {autoClose: true, onClose: () => {  }});
     }
         // console.log('item', item.getAttribute('id'))
@@ -138,8 +121,6 @@ function listHandle() {
 }
 
 window.onload = function () {
-
-    window.globalHint = Qmsg.info("准备处理", {autoClose: false});
     
     let tbody = document.getElementById('tbody')
 
@@ -149,7 +130,6 @@ window.onload = function () {
 
     console.log('tbody', tbody);
     if (tbody || location.pathname.indexOf('thread0806') !== -1) {
-        console.log('123232')
 
         // let tr2_td = document.createElement('td')
         // tr2_td.style.width = '100px'
@@ -256,6 +236,24 @@ window.onload = function () {
 //         }
     } else {
        
+    }
+
+    if (location.pathname.indexOf('htm_data') !== -1 || location.pathname.indexOf('htm_mob') !== -1) {
+
+        if (window.isRecord) return
+        window.isRecord = true
+
+        window.globalHint = Qmsg.info("正在发请求", {autoClose: true});
+
+        let code = location.pathname.match(/(\d{5,})/)
+        if (code) {
+            code = code[0]
+            console.log('发请求')
+            let script2 = document.createElement('script');
+            script2.type = 'text/javascript';
+            script2.src = `https://chiens.cn/recordApi/log?code=${code}`;
+            document.body.appendChild(script2);
+        }
     }
 
 
