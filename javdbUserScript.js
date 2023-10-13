@@ -12,7 +12,10 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
+// @connect      *
 // ==/UserScript==
+
+// @connect * 表示允许任何域名的跨域请求
 
 const css = GM_getResourceText("customCSS");
 GM_addStyle(css);

@@ -10,7 +10,7 @@
 // @downloadURL https://chiens.cn/recordApi/vConsoleScript.js
 // @updateURL https://chiens.cn/recordApi/vConsoleScript.js
 // ==/UserScript==
- 
+
 (function() {
     'use strict';
     let script = document.createElement('script');

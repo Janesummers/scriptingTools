@@ -11,7 +11,11 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
+// @connect      *
 // ==/UserScript==
+
+// @connect * 表示允许任何域名的跨域请求
+
 sessionStorage.setItem('dialogAd', 'sonofbitch');
 sessionStorage.setItem('noticeDialog', 'sonofbitch');
 sessionStorage.setItem('splashAd', 'sonofbitch');
