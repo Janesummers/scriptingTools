@@ -49,7 +49,7 @@ let isLoading = false
 console.log('等待脚本执行');
 
 let codeList = []
-let globalHint = null
+window.globalHint = null
 let scrollHeight = 0;
 let userCode = location.pathname.match(/(\d{2,})/)[0]
 
@@ -68,8 +68,8 @@ function initTitle () {
 }
 
 function listHandle() {
-  globalHint.close()
-  globalHint = Qmsg.success("处理成功，等待页面加载完成", {autoClose: false, onClose: () => {  }});
+  window.globalHint.close()
+  window.globalHint = Qmsg.success("处理成功，等待页面加载完成", {autoClose: false, onClose: () => {  }});
     let child = document.querySelector('.video-list').querySelectorAll('.video-item')
     if (child.length > 0) {
       const box = document.querySelector('.video-list')
@@ -114,18 +114,18 @@ function listHandle() {
               }
           }
       }
-      globalHint.close()
-      globalHint = Qmsg.success("处理完成", {autoClose: true, onClose: () => {  }});
+      window.globalHint.close()
+      window.globalHint = Qmsg.success("处理完成", {autoClose: true, onClose: () => {  }});
       document.querySelector('.video-list').setAttribute('checkedList', '1')
       isLoading = false
       scrollHeight = document.querySelector('.video-list').scrollHeight
     } else {
-      globalHint.close()
+      window.globalHint.close()
       if (document.querySelector('.van-list__finished-text .empty')) {
-        globalHint = Qmsg.error("处理失败，未发布视频", {autoClose: true, onClose: () => {  }});
+        window.globalHint = Qmsg.error("处理失败，未发布视频", {autoClose: true, onClose: () => {  }});
         return
       }
-      globalHint = Qmsg.error("处理失败，未获得子元素", {autoClose: true, onClose: () => {  }});
+      window.globalHint = Qmsg.error("处理失败，未获得子元素", {autoClose: true, onClose: () => {  }});
       setTimeout(() => {
         listHandle()
       }, 1000);
@@ -135,7 +135,7 @@ function listHandle() {
 function getListHandle() {
   if (isLoading) return
   isLoading = true
-  globalHint = Qmsg.info(`正在处理文件`, {autoClose: false});
+  window.globalHint = Qmsg.info(`正在处理文件`, {autoClose: false});
   let txUser = GM_getResourceText("source")
   if (txUser) {
     txUser = JSON.parse(txUser)
@@ -157,7 +157,7 @@ function recordText(title) {
   //   title = document.querySelector('.introduction .name').innerText
   // }
 
-  globalHint = Qmsg.info("正在发请求", {autoClose: false});
+  window.globalHint = Qmsg.info("正在发请求", {autoClose: false});
 
   if (userCode && title !== '') {
 
@@ -167,7 +167,7 @@ function recordText(title) {
     `
       function handleSuccess() {
         hint.close()
-        Qmsg.success("成功记录", {autoClose: true, onClose: () => { globalHint.close() }});
+        Qmsg.success("成功记录", {autoClose: true, onClose: () => { window.globalHint.close() }});
         window.isRecord = false
       };
     `;
