@@ -75,7 +75,7 @@ exports.writeFileFn = (fileFullName, originText = '', text = '') => {
       }
     }
     fs.writeFileSync(path.resolve(__dirname, `${fileFullName}`), writeText);
-    console.log('writeText',writeText);
+    // console.log('writeText',writeText);
     return writeText;
   } catch (error) {
     console.log('文件写入错误：', error);
@@ -119,7 +119,7 @@ exports.writeTxFileFn = (fileFullName, originText = '', reqData = {}) => {
       writeText = JSON.stringify({[reqData.userCode]: [reqData.title.toString()]})
     }
     fs.writeFileSync(path.resolve(__dirname, `${fileFullName}`), writeText);
-    console.log('writeText',writeText);
+    // console.log('writeText',writeText);
     return writeText;
   } catch (error) {
     console.log('文件写入错误：', error);

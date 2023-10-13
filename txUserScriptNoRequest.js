@@ -1,13 +1,12 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 用户（不发请求版）
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh016.com/user/*
 // @match        https://txh016.com/user/*
 // @resource customCSS https://chiens.cn/recordApi/message.css
-// @require      https://chiens.cn/recordApi/message.min.js
 // @resource source https://chiens.cn/recordApi/tx_log.json
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
@@ -16,13 +15,10 @@
 // @updateURL https://chiens.cn/recordApi/txUserScriptNoRequest.js
 // ==/UserScript==
 
-window.onload = function() {
-    let txUser = GM_getResourceText("source")
-    if (txUser) {
-        txUser = JSON.parse(txUser)
-    }
-    console.log(txUser)
-}
+let script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = `https://chiens.cn/recordApi/message.min.js`;
+document.body.appendChild(script);
 
 
 sessionStorage.setItem('dialogAd', 'sonofbitch');
@@ -47,7 +43,7 @@ var style = document.createElement('style');
 document.head.appendChild(style);
 let sheet = style.sheet;
 sheet.addRule('div[checked]', 'color: #b58226 !important;');
-let isRecord = false
+window.isRecord = false
 let isLoading = false
 
 console.log('等待脚本执行');
@@ -73,7 +69,7 @@ function initTitle () {
 
 function listHandle() {
   globalHint.close()
-  globalHint = Qmsg.success("请求成功，等待页面加载完成", {autoClose: false, onClose: () => {  }});
+  globalHint = Qmsg.success("处理成功，等待页面加载完成", {autoClose: false, onClose: () => {  }});
     let child = document.querySelector('.video-list').querySelectorAll('.video-item')
     if (child.length > 0) {
       const box = document.querySelector('.video-list')
@@ -139,23 +135,18 @@ function listHandle() {
 function getListHandle() {
   if (isLoading) return
   isLoading = true
-  globalHint = Qmsg.info(`正在处理文件-${userCode}`, {autoClose: false});
+  globalHint = Qmsg.info(`正在处理文件`, {autoClose: false});
   let txUser = GM_getResourceText("source")
   if (txUser) {
     txUser = JSON.parse(txUser)
   }
-  globalHint.close()
-  globalHint = Qmsg.success("处理完成，等待", {autoClose: false, onClose: () => {  }});
-  
   codeList = txUser[userCode] || []
-  globalHint.close()
-  globalHint = Qmsg.success("处理完成，等待处理", {autoClose: false, onClose: () => {  }});
   listHandle()
 }
 
 function recordText(title) {
-  if (isRecord) return
-  isRecord = true
+  if (window.isRecord) return
+  window.isRecord = true
   // let userCode = ''
   // let title = ''
   
@@ -165,39 +156,28 @@ function recordText(title) {
   // if (document.querySelector('.introduction .name')) {
   //   title = document.querySelector('.introduction .name').innerText
   // }
+
+  globalHint = Qmsg.info("正在发请求", {autoClose: false});
+
   if (userCode && title !== '') {
-    console.log('发请求')
-    globalHint = Qmsg.info("正在发请求", {autoClose: false});
-    GM_xmlhttpRequest({
-      method: "post",
-      url: "https://chiens.cn/recordApi/txLog",
-      data: `userCode=${userCode}&title=${title}`,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      onload: function(req){
-        console.log('dd', req)
-        const result = JSON.parse(req.response)
-        if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
-          console.log("记录成功");
-          //hint.close()
-          Qmsg.success("成功记录", {autoClose: true, onClose: () => { globalHint.close() }});
-          isRecord = false
-          // let text = localStorage.getItem('codeLog')
-          // if (result.message) {
-          //     if (text) {
-          //         localStorage.setItem('codeLog', `${text},${code}`)
-          //     } else {
-          //         console.log('11', result.message)
-          //         localStorage.setItem('codeLog', result.message)
-          //     }
-          // }
-        }
-      },
-      onerror: function(response){
-        Qmsg.error("请求失败", {autoClose: true });
-      }
-    });
+
+    let script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.innerHTML =
+    `
+      function handleSuccess() {
+        hint.close()
+        Qmsg.success("成功记录", {autoClose: true, onClose: () => { globalHint.close() }});
+        window.isRecord = false
+      };
+    `;
+    document.body.appendChild(script);
+
+
+    script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = `https://chiens.cn/recordApi/txLogInScript?userCode=${userCode}&title=${title}`;
+    document.body.appendChild(script);
   } else {
     // setTimeout(recordText, 1000)
   }

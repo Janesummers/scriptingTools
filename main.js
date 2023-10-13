@@ -19,7 +19,7 @@ app.post('/log', (req, resp) => {
       // result = `文件已存在，内容：${readFileFn('log.js')}`
       const writeResult = writeFileFn('log.json', text, req.body.code)
       if (writeResult) {
-        console.log('writeResult', writeResult);
+        // console.log('writeResult', writeResult);
         if (writeResult === true) {
           result = writeResult
         } else {
@@ -78,7 +78,7 @@ app.post('/txLog', (req, resp) => {
       // result = `文件已存在，内容：${readFileFn('tx_log.js')}`
       const writeResult = writeTxFileFn('tx_log.json', text, req.body)
       if (writeResult) {
-        console.log('writeResult', writeResult);
+        // console.log('writeResult', writeResult);
         if (writeResult === true) {
           result = writeResult
         } else {
@@ -100,6 +100,42 @@ app.post('/txLog', (req, resp) => {
   }
   // console.log(`${getTime()} 用户请求：log，${req.headers.token}，${JSON.stringify(req.headers)}`);
   resp.json(msgResult.msg({status: 200, message: result}));
+})
+
+// 糖心 记录
+app.get('/txLogInScript', (req, resp) => {
+  let result = ''
+  const _fileIsExist = fileIsExist('tx_log', 'json')
+  if (_fileIsExist) {
+    const text = readFileFn('tx_log.json')
+    if (text || text === '') {
+      // result = `文件已存在，内容：${readFileFn('tx_log.js')}`
+      const writeResult = writeTxFileFn('tx_log.json', text, req.query)
+      if (writeResult) {
+        // console.log('writeResult', writeResult);
+        if (writeResult === true) {
+          result = writeResult
+        } else {
+          result = JSON.parse(writeResult)
+        }
+      } else {
+        resp.json(msgResult.error({status: 500, message: '文件重写异常'}));
+      }
+    } else {
+      resp.json(msgResult.error({status: 500, message: '文件读取异常'}));
+    }
+  } else {
+    const fileWrite = writeTxFileFn('tx_log.json', '', req.query)
+    if (fileWrite) {
+      result = '文件不存在，已创建文件并写入数据'
+    } else {
+      resp.json(msgResult.error({status: 500, message: '文件写入异常'}));
+    }
+  }
+  // console.log(`${getTime()} 用户请求：log，${req.headers.token}，${JSON.stringify(req.headers)}`);
+  const str = `handleSuccess()`
+  // resp.json(msgResult.msg({status: 200, message: result}));
+  resp.send(`${str}`);
 })
 
 // 糖心 获取
@@ -144,7 +180,7 @@ app.post('/pornhubLog', (req, resp) => {
       // result = `文件已存在，内容：${readFileFn('pornhub_log.json')}`
       const writeResult = writeFileFn('pornhub_log.json', text, req.body.code)
       if (writeResult) {
-        console.log('writeResult', writeResult);
+        // console.log('writeResult', writeResult);
         if (writeResult === true) {
           result = writeResult
         } else {
