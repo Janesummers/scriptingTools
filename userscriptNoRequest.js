@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴（GET请求版）
 // @namespace    http://tampermonkey.net/
-// @version      1.9
+// @version      2.0
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -123,7 +123,6 @@ window.onload = function () {
         tbody = document.querySelector('#main .t tbody')
     }
 
-    console.log('tbody', tbody);
     if (tbody || location.pathname.indexOf('thread0806') !== -1) {
         if (window.isLoading) return
         window.isLoading = true
