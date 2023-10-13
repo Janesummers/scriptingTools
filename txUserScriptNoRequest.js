@@ -139,16 +139,17 @@ function listHandle() {
 function getListHandle() {
   if (isLoading) return
   isLoading = true
-  globalHint = Qmsg.info("正在处理文件", {autoClose: false});
+  globalHint = Qmsg.info(`正在处理文件-${userCode}`, {autoClose: false});
   let txUser = GM_getResourceText("source")
   if (txUser) {
     txUser = JSON.parse(txUser)
   }
+  globalHint.close()
+  globalHint = Qmsg.success("处理完成，等待", {autoClose: false, onClose: () => {  }});
   
   codeList = txUser[userCode] || []
-  console.log('ddsss', list)
   globalHint.close()
-  globalHint = Qmsg.success("处理完成，等待页面加载完成", {autoClose: false, onClose: () => {  }});
+  globalHint = Qmsg.success("处理完成，等待处理", {autoClose: false, onClose: () => {  }});
   listHandle()
 }
 
