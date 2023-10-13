@@ -13,6 +13,7 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
+// @run-at       document-end
 // @downloadURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // @updateURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // ==/UserScript==
