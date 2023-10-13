@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 用户（不发请求版）
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh016.com/user/*
@@ -166,7 +166,7 @@ function recordText(title) {
     script.innerHTML =
     `
       function handleSuccess() {
-        hint.close()
+        window.globalHint.close()
         Qmsg.success("成功记录", {autoClose: true, onClose: () => { window.globalHint.close() }});
         window.isRecord = false
       };
@@ -178,8 +178,6 @@ function recordText(title) {
     script2.type = 'text/javascript';
     script2.src = `https://chiens.cn/recordApi/txLogInScript?userCode=${userCode}&title=${title}`;
     document.body.appendChild(script2);
-    window.globalHint.close()
-    window.globalHint = Qmsg.info("等待完成", {autoClose: false});
   } else {
     // setTimeout(recordText, 1000)
   }
