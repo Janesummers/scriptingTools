@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 用户（不发请求版）
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh016.com/user/*
@@ -19,6 +19,18 @@ let messageScript = document.createElement('script');
 messageScript.type = 'text/javascript';
 messageScript.src = `https://chiens.cn/recordApi/message.min.js`;
 document.body.appendChild(messageScript);
+
+let script = document.createElement('script');
+script.type = 'text/javascript';
+script.innerHTML =
+`
+  function handleSuccess() {
+    window.globalHint.close()
+    Qmsg.success("成功记录", {autoClose: true, onClose: () => { window.globalHint.close() }});
+    window.isRecord = false
+  };
+`;
+document.body.appendChild(script);
 
 
 sessionStorage.setItem('dialogAd', 'sonofbitch');
@@ -44,7 +56,7 @@ document.head.appendChild(style);
 let sheet = style.sheet;
 sheet.addRule('div[checked]', 'color: #b58226 !important;');
 window.isRecord = false
-let isLoading = false
+window.isLoading = false
 
 console.log('等待脚本执行');
 
@@ -117,7 +129,7 @@ function listHandle() {
       window.globalHint.close()
       window.globalHint = Qmsg.success("处理完成", {autoClose: true, onClose: () => {  }});
       document.querySelector('.video-list').setAttribute('checkedList', '1')
-      isLoading = false
+      window.isLoading = false
       scrollHeight = document.querySelector('.video-list').scrollHeight
     } else {
       window.globalHint.close()
@@ -133,8 +145,8 @@ function listHandle() {
 }
 
 function getListHandle() {
-  if (isLoading) return
-  isLoading = true
+  if (window.isLoading) return
+  window.isLoading = true
   window.globalHint = Qmsg.info(`正在处理文件`, {autoClose: false});
   let txUser = GM_getResourceText("source")
   if (txUser) {
@@ -160,20 +172,6 @@ function recordText(title) {
   window.globalHint = Qmsg.info("正在发请求", {autoClose: false});
 
   if (userCode && title !== '') {
-
-    let script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.innerHTML =
-    `
-      function handleSuccess() {
-        window.globalHint.close()
-        Qmsg.success("成功记录", {autoClose: true, onClose: () => { window.globalHint.close() }});
-        window.isRecord = false
-      };
-    `;
-    document.body.appendChild(script);
-
-
     let script2 = document.createElement('script');
     script2.type = 'text/javascript';
     script2.src = `https://chiens.cn/recordApi/txLogInScript?userCode=${userCode}&title=${title}`;
