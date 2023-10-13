@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴（GET请求版）
 // @namespace    http://tampermonkey.net/
-// @version      1.15
+// @version      1.16
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -10,6 +10,7 @@
 // @resource source https://chiens.cn/recordApi/log.json
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
+// @run-at       document-end
 // @downloadURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // @updateURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // ==/UserScript==
