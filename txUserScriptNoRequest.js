@@ -11,6 +11,7 @@
 // @resource source https://chiens.cn/recordApi/tx_log.json
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
+// @run-at       document-end
 // @downloadURL https://chiens.cn/recordApi/txUserScriptNoRequest.js
 // @updateURL https://chiens.cn/recordApi/txUserScriptNoRequest.js
 // ==/UserScript==
@@ -146,6 +147,8 @@ function getListHandle() {
   
   codeList = txUser[userCode] || []
   console.log('ddsss', list)
+  globalHint.close()
+  globalHint = Qmsg.success("处理完成，等待页面加载完成", {autoClose: false, onClose: () => {  }});
   listHandle()
 }
 
