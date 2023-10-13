@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴（GET请求版）
 // @namespace    http://tampermonkey.net/
-// @version      1.11
+// @version      1.12
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -18,6 +18,13 @@
 // @downloadURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // @updateURL https://chiens.cn/recordApi/userscriptNoRequest.js
 // ==/UserScript==
+
+console.log('等待脚本执行');
+
+let codeList = []
+window.globalHint = null
+window.isRecord = false
+window.isLoading = false
 
 let messageScript = document.createElement('script');
 messageScript.type = 'text/javascript';
@@ -55,12 +62,7 @@ sheet.addRule('#main a', 'font-size: 14px;font-weight: 800;');
 sheet.addRule('#tbody .tal a[local]', 'color: #9126b5 !important;');
 sheet.addRule('#tbody .tr3 a[btn]', 'padding: 6px 14px;color: #3c3c3c !important;');
 
-console.log('等待脚本执行');
-
-let codeList = []
-window.globalHint = null
-window.isRecord = false
-window.isLoading = false
+window.globalHint = Qmsg.info("等待脚本执行", {autoClose: true});
 
 if (location.pathname.indexOf('htm_data') !== -1 || location.pathname.indexOf('htm_mob') !== -1) {
 
