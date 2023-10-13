@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         JSummer - 糖心 - 详情（不发请求版）
+// @name         JSummer - 糖心 - 详情（GET请求版）
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.4
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh016.com/movie/detail/*
@@ -18,6 +18,18 @@ let messageScript = document.createElement('script');
 messageScript.type = 'text/javascript';
 messageScript.src = `https://chiens.cn/recordApi/message.min.js`;
 document.body.appendChild(messageScript);
+
+let script = document.createElement('script');
+script.type = 'text/javascript';
+script.innerHTML =
+`
+  function handleSuccess() {
+    window.globalHint.close()
+    Qmsg.success("成功记录", {autoClose: true, onClose: () => { window.globalHint.close() }});
+  };
+`;
+document.body.appendChild(script);
+
 
 sessionStorage.setItem('dialogAd', 'sonofbitch');
 sessionStorage.setItem('noticeDialog', 'sonofbitch');
@@ -56,21 +68,9 @@ function recordText() {
     console.log('发请求')
     window.globalHint = Qmsg.info("正在发请求", {autoClose: false});
 
-    let script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.innerHTML =
-    `
-      function handleSuccess() {
-        window.globalHint.close()
-        Qmsg.success("成功记录", {autoClose: true, onClose: () => { window.globalHint.close() }});
-      };
-    `;
-    document.body.appendChild(script);
-
-
     let script2 = document.createElement('script');
     script2.type = 'text/javascript';
-    script2.src = `https://chiens.cn/recordApi/txLogInScript?userCode=${userCode}&title=${title}`;
+    script2.src = `https://chiens.cn/recordApi/txLog?userCode=${userCode}&title=${title}`;
     document.body.appendChild(script2);
   } else {
     setTimeout(recordText, 1000)
