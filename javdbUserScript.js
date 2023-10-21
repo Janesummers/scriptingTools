@@ -136,7 +136,7 @@ let globalResult = {}
 let globalHint = null
 let isHandle = false
 
-const homeList = ['/', '/v/', '/search', '/series/', '/video_codes/', '/tags', '/makers/', '/publishers/', '/directors/', '/actors/', '/rankings/movies', '/rankings/fanza_award', '/uncensored', '/censored', '/anime']
+const homeList = ['/', '/search', '/series/', '/video_codes/', '/tags', '/makers/', '/publishers/', '/directors/', '/actors/', '/rankings/movies', '/rankings/fanza_award', '/uncensored', '/censored', '/anime']
 
 function urlIncludes(list, url) {
   if (list.includes(url)) {
@@ -157,6 +157,9 @@ document.addEventListener("visibilitychange", function() {
     if (urlIncludes(homeList, location.pathname)) {
       if (isHandle) return
       homePageListHandle()
+    }
+    if (location.pathname.indexOf('/v/') !== -1) {
+      detailPageListHandle()
     }
   }
 });
