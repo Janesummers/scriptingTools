@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      1.91
+// @version      1.92
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
