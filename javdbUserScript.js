@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      1.9
+// @version      1.91
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -136,7 +136,7 @@ let globalResult = {}
 let globalHint = null
 let isHandle = false
 
-const homeList = ['/', '/search', '/series/', '/video_codes/', '/tags', '/makers/', '/publishers/', '/directors/', '/actors/', '/rankings/movies', '/rankings/fanza_award', '/uncensored', '/censored', '/anime']
+const homeList = ['/', '/v/', '/search', '/series/', '/video_codes/', '/tags', '/makers/', '/publishers/', '/directors/', '/actors/', '/rankings/movies', '/rankings/fanza_award', '/uncensored', '/censored', '/anime']
 
 function urlIncludes(list, url) {
   if (list.includes(url)) {
