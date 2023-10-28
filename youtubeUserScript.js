@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -205,7 +205,7 @@ function handleData() {
   if (location.pathname === '/') {
     console.log('开始处理首页');
 
-    const list = entries[0].target.querySelectorAll("div#dismissible.ytd-rich-grid-media")
+    const list = document.querySelectorAll("div#dismissible.ytd-rich-grid-media")
     list.forEach(item => {
       let code = new URLSearchParams(item.querySelector('a#thumbnail').search).get("v")
       if (codeList.includes(code)) {
@@ -215,7 +215,7 @@ function handleData() {
 
     // document.querySelectorAll("div#dismissible.ytd-rich-grid-media")
 
-    
+    homePageListHandle()
 
   }
 }
