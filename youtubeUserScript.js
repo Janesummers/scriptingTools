@@ -205,17 +205,21 @@ function handleData() {
   if (location.pathname === '/') {
     console.log('开始处理首页');
 
-    const list = document.querySelectorAll("div#dismissible.ytd-rich-grid-media")
-    list.forEach(item => {
-      let code = new URLSearchParams(item.querySelector('a#thumbnail').search).get("v")
-      if (codeList.includes(code)) {
-        item.querySelector('#video-title').setAttribute('checked', '1')
-      }
-    })
+    setTimeout(() => {
+      const list = document.querySelectorAll("div#dismissible.ytd-rich-grid-media")
+      console.log('list', list);
+      list.forEach(item => {
+        let code = new URLSearchParams(item.querySelector('a#thumbnail').search).get("v")
+        if (codeList.includes(code)) {
+          item.querySelector('#video-title').setAttribute('checked', '1')
+        }
+      })
+      homePageListHandle()
+    }, 500);
 
     // document.querySelectorAll("div#dismissible.ytd-rich-grid-media")
 
-    homePageListHandle()
+    
 
   }
 }
@@ -232,7 +236,8 @@ function homePageListHandle() {
     } else {
       homeContents = watchElementChange(box, (entries) => {
         var newHeight = entries[0].target.scrollHeight;
-        if (newHeight !== viewPageListHeight) {
+        console.log('newHeight !== homePageListHeight', newHeight, homePageListHeight);
+        if (newHeight !== homePageListHeight) {
           homePageListHeight = newHeight;
           const list = entries[0].target.querySelectorAll("div#dismissible.ytd-rich-grid-media")
           list.forEach(item => {
@@ -241,11 +246,16 @@ function homePageListHandle() {
               item.querySelector('#video-title').setAttribute('checked', '1')
             }
           })
+          console.log('homeContents - 处理完成');
+          Qmsg.success("homeContents - 处理完成", {autoClose: true, onClose: () => {  }});
         }
       })
       homeContents.observe(box)
     }
   }
+  console.log('homePageListHandle - 处理完成');
+  globalHint.close()
+  globalHint = Qmsg.success("homePageListHandle - 处理完成", {autoClose: true, onClose: () => {  }});
 }
 
 /**
@@ -317,6 +327,8 @@ function viewPageListHandle() {
               item.querySelector('.metadata a.ytd-compact-video-renderer h3.ytd-compact-video-renderer').setAttribute('checked', '1')
             }
           })
+          console.log('itemsContents - 处理完成');
+          Qmsg.success("itemsContents - 处理完成", {autoClose: true, onClose: () => {  }});
         }
       })
       itemsContents.observe(box)
