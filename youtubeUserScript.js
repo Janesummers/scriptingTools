@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -41,10 +41,10 @@ const skipUrls = ['/live_chat_replay']
 document.addEventListener("visibilitychange", function() {
   var string = document.visibilityState
   console.log(string)
-  if (string === 'hidden') {  // 当页面由前端运行在后端时，出发此代码
+  if (string === 'hidden') {
     isHidden = true
   }
-  if (string === 'visible') {   // 当页面由隐藏至显示时
+  if (string === 'visible') {
     isHidden = false
     if (!skipUrls.includes(location.pathname)) {
       getData()
@@ -54,14 +54,18 @@ document.addEventListener("visibilitychange", function() {
 
 let codeList = []
 let globalHint = null
-let recommendedVideosHeight = 0
-let relatedVideosCenterHeight = 0
+// 首页视频列表高度
+let homePageListHeight = 0
+// 查看视频详情页面右侧列表高度
+let viewPageListHeight = 0
 let isRecord = false
 let isChecked = false
 let isHandlePlayList = false
 let insertTime = new Date().getTime()
 let timer = null
 let search = ''
+// 首页列表
+let homeContents = null
 // 详情页右侧列表
 let itemsContents = null
 
@@ -70,6 +74,7 @@ document.head.appendChild(style);
 let sheet = style.sheet;
 sheet.addRule('.title a:visited', 'color: #d34141 !important;');
 sheet.addRule('.metadata a.ytd-compact-video-renderer h3.ytd-compact-video-renderer[checked]', 'color: #d36141 !important;');
+sheet.addRule('div#dismissible.ytd-rich-grid-media #video-title[checked]', 'color: #d36141 !important;');
 
 console.log('等待脚本执行');
 
@@ -195,8 +200,51 @@ function handleData() {
       console.log('jiu');
       record()
     }
+  }
+  // 首页处理
+  if (location.pathname === '/') {
+    console.log('开始处理首页');
+
+    const list = entries[0].target.querySelectorAll("div#dismissible.ytd-rich-grid-media")
+    list.forEach(item => {
+      let code = new URLSearchParams(item.querySelector('a#thumbnail').search).get("v")
+      if (codeList.includes(code)) {
+        item.querySelector('#video-title').setAttribute('checked', '1')
+      }
+    })
+
+    // document.querySelectorAll("div#dismissible.ytd-rich-grid-media")
 
     
+
+  }
+}
+
+/**
+ * @description: 监听首页视频列表数据更新
+ * @return {*}
+ */
+function homePageListHandle() {
+  const box = document.querySelector("div#contents.ytd-rich-grid-renderer")
+  if (box) {
+    if (homeContents) {
+      console.log('homeContents - 已存在，无需再次监听');
+    } else {
+      homeContents = watchElementChange(box, (entries) => {
+        var newHeight = entries[0].target.scrollHeight;
+        if (newHeight !== viewPageListHeight) {
+          homePageListHeight = newHeight;
+          const list = entries[0].target.querySelectorAll("div#dismissible.ytd-rich-grid-media")
+          list.forEach(item => {
+            let code = new URLSearchParams(item.querySelector('a#thumbnail').search).get("v")
+            if (codeList.includes(code)) {
+              item.querySelector('#video-title').setAttribute('checked', '1')
+            }
+          })
+        }
+      })
+      homeContents.observe(box)
+    }
   }
 }
 
@@ -242,7 +290,6 @@ function listHandle(box, callback) {
 function viewPageListHandle() {
   if (document.querySelector("#items #contents")) {
     const box = document.querySelector("#items #contents")
-    recommendedVideosHeight = box.offsetHeight
     if (itemsContents) {
       console.log('itemsContents - 已存在，无需再次监听');
     } else {
@@ -255,8 +302,8 @@ function viewPageListHandle() {
           isChecked = false
           getData()
         }
-        if (newHeight !== relatedVideosCenterHeight) {
-          relatedVideosCenterHeight = newHeight;
+        if (newHeight !== viewPageListHeight) {
+          viewPageListHeight = newHeight;
           const list = entries[0].target.querySelectorAll('#dismissible')
           list.forEach(item => {
             let code = new URLSearchParams(item.querySelector('a#thumbnail').search).get("v")
