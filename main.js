@@ -402,6 +402,77 @@ app.post('/updateDesignationLog', (req, resp) => {
   resp.json(msgResult.msg({status: 200, message: result}));
 })
 
+// youtube 记录
+app.all('/youtubeLog', (req, resp) => {
+  let param = {}
+  if (req.method == "POST") {
+    param = req.body;
+  } else{
+    param = req.query || req.params; 
+  }
+  let result = ''
+  console.log('youtube', req.body);
+  const _fileIsExist = fileIsExist('youtube_log', 'json')
+  if (_fileIsExist) {
+    const text = readFileFn('youtube_log.json')
+    if (text || text === '') {
+      // result = `文件已存在，内容：${readFileFn('youtube_log.json')}`
+      const writeResult = writeFileFn('youtube_log.json', text, param.code)
+      if (writeResult) {
+        // console.log('writeResult', writeResult);
+        if (writeResult === true) {
+          result = writeResult
+        } else {
+          result = JSON.parse(writeResult).join(',')
+        }
+      } else {
+        resp.json(msgResult.error({status: 500, message: '文件重写异常'}));
+      }
+    } else {
+      resp.json(msgResult.error({status: 500, message: '文件读取异常'}));
+    }
+  } else {
+    const fileWrite = writeFileFn('youtube_log.json', '', param.code)
+    if (fileWrite) {
+      result = '文件不存在，已创建文件并写入数据'
+    } else {
+      resp.json(msgResult.error({status: 500, message: '文件写入异常'}));
+    }
+  }
+  // console.log(`${getTime()} 用户请求：log，${req.headers.token}，${JSON.stringify(req.headers)}`);
+  if (req.method == "POST") {
+    resp.json(msgResult.msg({status: 200, message: result}));
+  } else{
+    const str = `handleSuccess()`
+    resp.send(`${str}`);
+  }
+})
+
+// youtube 获取
+app.post('/getYoutubeLog', (req, resp) => {
+  let result = ''
+  const _fileIsExist = fileIsExist('youtube_log', 'json')
+  if (_fileIsExist) {
+    const text = readFileFn('youtube_log.json')
+    if (text || text === '') {
+      // result = `文件已存在，内容：${readFileFn('youtube_log.json')}`
+      result = text
+    } else {
+      resp.json(msgResult.error({status: 500, message: '文件读取异常'}));
+    }
+  } else {
+    const fileWrite = writeFileFn('youtube_log.json')
+    if (fileWrite) {
+      // 文件不存在，已创建文件并写入数据
+      result = ''
+    } else {
+      resp.json(msgResult.error({status: 500, message: '文件写入异常'}));
+    }
+  }
+  // console.log(`${getTime()} 用户请求：log，${req.headers.token}，${JSON.stringify(req.headers)}`);
+  resp.json(msgResult.msg({status: 200, message: result}));
+})
+
 app.get('*', (req, resp) => {
   console.log('req', req.params[0])
   resp.writeHead(200, { "Content-Type": "text/plain;charset=utf-8" });
