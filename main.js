@@ -282,7 +282,7 @@ app.post('/updateDesignationLog', (req, resp) => {
 
   let code = req.body.code
   let type = req.body.type || '0'
-  let isUpdate = req.body.update
+  // let isUpdate = req.body.update
 
 
   const reg = new RegExp('^\\[.+\\]$')
@@ -312,7 +312,7 @@ app.post('/updateDesignationLog', (req, resp) => {
 
   data[changeKey].push(...code)
 
-  console.log("updateDesignationLog - 准备写入", isChange, isUpdate, type, code);
+  console.log("updateDesignationLog - 准备写入", type, code);
   const toJson = jsonToString(data, true)
   fs.writeFileSync(path.resolve(__dirname, 'merge.json'), toJson);
   console.log("updateDesignationLog - 写入完成");
