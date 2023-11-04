@@ -85,7 +85,7 @@ function listHandle() {
         tbody = document.querySelector('#main .t tbody')
         child = tbody.querySelectorAll('.t_one')
     }
-    if (!tbody && location.pathname.indexOf('thread0806') !== -1) {
+    if (tbody && location.pathname.indexOf('thread0806') !== -1) {
         // tbody = document.querySelector('#main .t tbody')
         child = document.querySelectorAll('.t_one')
     }
@@ -146,7 +146,7 @@ window.onload = function () {
     }
 
     console.log('tbody', tbody);
-    if (tbody || location.pathname.indexOf('thread0806') !== -1) {
+    if ((tbody || location.pathname.indexOf('thread0806') !== -1) && location.pathname.indexOf('htm_data') === -1) {
         console.log('123232')
 
         // let tr2_td = document.createElement('td')

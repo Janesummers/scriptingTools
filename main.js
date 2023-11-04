@@ -295,110 +295,27 @@ app.post('/updateDesignationLog', (req, resp) => {
   } else {
     code = code.split(',')
   }
-  let isChange = false
-  if (isUpdate) {
-    code.map(item => {
-      data.unDown = data.unDown.filter(codes => codes !== item)
-      data.read = data.read.filter(codes => codes !== item)
-      data.wm = data.wm.filter(codes => codes !== item)
-      data.wmUnDown = data.wmUnDown.filter(codes => codes !== item)
-      data.lc = data.lc.filter(codes => codes !== item)
-      data.lcUnDown = data.lcUnDown.filter(codes => codes !== item)
-      data.starUnDown = data.starUnDown.filter(codes => codes !== item)
-      switch (type) {
-        case '0':
-          if (!data.unDown.includes(item)) {
-            data.unDown.push(item)
-          }
-          break;
-        case '1':
-          if (!data.read.includes(item)) {
-            data.read.push(item)
-          }
-          break;
-        case '3':
-          if (!data.wm.includes(item)) {
-            data.wm.push(item)
-          }
-          break;
-        case '4':
-          if (!data.wmUnDown.includes(item)) {
-            data.wmUnDown.push(item)
-          }
-          break;
-        case '5':
-          if (!data.lc.includes(item)) {
-            data.lc.push(item)
-          }
-          break;
-        case '6':
-          if (!data.lcUnDown.includes(item)) {
-            data.lcUnDown.push(item)
-          }
-          break;
-        case '7':
-          if (!data.starUnDown.includes(item)) {
-            data.starUnDown.push(item)
-          }
-          break;
-        default:
-          break;
-      }
-    })
-    const toJson = jsonToString(data, true)
-    fs.writeFileSync(path.resolve(__dirname, 'merge.json'), toJson);
-  } else {
-    code.map(item => {
-      if (!data.unDown.includes(item) && !data.read.includes(item) && !data.wm.includes(item) && !data.wmUnDown.includes(item) && !data.lc.includes(item) && !data.lcUnDown.includes(item) && !data.starUnDown.includes(item)) {
-        isChange = true
-        switch (type) {
-          case '0':
-            if (!data.unDown.includes(item)) {
-              data.unDown.push(item)
-            }
-            break;
-          case '1':
-            if (!data.read.includes(item)) {
-              data.read.push(item)
-            }
-            break;
-          case '3':
-            if (!data.wm.includes(item)) {
-              data.wm.push(item)
-            }
-            break;
-          case '4':
-            if (!data.wmUnDown.includes(item)) {
-              data.wmUnDown.push(item)
-            }
-            break;
-          case '5':
-            if (!data.lc.includes(item)) {
-              data.lc.push(item)
-            }
-            break;
-          case '6':
-            if (!data.lcUnDown.includes(item)) {
-              data.lcUnDown.push(item)
-            }
-            break;
-          case '7':
-            if (!data.starUnDown.includes(item)) {
-              data.starUnDown.push(item)
-            }
-            break;
-          default:
-            break;
-        } 
-      }
-    })
-  }
+
+  const keyArray = ['unDown', 'read', 'wm', 'wmUnDown', 'lc', 'lcUnDown', 'starUnDown']
+
+  let changeKey = keyArray[type]
+
+  code.map(item => {
+    data.unDown = data.unDown.filter(codes => codes !== item)
+    data.read = data.read.filter(codes => codes !== item)
+    data.wm = data.wm.filter(codes => codes !== item)
+    data.wmUnDown = data.wmUnDown.filter(codes => codes !== item)
+    data.lc = data.lc.filter(codes => codes !== item)
+    data.lcUnDown = data.lcUnDown.filter(codes => codes !== item)
+    data.starUnDown = data.starUnDown.filter(codes => codes !== item)
+  })
+
+  data[changeKey].push(...code)
+
   console.log("updateDesignationLog - 准备写入", isChange, isUpdate, type, code);
-  if (isChange) {
-    const toJson = jsonToString(data, true)
-    fs.writeFileSync(path.resolve(__dirname, 'merge.json'), toJson);
-    console.log("updateDesignationLog - 写入完成");
-  }
+  const toJson = jsonToString(data, true)
+  fs.writeFileSync(path.resolve(__dirname, 'merge.json'), toJson);
+  console.log("updateDesignationLog - 写入完成");
   resp.json(msgResult.msg({status: 200, message: result}));
 })
 
