@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      1.94
+// @version      1.95
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -195,12 +195,13 @@ function homePageListHandle() {
 function checkDesignationHandle(code) {
   if (isChecking) return
   isChecking = true
+  console.log('code.toString()', code.toString());
   if (JSON.stringify(globalResult) === '{}') {
     globalHint = Qmsg.info("正在获取数据", {autoClose: false});
     GM_xmlhttpRequest({
         method: "post",
         url: "https://chiens.cn/recordApi/checkDesignationLog",
-        data: `code=${code}`,
+        data: `code=${code.toString()}`,
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
@@ -210,6 +211,7 @@ function checkDesignationHandle(code) {
           const result = JSON.parse(req.response)
           if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
             const list = result.data.message
+            console.log('list', list);
             globalResult = list
             isChecking = false
             globalHint.close()
@@ -248,6 +250,7 @@ function listHandle () {
       let avDetailBoxChildren = avDetailBox[k].children;
       for (let i = 0; i < avDetailBoxChildren.length; i++) {
         let x = avDetailBoxChildren[i].innerText.match(numberExtraction)[0]
+        x = x.toUpperCase()
         avDetailBoxChildren[i].querySelector(".video-number").setAttribute('checked', globalResult[x] || '0')
         if (globalResult[x] && globalResult[x] !== '0') {
           avDetailBoxChildren[i].querySelector(".video-number").setAttribute('exits', '1')
@@ -257,6 +260,7 @@ function listHandle () {
     let t = document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").innerText.match(numberExtraction);
     t = t ? t[0] : "";
     if (t != "") {
+      t = t.toUpperCase()
       document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block .value").setAttribute('checked', globalResult[t]);
     }
     globalHint.close()
@@ -285,6 +289,7 @@ function detailPageListHandle() {
       checkList.push(x)
     }
   }
+  console.log('checkList', checkList);
   checkDesignationHandle(checkList)
 }
 
