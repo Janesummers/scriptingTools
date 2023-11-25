@@ -247,6 +247,7 @@ app.post('/checkDesignationLog', (req, resp) => {
   }
 
   code.map(item => {
+    item = item.toUpperCase()
     let check = '0'
     if (data.read.includes(item)) {
       check = '1'
@@ -301,6 +302,7 @@ app.post('/updateDesignationLog', (req, resp) => {
   let changeKey = keyArray[type]
 
   code.map(item => {
+    item = item.toUpperCase()
     data.unDown = data.unDown.filter(codes => codes !== item)
     data.read = data.read.filter(codes => codes !== item)
     data.wm = data.wm.filter(codes => codes !== item)
