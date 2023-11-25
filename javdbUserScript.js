@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      1.95
+// @version      1.96
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -186,6 +186,7 @@ function homePageListHandle() {
   let checkList = []
   for (let i = 0; i < avDetailBoxChildren.length; i++) {
       let x = avDetailBoxChildren[i].querySelector(".video-title").innerText.match(numberExtraction)[0];
+      x = x.toUpperCase()
       avDetailBoxChildren[i].querySelector(".video-title").style.whiteSpace = 'normal'
       checkList.push(x)
   }
@@ -236,6 +237,7 @@ function listHandle () {
     let avDetailBoxChildren = avDetailBox.children;
     for (let i = 0; i < avDetailBoxChildren.length; i++) {
       let x = avDetailBoxChildren[i].querySelector(".video-title").innerText.match(numberExtraction)[0];
+      x = x.toUpperCase()
       avDetailBoxChildren[i].querySelector(".video-title").setAttribute('checked', globalResult[x] || '0')
       if (globalResult[x] && globalResult[x] !== '0') {
         avDetailBoxChildren[i].querySelector(".video-title").setAttribute('exits', '1')
