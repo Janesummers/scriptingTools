@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      1.93
+// @version      1.94
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -270,9 +270,9 @@ function listHandle () {
 function detailPageListHandle() {
   let t = document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").innerText.match(numberExtraction);
   t = t ? t[0] : "";
-  console.log('查询番号', t);
   let checkList = []
   if (t !== '') {
+    t = t.toUpperCase()
     checkList.push(t)
   }
   let avDetailBox = document.querySelectorAll(".tile-images.tile-small")
@@ -281,6 +281,7 @@ function detailPageListHandle() {
     let avDetailBoxChildren = avDetailBox[k].children;
     for (let i = 0; i < avDetailBoxChildren.length; i++) {
       let x = avDetailBoxChildren[i].innerText.match(numberExtraction)[0]
+      x = x.toUpperCase()
       checkList.push(x)
     }
   }
