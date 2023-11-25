@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      1.92
+// @version      1.93
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -270,6 +270,7 @@ function listHandle () {
 function detailPageListHandle() {
   let t = document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").innerText.match(numberExtraction);
   t = t ? t[0] : "";
+  console.log('查询番号', t);
   let checkList = []
   if (t !== '') {
     checkList.push(t)
