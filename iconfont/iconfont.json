@@ -1,0 +1,16 @@
+{
+  "id": "4346346",
+  "name": "scripts",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10340307",
+      "name": "复制",
+      "font_class": "fuzhi",
+      "unicode": "ed25",
+      "unicode_decimal": 60709
+    }
+  ]
+}
