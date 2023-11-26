@@ -246,6 +246,8 @@ app.post('/checkDesignationLog', (req, resp) => {
     code = code.split(',')
   }
 
+  code = code.map(item => item.toUpperCase())
+
   code.map(item => {
     item = item.toUpperCase()
     let check = '0'
@@ -311,6 +313,8 @@ app.post('/updateDesignationLog', (req, resp) => {
     data.lcUnDown = data.lcUnDown.filter(codes => codes !== item)
     data.starUnDown = data.starUnDown.filter(codes => codes !== item)
   })
+
+  code = code.map(item => item.toUpperCase())
 
   data[changeKey].push(...code)
 
