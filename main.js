@@ -202,7 +202,7 @@ app.all('/pornhubLog', (req, resp) => {
 })
 
 // pornhub 获取
-app.post('/getPornhubLog', (req, resp) => {
+app.all('/getPornhubLog', (req, resp) => {
   let result = ''
   const _fileIsExist = fileIsExist('pornhub_log', 'json')
   if (_fileIsExist) {
@@ -227,7 +227,7 @@ app.post('/getPornhubLog', (req, resp) => {
 })
 
 // 番号 获取
-app.post('/checkDesignationLog', (req, resp) => {
+app.all('/checkDesignationLog', (req, resp) => {
   let result = {}
   const text = readFileFn('merge.json')
   let data = JSON.parse(text)
