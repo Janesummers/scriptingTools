@@ -232,7 +232,13 @@ app.all('/checkDesignationLog', (req, resp) => {
   const text = readFileFn('merge.json')
   let data = JSON.parse(text)
 
-  let code = req.body.code
+  let code = ''
+
+  if (req.method == "POST") {
+    code = req.body.code;
+  } else{
+    code = req.query.code || req.params.code; 
+  }
 
 
   const reg = new RegExp('^\\[.+\\]$')
