@@ -1,19 +1,17 @@
 // ==UserScript==
-// @name         JSummer - 糖心 - 用户
+// @name         JSummer - 糖心 - 万花筒
 // @namespace    http://tampermonkey.net/
 // @version      0.2
 // @description  try to take over the world!
 // @author       You
-// @match        https://*.txh041.com/user/*
-// @match        https://txh041.com/user/*
+// @match        https://*.txh041.com/movie/block/*
+// @match        https://txh041.com/movie/block/*
 // @resource customCSS https://chiens.cn/recordApi/message.css
 // @require      https://chiens.cn/recordApi/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @connect      *
-// @downloadURL https://chiens.cn/recordApi/txUserScript.js
-// @updateURL https://chiens.cn/recordApi/txUserScript.js
 // ==/UserScript==
 
 // @connect * 表示允许任何域名的跨域请求
@@ -23,6 +21,7 @@ sessionStorage.setItem('noticeDialog', 'sonofbitch');
 sessionStorage.setItem('splashAd', 'sonofbitch');
 
 const css = GM_getResourceText("customCSS");
+const dataSource = GM_getResourceText("dataSource");
 GM_addStyle(css);
 // GM_addStyle(`
 // a[checked]::before {
@@ -56,7 +55,8 @@ function initTitle () {
   // let title = pathname.includes('/video/detail') ? document.querySelector('.video-info .title') : document.querySelector('.nickname')
   let title = document.querySelector('.nickname')
   if (title && !document.title.includes(title.innerText.trim())) {
-    document.title = `${title.innerText.trim()} -糖心`
+    // document.title = `${title.innerText.trim()} -糖心`
+    document.title = new URLSearchParams(window.location.search).get("title")
     getListHandle()
     // document.querySelector('.my-swipe.ad.van-swipe').remove()
   } else {
@@ -78,38 +78,39 @@ function listHandle() {
       }, false);
       
       for (let i = 0; i < child.length; i++) {
-          let item = child[i]
-          // console.log('item', item.getAttribute('id'))
-          item.querySelector('.aspect-ratio').setAttribute('title', item.querySelector('.info .title').innerText)
-          item.querySelector('.aspect-ratio').addEventListener('click', function(){
-              // console.log('123', this)
-              // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
-              recordText(this.getAttribute('title'))
-              // if (this.querySelector('.info .title').getAttribute('checked')) {
-                
-              // } else {
-              //     this.querySelector('.info .title').setAttribute('checked','')
-              // }
-          }, false)
-          item.querySelector('.info .title').addEventListener('click', function(){
-              // console.log('123', this)
-              // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
-              recordText(this.innerText)
-              this.setAttribute('checked','1')
-              // if (this.querySelector('.info .title').getAttribute('checked')) {
-                
-              // } else {
-              //     this.querySelector('.info .title').setAttribute('checked','')
-              // }
-          }, false)
-          // console.log('codeList', codeList);
-          if (codeList.length) {
-              const text = item.querySelector('.info .title').innerText
-              if (codeList.includes(text)) {
+        let item = child[i]
+        // console.log('item', item.getAttribute('id'))
+        item.querySelector('.aspect-ratio').setAttribute('title', item.querySelector('.info .title').innerText)
+        // item.querySelector('.aspect-ratio').addEventListener('click', function(){
+        //     // console.log('123', this)
+        //     // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
+        //     recordText(this.getAttribute('title'))
+        //     // if (this.querySelector('.info .title').getAttribute('checked')) {
               
-                  item.querySelector('.info .title').setAttribute('checked','')
-              }
+        //     // } else {
+        //     //     this.querySelector('.info .title').setAttribute('checked','')
+        //     // }
+        // }, false)
+        // item.querySelector('.info .title').addEventListener('click', function(){
+        //     // console.log('123', this)
+        //     // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
+        //     recordText(this.innerText)
+        //     this.setAttribute('checked','1')
+        //     // if (this.querySelector('.info .title').getAttribute('checked')) {
+              
+        //     // } else {
+        //     //     this.querySelector('.info .title').setAttribute('checked','')
+        //     // }
+        // }, false)
+        if (codeList.length) {
+          const text = item.querySelector('.info .title').innerText
+          for (let n = 0; n < codeList.length; n++) {
+            if(codeList[n].includes(text)) {
+              item.querySelector('.info .title').setAttribute('checked','1')
+              break
+            }
           }
+        }
       }
       globalHint.close()
       globalHint = Qmsg.success("处理完成", {autoClose: true, onClose: () => {  }});
@@ -131,29 +132,28 @@ function listHandle() {
 
 function getListHandle() {
   if (isLoading) return
+  if (codeList.length > 0) {
+    listHandle()
+    return
+  }
   isLoading = true
   globalHint = Qmsg.info("正在发请求", {autoClose: false});
-  // if (codeList.length > 0) {
-  //   listHandle()
-  //   return
-  // }
   GM_xmlhttpRequest({
-      method: "post",
-      url: "https://chiens.cn/recordApi/getTxLog",
-      data: `userCode=${userCode}`,
+      method: "get",
+      url: "https://chiens.cn/recordApi/tx_log.json",
+      data: '',
       headers: {
           "Content-Type": "application/x-www-form-urlencoded"
       },
 
       onload: (req) => {
-
-          const result = JSON.parse(req.response)
-          if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
-              const list = result.data.message
-              codeList = list || []
-              console.log('ddsss', list)
-              listHandle()
-          }
+        const result = JSON.parse(req.response)
+        if (req.readyState === 4 && req.status === 200) {
+          const list = Object.values(result)
+          codeList = list || []
+          console.log('ddsss', list)
+          listHandle()
+        }
       },
       onerror: (response) => {
           globalHint.close()
@@ -214,7 +214,7 @@ function recordText(title) {
 }
 
 function handleScroll () {
-  if (location.pathname.indexOf('/user') !== -1) {
+  if (location.pathname.indexOf('/block') !== -1) {
     if (!document.querySelector('.video-list').getAttribute('checkedList')) {
       document.querySelector('.video-list').setAttribute('checkedList', '1')
       getListHandle()

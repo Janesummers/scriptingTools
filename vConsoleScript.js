@@ -7,6 +7,8 @@
 // @author       You
 // @match        https://*.t66y.com/*
 // @match        https://t66y.com/*
+// @match        https://*.txh041.com/*
+// @match        https://txh041.com/*
 // @downloadURL https://chiens.cn/recordApi/vConsoleScript.js
 // @updateURL https://chiens.cn/recordApi/vConsoleScript.js
 // ==/UserScript==
