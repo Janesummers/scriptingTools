@@ -4,8 +4,8 @@
 // @version      0.2
 // @description  try to take over the world!
 // @author       You
-// @match        https://*.txh016.com/movie/detail/*
-// @match        https://txh016.com/movie/detail/*
+// @match        https://*.txh041.com/movie/detail/*
+// @match        https://txh041.com/movie/detail/*
 // @resource customCSS https://chiens.cn/recordApi/message.css
 // @require      https://chiens.cn/recordApi/message.min.js
 // @grant        GM_xmlhttpRequest

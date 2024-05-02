@@ -214,6 +214,7 @@ function homePageListHandle() {
       homePageListHandle()
     } else {
       for (let i = 0; i < list.length; i++) {
+        list[i].href = list[i].href.replace(/(?=#).+/, '').replace(/.+(?<=com)/, '')
         let code = list[i].pathname.split('/').pop().replace('-uncensored-leak', '').toUpperCase()
         code = code.replace('FC2-PPV', 'FC2')
         let x = code.match(numberExtraction)[0];
@@ -265,9 +266,16 @@ function listHandle () {
   if (urlIncludes(location.pathname)) {
     // let avDetailBox = document.querySelector(".movie-list")
     // let avDetailBoxChildren = avDetailBox.children;
-    let list = document.querySelectorAll('.text-sm.text-nord4.truncate a[x-text], .text-sm.text-nord4.truncate a[alt]')
+    let list = document.querySelectorAll('.text-sm.text-nord4.truncate a[x-text]')
+    if (list.length <= 0) {
+      list = document.querySelectorAll('.text-sm.text-nord4.truncate a[alt]')
+    }
     for (let i = 0; i < list.length; i++) {
-
+      if (list[i].parentNode.parentNode) {
+        if (list[i].parentNode.parentNode.querySelector("a[x-text]")) {
+          list[i].parentNode.parentNode.querySelector("a[x-text]").href = list[i].parentNode.parentNode.querySelector("a[x-text]").href.replace(/(?=#).+/, '').replace(/.+(?<=com)/, '')
+        }
+      }
       let code = list[i].pathname.split('/').pop().replace('-uncensored-leak', '').toUpperCase()
       code = code.replace('FC2-PPV', 'FC2')
       let x = code.match(numberExtraction)[0];
@@ -286,36 +294,49 @@ function listHandle () {
   if (location.pathname !== '/' && !skip.includes(location.pathname) && !urlIncludes(location.pathname)) {
     let list = document.querySelectorAll('div.rounded')
     for (let i = 0; i < list.length; i++) {
+      // list[i].querySelector("a[alt]").href = list[i].querySelector("a[alt]").href.replace(/(?=#).+/, '').replace(/.+(?<=com)/, '')
+      if (list[i].parentNode.querySelector("a[x-text]")) {
+        list[i].parentNode.querySelector("a[x-text]").href = list[i].parentNode.querySelector("a[x-text]").href.replace(/(?=#).+/, '').replace(/.+(?<=com)/, '')
+      }
+      if (list[i].parentNode.querySelector("a[x-text]")) {
+        list[i].parentNode.querySelector("a[x-text]").href = list[i].parentNode.querySelector("a[x-text]").href.replace(/(?=#).+/, '').replace(/.+(?<=com)/, '')
+      } else {
+        if (list[i].parentNode.parentNode.parentNode.querySelector("a[x-text]")) {
+          list[i].parentNode.parentNode.parentNode.querySelector("a[x-text]").href = list[i].parentNode.parentNode.parentNode.querySelector("a[x-text]").href.replace(/(?=#).+/, '').replace(/.+(?<=com)/, '')
+        }
+      }
       let code = list[i].querySelector("a[alt]").pathname.split('/').pop().replace('-uncensored-leak', '').toUpperCase()
       code = code.replace('FC2-PPV', 'FC2')
-      let x = code.match(numberExtraction)[0]
-
-      if (list[i].parentElement.querySelector('div.text-sm')) {
-        const text = list[i].parentElement.querySelector('div.text-sm a').innerText
-        if (text.indexOf(x) === -1) {
-          list[i].parentElement.querySelector('div.text-sm a').innerText =` ${x} ${text}`
-        }
-        list[i].parentElement.querySelector('div.text-sm').setAttribute('checked', globalResult[x] || '0')
-      } else {
-        const text = list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText
-        if (text.indexOf(x) === -1) {
-          list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText = ` ${x} ${text}`
-        }
-        list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm').setAttribute('checked', globalResult[x] || '0')
-      }
-      if (globalResult[x] && globalResult[x] !== '0') {
+      let x = code.match(numberExtraction)
+      if (x) {
+        x = x[0]
         if (list[i].parentElement.querySelector('div.text-sm')) {
           const text = list[i].parentElement.querySelector('div.text-sm a').innerText
           if (text.indexOf(x) === -1) {
-            list[i].parentElement.querySelector('div.text-sm a').innerText = ` ${x} ${text}`
+            list[i].parentElement.querySelector('div.text-sm a').innerText =` ${x} ${text}`
           }
-          list[i].parentElement.querySelector('div.text-sm').setAttribute('exits', '1')
+          list[i].parentElement.querySelector('div.text-sm').setAttribute('checked', globalResult[x] || '0')
         } else {
           const text = list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText
           if (text.indexOf(x) === -1) {
             list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText = ` ${x} ${text}`
           }
-          list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm').setAttribute('exits', '1')
+          list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm').setAttribute('checked', globalResult[x] || '0')
+        }
+        if (globalResult[x] && globalResult[x] !== '0') {
+          if (list[i].parentElement.querySelector('div.text-sm')) {
+            const text = list[i].parentElement.querySelector('div.text-sm a').innerText
+            if (text.indexOf(x) === -1) {
+              list[i].parentElement.querySelector('div.text-sm a').innerText = ` ${x} ${text}`
+            }
+            list[i].parentElement.querySelector('div.text-sm').setAttribute('exits', '1')
+          } else {
+            const text = list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText
+            if (text.indexOf(x) === -1) {
+              list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText = ` ${x} ${text}`
+            }
+            list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm').setAttribute('exits', '1')
+          }
         }
       }
       
@@ -342,7 +363,6 @@ function detailPageListHandle() {
   setTimeout(() => {
     let code = location.pathname.split('/').pop().replace('-uncensored-leak', '').toUpperCase()
     code = code.replace('FC2-PPV', 'FC2')
-    console.log('code', code);
     let t = code.match(numberExtraction);
     t = t ? t[0] : "";
     let checkList = []
@@ -351,10 +371,18 @@ function detailPageListHandle() {
     }
     let list = document.querySelectorAll('div.rounded')
     for (let i = 0; i < list.length; i++) {
+      if (document.querySelectorAll('div.rounded')[i].parentNode.parentNode.parentNode) {
+        if (document.querySelectorAll('div.rounded')[i].parentNode.parentNode.parentNode.querySelector("a[x-text]")) {
+          document.querySelectorAll('div.rounded')[i].parentNode.parentNode.parentNode.querySelector("a[x-text]").href = document.querySelectorAll('div.rounded')[i].parentNode.parentNode.parentNode.querySelector("a[x-text]").href.replace(/(?=#).+/, '').replace(/.+(?<=com)/, '')
+        }
+      }
       let code = list[i].querySelector("a[alt]").pathname.split('/').pop().replace('-uncensored-leak', '').toUpperCase()
       code = code.replace('FC2-PPV', 'FC2')
-      let x = code.match(numberExtraction)[0]
-      checkList.push(x)
+      let x = code.match(numberExtraction)
+      if (x) {
+        x = x[0]
+        checkList.push(x)
+      }
     }
     checkDesignationHandle(checkList)
   }, 1000);
