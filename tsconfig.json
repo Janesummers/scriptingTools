@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "rootDir": "./",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "build",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "sourceMap": true,
+    "lib": ["esnext", "dom"],
+    "types": ["node"],
+    "incremental": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "paths": {
+      "@/*": ["*"]
+    }
+  },
+  "ts-node": {
+    "files": true
+  },
+  "files": [
+    "types/index.d.ts"
+  ],
+  "include": [
+    "*.ts"
+  ]
+}

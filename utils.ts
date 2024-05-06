@@ -1,6 +1,6 @@
 const os = require('os');
-const fs = require("fs");
-const path = require('path');
+const _fs = require("fs");
+const _path = require('path');
 
 exports.getTime = () => {
   let d = new Date();
@@ -35,14 +35,14 @@ exports.fileIsExist = (fileName = '', suffix = '') => {
     return false
   }
   try {
-    const result = fs.statSync(path.resolve(__dirname, `${fileName}.${suffix}`));
+    const result = _fs.statSync(_path.resolve(__dirname, `${fileName}.${suffix}`));
     return result;
   } catch (error) {
     return false;
   }
 }
 
-exports.writeFileFn = (fileFullName, originText = '', text = '') => {
+exports.writeFileFn = (fileFullName: string, originText = '', text = '') => {
   if (fileFullName === '') {
     throw('缺少完整的文件名')
     return false
@@ -54,19 +54,19 @@ exports.writeFileFn = (fileFullName, originText = '', text = '') => {
       text = text.replace(/'/g, '"')
       text = JSON.parse(text)
     }
+    let originData;
     if (originText !== '') {
-      originText = JSON.parse(originText)
+      originData = JSON.parse(originText)
       if (Object.prototype.toString.call(text).indexOf('Array') !== -1) {
-        let mergeData = originText.concat(text)
-        mergeData = [...new Set(mergeData)]
-        originText = mergeData
+        const mergeData = originData.concat(text)
+        originData = [...new Set(mergeData)]
       } else {
-        if (originText.indexOf(text.toString()) !== -1) {
-          return JSON.stringify(originText);
+        if (originData.indexOf(text.toString()) !== -1) {
+          return JSON.stringify(originData);
         }
-        originText.push(text.toString())
+        originData.push(text.toString())
       }
-      writeText = JSON.stringify(originText)
+      writeText = JSON.stringify(originData)
     } else {
       if (Object.prototype.toString.call(text).indexOf('Array') !== -1) {
         writeText = JSON.stringify([...text])
@@ -74,7 +74,7 @@ exports.writeFileFn = (fileFullName, originText = '', text = '') => {
         writeText = JSON.stringify([text.toString()])
       }
     }
-    fs.writeFileSync(path.resolve(__dirname, `${fileFullName}`), writeText);
+    _fs.writeFileSync(_path.resolve(__dirname, `${fileFullName}`), writeText);
     // console.log('writeText',writeText);
     return writeText;
   } catch (error) {
@@ -83,13 +83,13 @@ exports.writeFileFn = (fileFullName, originText = '', text = '') => {
   }
 }
 
-exports.readFileFn = (fileFullName) => {
+exports.readFileFn = (fileFullName: string) => {
   if (fileFullName === '') {
     throw('缺少完整的文件名')
     return false
   }
   try {
-    const result = fs.readFileSync(path.resolve(__dirname, `${fileFullName}`));
+    const result = _fs.readFileSync(_path.resolve(__dirname, `${fileFullName}`));
     return result.toString()
   } catch (error) {
     return false
@@ -97,28 +97,29 @@ exports.readFileFn = (fileFullName) => {
 }
 
 
-exports.writeTxFileFn = (fileFullName, originText = '', reqData = {}) => {
+exports.writeTxFileFn = (fileFullName: string, originText = '', reqData: Recordable = {}) => {
   if (fileFullName === '') {
     throw('缺少完整的文件名')
     return false
   }
   try {
     let writeText = ''
+    let originData;
     if (originText !== '') {
-      originText = JSON.parse(originText)
-      if (originText[reqData.userCode]) {
-        if (originText[reqData.userCode].indexOf(reqData.title.toString()) !== -1) {
-          return JSON.stringify(originText);
+      originData = JSON.parse(originText)
+      if (originData[reqData.userCode]) {
+        if (originData[reqData.userCode].indexOf(reqData.title.toString()) !== -1) {
+          return JSON.stringify(originData);
         }
-        originText[reqData.userCode].push(reqData.title.toString())
+        originData[reqData.userCode].push(reqData.title.toString())
       } else {
-        originText[reqData.userCode] = [reqData.title.toString()]
+        originData[reqData.userCode] = [reqData.title.toString()]
       }
-      writeText = JSON.stringify(originText)
+      writeText = JSON.stringify(originData)
     } else {
       writeText = JSON.stringify({[reqData.userCode]: [reqData.title.toString()]})
     }
-    fs.writeFileSync(path.resolve(__dirname, `${fileFullName}`), writeText);
+    _fs.writeFileSync(_path.resolve(__dirname, `${fileFullName}`), writeText);
     // console.log('writeText',writeText);
     return writeText;
   } catch (error) {
@@ -127,21 +128,26 @@ exports.writeTxFileFn = (fileFullName, originText = '', reqData = {}) => {
   }
 }
 
-exports.jsonToString = (obj, skipBasicObj, level = 0) => {
-  const getLevelSpaces = (level) => Array(level * 2).fill(' ').join('');
-  const isBasicType = (item) => item === null || typeof item !== 'object';
+function JSON_TO_STRING (obj: any, skipBasicObj: boolean = false, level = 0): string {
+  const getLevelSpaces = (level: number) => Array(level * 2).fill(' ').join('');
+  const isBasicType = (item: any) => item === null || typeof item !== 'object';
   if (obj === null || obj === undefined) return 'null';
   if (typeof obj === 'string') return '"' + obj.replace(/"/g, '\\"') + '"';
   if (typeof obj !== 'object') return obj.toString();
   if (Array.isArray(obj)) {
     // 间隔
-    if (obj.every(item => isBasicType(item))) return '[' + obj.map(i => this.jsonToString(i)).join(',') + ']';
-    return '[\n' + getLevelSpaces(level + 1) + obj.map(item => this.jsonToString(item, skipBasicObj, level + 1)).join(',\n' + getLevelSpaces(level + 1)) + '\n' + getLevelSpaces(level) + ']';
+    if (obj.every(item => isBasicType(item))) return '[' + obj.map(i => JSON_TO_STRING(i)).join(',') + ']';
+    return '[\n' + getLevelSpaces(level + 1) + obj.map(item => JSON_TO_STRING(item, skipBasicObj, level + 1)).join(',\n' + getLevelSpaces(level + 1)) + '\n' + getLevelSpaces(level) + ']';
   }
   const entries = Object.entries(obj).filter(value => value[1] !== undefined);
   if (entries.length === 0) return '{}';
   if (skipBasicObj && entries.every(value => isBasicType(value[1]))) {
-    return '{' + entries.map(value => '"' + value[0] + '": ' + this.jsonToString(value[1], skipBasicObj)).join(', ') + '}';
+    return '{' + entries.map(value => '"' + value[0] + '": ' + JSON_TO_STRING(value[1], skipBasicObj)).join(', ') + '}';
   }
-  return '{\n' + getLevelSpaces(level + 1) + entries.map(value => '"' + value[0] + '": ' + this.jsonToString(value[1], skipBasicObj, level + 1)).join(',\n' + getLevelSpaces(level + 1)) + '\n' + getLevelSpaces(level) + '}';
+  return '{\n' + getLevelSpaces(level + 1) + entries.map(value => '"' + value[0] + '": ' + JSON_TO_STRING(value[1], skipBasicObj, level + 1)).join(',\n' + getLevelSpaces(level + 1)) + '\n' + getLevelSpaces(level) + '}';
 }
+
+exports.jsonToString = (obj: any, skipBasicObj: boolean = false, level = 0) :string => {
+  return JSON_TO_STRING(obj, skipBasicObj, level)
+}
+

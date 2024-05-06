@@ -1,11 +1,11 @@
-var error = data => {
+const error = (data: Recordable) => {
   return {
     code: "error",
     data
   }
 };
 
-var msg = data => {
+const msg = (data: Recordable) => {
   return {
     code: "ok",
     data
