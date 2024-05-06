@@ -5,6 +5,7 @@
 // @description  try to take over the world!
 // @author       You
 // @match        https://cn.pornhub.com/*
+// @match        https://www.pornhub.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=pornhub.com
 // @resource customCSS https://chiens.cn/recordApi/message.css
 // @require      https://chiens.cn/recordApi/message.min.js
@@ -29,6 +30,22 @@ GM_addStyle(`
   content: '[已看]';
   font-size: 18px;
 }
+.vcVideoTitle[oldChecked]::before {
+  content: '[早期已看]';
+  font-size: 18px;
+}
+.vcVideoTitle[checked]::before {
+  content: '[已看]';
+  font-size: 18px;
+}
+.thumbnail-info-wrapper .title[oldChecked]::before {
+  content: '[早期已看]';
+  font-size: 14px;
+}
+.thumbnail-info-wrapper .title[checked]::before {
+  content: '[已看]';
+  font-size: 14px;
+}
 `);
 
 let isHidden = false
@@ -51,6 +68,7 @@ let codeList = []
 let globalHint = null
 let recommendedVideosHeight = 0
 let relatedVideosCenterHeight = 0
+let competitionVideosCenterHeight = 0
 let isRecord = false
 let isChecked = false
 let isHandlePlayList = false
@@ -82,12 +100,17 @@ function watchElementChange(el, callback) {
   resizeObserver.observe(el);
 }
 
-function record() {
+function record(keyCode) {
   if (isRecord) return
   isRecord = true
-  let code = new URLSearchParams(location.search).get("viewkey")
-  if (!code) {
-    code = new URL(location.search).searchParams.get("viewkey")
+  let code = ''
+  if (!keyCode) {
+    code = new URLSearchParams(location.search).get("viewkey")
+    if (!code) {
+      code = new URL(location.search).searchParams.get("viewkey")
+    }
+  } else {
+    code = keyCode
   }
   if (code) {
     console.log('发请求')
@@ -107,6 +130,8 @@ function record() {
             Qmsg.success("成功记录", {autoClose: true, onClose: () => {  }});
             if (document.querySelector('.video-wrapper .title .inlineFree')) {
               document.querySelector('.video-wrapper .title .inlineFree').setAttribute('checked', '1')
+            } else if (document.querySelector('.vcVideoTitle')) {
+              document.querySelector('.vcVideoTitle').setAttribute('checked', '1')
             }
             isRecord = false
             isChecked = true
@@ -122,6 +147,9 @@ function record() {
 }
 
 function getData() {
+  if (location.pathname.indexOf('/contest_hub') !== -1 && location.pathname.indexOf('/contest_hub/viewers_choice') === -1) {
+    return
+  }
   if (isChecked) return
   if (codeList && codeList.length) {
     if (location.pathname.indexOf('view_video') !== -1) {
@@ -182,6 +210,9 @@ function getData() {
           }
           if (location.pathname === '/') {
             homePageListHandle()
+          }
+          if (location.pathname.indexOf('/contest_hub/viewers_choice') !== -1) {
+            competitionPageListHandle()
           }
           if (location.pathname.indexOf('/playlist') !== -1) {
             const box = document.querySelector('#videoPlaylist')
@@ -372,9 +403,110 @@ function homePageListHandle() {
   globalHint = Qmsg.success("homePageListHandle - 处理完成", {autoClose: true, onClose: () => {  }});
 }
 
+function competitionPageListHandle() {
+  // 处理参赛列表
+  if (document.querySelector('.videos-morepad')) {
+    const box = document.querySelector('.videos-morepad')
+    competitionVideosCenterHeight = box.offsetHeight
+    watchElementChange(box, (entries) => {
+      var newHeight = entries[0].target.scrollHeight;
+      if (newHeight !== competitionVideosCenterHeight) {
+        competitionVideosCenterHeight = newHeight;
+        const list = document.querySelectorAll('.videos-morepad .videoEntry')
+        for (let index = 0; index < list.length; index++) {
+          const element = list[index];
+          if (element.querySelector('.thumbnail-info-wrapper')) {
+            element.querySelector('.thumbnail-info-wrapper').style.display = 'block'
+          }
+          if (element.querySelector('a.fade.linkVideoThumb')) {
+            let playerUrl = element.querySelector('a.fade.linkVideoThumb').getAttribute('data-related-url')
+            if (playerUrl) {
+              playerUrl = `https://www.pornhub.com${playerUrl}`
+              let code = new URLSearchParams(playerUrl).get("vkey")
+              if (!code) {
+                code = new URL(playerUrl).searchParams.get("vkey")
+              }
+              if (code) {
+                if (codeList.includes(code)) {
+                  if (element.querySelector('.thumbnail-info-wrapper .title')) {
+                    element.querySelector('.thumbnail-info-wrapper .title').setAttribute('checked', '1')
+                  }
+                }
+              }
+            }
+          }
+        }
+        console.log('competitionPageListHandle - 处理完成');
+        globalHint.close()
+        globalHint = Qmsg.success("competitionPageListHandle - 处理完成", {autoClose: true, onClose: () => {  }});
+        isChecked = true
+      }
+    })
+    const list = document.querySelectorAll('.videos-morepad .videoEntry')
+    for (let index = 0; index < list.length; index++) {
+      const element = list[index];
+      if (element.querySelector('.thumbnail-info-wrapper')) {
+        element.querySelector('.thumbnail-info-wrapper').style.display = 'block'
+      }
+      if (element.querySelector('a.fade.linkVideoThumb')) {
+        let playerUrl = element.querySelector('a.fade.linkVideoThumb').getAttribute('data-related-url')
+        if (playerUrl) {
+          playerUrl = `https://www.pornhub.com${playerUrl}`
+          let code = new URLSearchParams(playerUrl).get("vkey")
+          if (!code) {
+            code = new URL(playerUrl).searchParams.get("vkey")
+          }
+          if (code) {
+            if (codeList.includes(code)) {
+              if (element.querySelector('.thumbnail-info-wrapper .title')) {
+                element.querySelector('.thumbnail-info-wrapper .title').setAttribute('checked', '1')
+              }
+            }
+          }
+        }
+      }
+    }
+    console.log('competitionPageListHandle - 处理完成');
+    globalHint.close()
+    globalHint = Qmsg.success("competitionPageListHandle - 处理完成", {autoClose: true, onClose: () => {  }});
+  }
+  // 处理播放视频
+  if (document.querySelector('.playerFlvContainer')) {
+    let playerId = document.querySelector('.playerFlvContainer').id
+    if (playerId) {
+      playerId = playerId.replace('playerDiv', 'flashvars')
+      const info = eval(playerId)
+      if (info.link_url) {
+        let code = new URLSearchParams(info.link_url).get("viewkey")
+        if (!code) {
+          code = new URL(info.link_url).searchParams.get("viewkey")
+        }
+        if (code) {
+          if (codeList.includes(code)) {
+            if (document.querySelector('.vcVideoTitle')) {
+              document.querySelector('.vcVideoTitle').setAttribute('oldChecked', '1')
+            }
+            console.log('competitionPageListHandle - 处理完成');
+            globalHint.close()
+            globalHint = Qmsg.success("competitionPageListHandle - 处理完成", {autoClose: true, onClose: () => {  }});
+            isChecked = true
+          } else {
+            record(code)
+          }
+        }
+        // const box = document.querySelector('#singleFeedSection')
+        // listHandle(box)
+      }
+    }
+  }
+}
+
 function typeVideoListHandle() {
   if (document.querySelector('#videoCategory')) {
     const box = document.querySelector('#videoCategory')
+    listHandle(box)
+  } else if (document.querySelector('#incategoryVideos')) {
+    const box = document.querySelector('#incategoryVideos')
     listHandle(box)
   }
   // if (document.querySelector('#moreData')) {

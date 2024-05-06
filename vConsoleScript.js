@@ -10,8 +10,10 @@
 // @match        https://t66y.com/*
 // @match        http://wcsntz.swj.wuch.gov.cn:9987/*
 // @match        http://10.12.120.11:8080/#/*
-// @downloadURL https://chiens.cn/recordApi/vConsoleScript.js
-// @updateURL https://chiens.cn/recordApi/vConsoleScript.js
+// @match        https://*.txh041.com/*
+// @match        https://txh041.com/*
+// @downloadURL  https://chiens.cn/recordApi/vConsoleScript.js
+// @updateURL    https://chiens.cn/recordApi/vConsoleScript.js
 // ==/UserScript==
 
 GM_addStyle(`

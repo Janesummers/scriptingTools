@@ -123,6 +123,11 @@ function listHandle() {
         // tbody = document.querySelector('#main .t tbody')
         child = document.querySelectorAll('.t_one')
     }
+    if (tbody && location.pathname.indexOf('/user/') !== -1) {
+        // tbody = document.querySelector('#main .t tbody')
+        child = document.querySelectorAll('.t_one')
+    }
+    console.log('child', child);
     
     if (child.length > 0) {
         for (let i = 0; i < child.length; i++) {

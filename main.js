@@ -240,6 +240,8 @@ app.all('/checkDesignationLog', (req, resp) => {
     code = req.query.code || req.params.code; 
   }
 
+  code = code.trim()
+
 
   const reg = new RegExp('^\\[.+\\]$')
   const reg2 = new RegExp('\\s')
@@ -292,6 +294,8 @@ app.post('/updateDesignationLog', (req, resp) => {
   let code = req.body.code
   let type = req.body.type || '0'
   // let isUpdate = req.body.update
+
+  code = code.trim()
 
 
   const reg = new RegExp('^\\[.+\\]$')
