@@ -12,22 +12,26 @@
 // @match        http://10.12.120.11:8080/#/*
 // @downloadURL https://chiens.cn/recordApi/vConsoleScript.js
 // @updateURL https://chiens.cn/recordApi/vConsoleScript.js
+// @grant        GM_addElement
 // ==/UserScript==
 
-GM_addStyle(`
-.icon-locate {
-  bottom: 130px !important;
-}
-`)
+// GM_addStyle(`
+// .icon-locate {
+//   bottom: 130px !important;
+// }
+// `)
 
-let script = document.createElement('script');
-script.type = 'text/javascript';
-script.src = 'https://chiens.cn/recordApi/vconsole.min.js';
-document.body.appendChild(script);
-script = document.createElement('script');
-script.type = 'text/javascript';
-script.innerHTML =
-    `
+GM_addElement('script', {
+  src: 'https://chiens.cn/recordApi/vconsole.min.js',
+  type: 'text/javascript'
+});
+
+// let script = document.createElement('script');
+// script.type = 'text/javascript';
+// script.src = 'https://chiens.cn/recordApi/vconsole.min.js';
+// document.body.appendChild(script);
+GM_addElement('script', {
+  textContent: `
         (function wait() {
             try {
                 var vc = new VConsole();
@@ -36,5 +40,20 @@ script.innerHTML =
                 setTimeout(wait, 50);
             };
         })();
-    `;
-document.body.appendChild(script);
+    `,
+  type: 'text/javascript'
+});
+// script = document.createElement('script');
+// script.type = 'text/javascript';
+// script.innerHTML =
+//     `
+//         (function wait() {
+//             try {
+//                 var vc = new VConsole();
+//                 console.log('vConsole has been created.');
+//             } catch {
+//                 setTimeout(wait, 50);
+//             };
+//         })();
+//     `;
+// document.body.appendChild(script);

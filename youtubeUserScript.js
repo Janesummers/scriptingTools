@@ -105,30 +105,30 @@ function record() {
   if (code) {
     console.log('发请求')
     GM_xmlhttpRequest({
-        method: "post",
-        url: "https://chiens.cn/recordApi/youtubeLog",
-        data: `code=${code}`,
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
+      method: "post",
+      url: "https://chiens.cn/recordApi/youtubeLog",
+      data: `code=${code}`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
 
-        onload: function(req){
-          console.log('dd', req)
-          const result = JSON.parse(req.response)
-          if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
-            console.log("记录成功");
-            Qmsg.success("成功记录", {autoClose: true, onClose: () => {  }});
-            if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
-              document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('checked', '1')
-            }
-            isRecord = false
-            isChecked = true
+      onload: function(req){
+        console.log('dd', req)
+        const result = JSON.parse(req.response)
+        if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+          console.log("记录成功");
+          Qmsg.success("成功记录", {autoClose: true, onClose: () => {  }});
+          if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
+            document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('checked', '1')
           }
-        },
-        onerror: function(response){
-          Qmsg.error("记录失败", {autoClose: true });
           isRecord = false
+          isChecked = true
         }
+      },
+      onerror: function(response){
+        Qmsg.error("记录失败", {autoClose: true });
+        isRecord = false
+      }
     });
   }
   // const query = location.search.match(/q=(.*)/)[1];console.log(query);
