@@ -6,13 +6,13 @@
 // @author       You
 // @match        https://missav.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=missav.com
-// @resource customCSS https://chiens.cn/recordApi/message.css
+// @resource     customCSS https://chiens.cn/recordApi/message.css
 // @require      https://chiens.cn/recordApi/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
-// @downloadURL https://chiens.cn/recordApi/javdbUserScript.js
-// @updateURL https://chiens.cn/recordApi/javdbUserScript.js
+// @downloadURL  https://chiens.cn/recordApi/javdbUserScript.js
+// @updateURL    https://chiens.cn/recordApi/javdbUserScript.js
 // @connect      *
 // ==/UserScript==
 
@@ -231,30 +231,30 @@ function checkDesignationHandle(code) {
   if (JSON.stringify(globalResult) === '{}') {
     globalHint = Qmsg.info("正在获取数据", {autoClose: false});
     GM_xmlhttpRequest({
-        method: "post",
-        url: "https://chiens.cn/recordApi/checkDesignationLog",
-        data: `code=${code}`,
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
+      method: "post",
+      url: "https://chiens.cn/recordApi/checkDesignationLog",
+      data: `code=${code}`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
 
-        onload: function(req){
-          // console.log('dd', req)
-          const result = JSON.parse(req.response)
-          if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
-            const list = result.data.message
-            globalResult = list
-            console.log('globalResult', globalResult);
-            isChecking = false
-            globalHint.close()
-            globalHint = Qmsg.success("获取数据成功，等待处理", {autoClose: false, onClose: () => {  }});
-            listHandle()
-          }
-        },
-        onerror: function(response){
-          Qmsg.error("获取失败", {autoClose: true });
+      onload: function(req){
+        // console.log('dd', req)
+        const result = JSON.parse(req.response)
+        if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+          const list = result.data.message
+          globalResult = list
+          console.log('globalResult', globalResult);
           isChecking = false
+          globalHint.close()
+          globalHint = Qmsg.success("获取数据成功，等待处理", {autoClose: false, onClose: () => {  }});
+          listHandle()
         }
+      },
+      onerror: function(response){
+        Qmsg.error("获取失败", {autoClose: true });
+        isChecking = false
+      }
     });
   } else {
     globalHint = Qmsg.success("获取本地数据成功，等待处理", {autoClose: false, onClose: () => {  }});
@@ -266,30 +266,29 @@ function listHandle () {
   if (urlIncludes(location.pathname)) {
     // let avDetailBox = document.querySelector(".movie-list")
     // let avDetailBoxChildren = avDetailBox.children;
-    let list = document.querySelectorAll('.text-sm.text-nord4.truncate a[x-text]')
+    let list = document.querySelectorAll('.text-sm.text-nord4.truncate a[x-text], .text-sm.text-nord4.truncate a[alt]')
     if (list.length <= 0) {
-      list = document.querySelectorAll('.text-sm.text-nord4.truncate a[alt]')
-    }
-    for (let i = 0; i < list.length; i++) {
-      if (list[i].parentNode.parentNode) {
-        if (list[i].parentNode.parentNode.querySelector("a[x-text]")) {
-          list[i].parentNode.parentNode.querySelector("a[x-text]").href = list[i].parentNode.parentNode.querySelector("a[x-text]").href.replace(/(?=#).+/, '').replace(/.+(?<=com)/, '')
+      setTimeout(() => {
+        listHandle()
+      }, 1000);
+    } else {
+      for (let i = 0; i < list.length; i++) {
+
+        let code = list[i].pathname.split('/').pop().replace('-uncensored-leak', '').toUpperCase()
+        code = code.replace('FC2-PPV', 'FC2')
+        let x = code.match(numberExtraction)[0];
+        const text = list[i].innerText.replace('FC2-PPV', 'FC2')
+        if (text.indexOf(x) === -1) {
+          list[i].innerText = ` ${x} ${text}`
+        }
+        list[i].setAttribute('checked', globalResult[x] || '0')
+        if (globalResult[x] && globalResult[x] !== '0') {
+          list[i].setAttribute('exits', '1')
         }
       }
-      let code = list[i].pathname.split('/').pop().replace('-uncensored-leak', '').toUpperCase()
-      code = code.replace('FC2-PPV', 'FC2')
-      let x = code.match(numberExtraction)[0];
-      const text = list[i].innerText.replace('FC2-PPV', 'FC2')
-      if (text.indexOf(x) === -1) {
-        list[i].innerText = ` ${x} ${text}`
-      }
-      list[i].setAttribute('checked', globalResult[x] || '0')
-      if (globalResult[x] && globalResult[x] !== '0') {
-        list[i].setAttribute('exits', '1')
-      }
+      globalHint.close()
+      globalHint = Qmsg.success("首页列表数据 - 处理完成", {autoClose: true, onClose: () => {  }});
     }
-    globalHint.close()
-    globalHint = Qmsg.success("首页列表数据 - 处理完成", {autoClose: true, onClose: () => {  }});
   }
   if (location.pathname !== '/' && !skip.includes(location.pathname) && !urlIncludes(location.pathname)) {
     let list = document.querySelectorAll('div.rounded')

@@ -41,41 +41,75 @@ let codeList = []
 let globalHint = null
 let isRecord = false
 let isLoading = false
+// 详情页路由
+const detailRouterPathList = ['htm_data', 'htm_mob', '/read.php']
 
-if (location.pathname.indexOf('htm_data') !== -1 || location.pathname.indexOf('htm_mob') !== -1) {
+// 获取当前页面路由
+function getCurrentPagePath() {
+    return location.pathname.match(/\/[^\/]+/)
+}
 
-    if (isRecord) return
-    isRecord = true
+// 视频详情页
+if (location.pathname) {
+    const path = getCurrentPagePath()
+    if (detailRouterPathList.includes(path)) {
+        getCodeHandle()
+    }
+}
 
-    const hint = Qmsg.info("正在发请求", {autoClose: false});
-
+/**
+ * @description: 获取详情页番号code
+ * @return {*}
+ */
+function getCodeHandle() {
+    location.pathname
     let code = location.pathname.match(/(\d{5,})/)
     if (code) {
         code = code[0]
-        console.log('发请求')
-        GM_xmlhttpRequest({
-            method: "post",
-            url: "https://chiens.cn/recordApi/log",
-            data: `code=${code}`,
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-
-            onload: function(req){
-                console.log('dd', req)
-                const result = JSON.parse(req.response)
-                if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
-                    console.log("记录成功");
-                    //hint.close()
-                    Qmsg.success("成功记录", {autoClose: true, onClose: () => { hint.close() }});
-                    isRecord = false
-                }
-            },
-            onerror: function(response){
-               Qmsg.error("请求失败", {autoClose: true });
-            }
-        });
     }
+    if (!code && location.search) {
+        let code = new URLSearchParams(location.search).get("tid")
+        if (!code) {
+            code = new URL(location.href).searchParams.get("tid")
+        }
+    }
+
+    if (code) {
+        recordHandle(code)
+    }
+}
+
+/**
+ * @description: 记录番号
+ * @param {*} code 番号code
+ * @return {*}
+ */
+function recordHandle(code) {
+    if (isRecord) return
+    isRecord = true
+    const hint = Qmsg.info("正在发请求", {autoClose: false});
+    console.log('发请求')
+    GM_xmlhttpRequest({
+        method: "post",
+        url: "https://chiens.cn/recordApi/log",
+        data: `code=${code}`,
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+
+        onload: function(req){
+            const result = JSON.parse(req.response)
+            if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+                console.log("记录成功");
+                //hint.close()
+                Qmsg.success("成功记录", {autoClose: true, onClose: () => { hint.close() }});
+                // isRecord = false
+            }
+        },
+        onerror: function(response){
+            Qmsg.error("请求失败", {autoClose: true });
+        }
+    });
 }
 
 function listHandle() {
@@ -106,7 +140,6 @@ function listHandle() {
             }
             if (item) {
                 item.addEventListener('click', function(){
-                    // console.log('123', this)
                     if (this.getAttribute('checked')) {
 
                     } else {
@@ -142,6 +175,13 @@ function listHandle() {
         
 }
 
+// 处理列表页
+if ()
+
+function getContainer() {
+    detailRouterPathList.includes(path)
+}
+
 window.onload = function () {
     
     let tbody = document.getElementById('tbody')
@@ -150,14 +190,8 @@ window.onload = function () {
         tbody = document.querySelector('#main .t tbody')
     }
 
-    console.log('tbody', tbody);
-    if ((tbody || location.pathname.indexOf('thread0806') !== -1) && location.pathname.indexOf('htm_data') === -1) {
-        console.log('123232')
 
-        // let tr2_td = document.createElement('td')
-        // tr2_td.style.width = '100px'
-        // tr2_td.innerText = '操作'
-        // document.querySelector('#ajaxtable .tr2').appendChild(tr2_td)
+    if ((tbody || location.pathname.indexOf('thread0806') !== -1) && location.pathname.indexOf('htm_data') === -1) {
 
         globalHint = Qmsg.info("正在发请求", {autoClose: false});
 
@@ -189,80 +223,7 @@ window.onload = function () {
                 Qmsg.error("请求失败", {autoClose: true });
             }
         });
-
-
-
-
-//         let child = document.querySelector('#tbody').querySelectorAll('.t_one')
-//         //console.log('---', child)
-//         for (let i = 0; i < child.length; i++) {
-//             let item = child[i].querySelector('.tal a[id]')
-
-
-
-// //             item.parentElement.addEventListener('click', function(){
-// //                 console.log('123', this)
-// //            }, false)
-
-//             //console.log('a', item.parentElement)
-
-//             let td = `<td><a href="${item.getAttribute('href') + '?traceless=1'}" target="_blank" btn="1">无痕</a></td>`
-//             let line = child[i].innerHTML
-//             child[i].innerHTML = line += td
-
-//             child[i].querySelector('.tal a[id]>div') ? child[i].querySelector('.tal a[id]>div').style.width = '790px' : null
-//             child[i].querySelector('.tal').style.whiteSpace = 'normal'
-//             child[i].querySelector('.tal .subleft') ? child[i].querySelector('.tal .subleft').style.whiteSpace = 'normal' : null
-
-//             let urls = localStorage.getItem('urls')
-//             if (urls === null) {
-//                 urls = []
-//             } else {
-//                 urls = JSON.parse(urls)
-//             }
-//             if (urls.includes(item.pathname)) {
-//                 item.setAttribute('local', '1')
-//             }
-//             item.onclick = function () {
-//                 item.setAttribute('local', '1')
-//                 // item.style.color = '#9126b5 !important'
-//                 let urls = localStorage.getItem('urls')
-//                 if (urls === null) {
-//                     urls = []
-//                 } else {
-//                     urls = JSON.parse(urls)
-//                 }
-//                 console.log('duuds', urls)
-//                 if (item.pathname.includes('htm_data')) {
-//                     if (!urls.includes(item.pathname)) {
-//                         urls.push(item.pathname)
-//                     }
-//                 } else {
-//                     let text = item.pathname.slice(1).match(/\d+/)[0]
-//                     let url = `/htm_data/${new Date().getFullYear().toString().slice(2)}${new Date().getMonth() + 1}/${item.baseURI.match(/\??=\d+/)[0].slice(1)}/${text}.html`
-//                     if (!urls.includes(url)) {
-//                         urls.push(url)
-//                     }
-//                 }
-//                 console.log('duuds1232323', urls)
-//                 localStorage.setItem('urls', JSON.stringify(urls))
-//             }
-//         }
     } else {
        
     }
-
-
-
-    // console.log('codeList', codeList)
-
-    // console.log('11', document.getElementById('tbody').getElementsByClassName('tal')[0].children[0])
-
-    //             document.getElementById('tbody').getElementsByClassName('tal')[0].getElementsByTagName('a')[0].addEventListener('click', function(){
-    //                 console.log('123', this)
-    //             })
 }
-
-// if (document.querySelector('#ajaxtable')) {
-//     document.querySelector('#ajaxtable').querySelector('.tr2 td[title="以“最後發表”顺序排列"]').style.width = '135px'
-// }
