@@ -14,15 +14,16 @@ sessionStorage.setItem('splashAd', 'sonofbitch');
 
 var style = document.createElement('style');
 let sheet = style.sheet;
-if (sheet.insertRule) {
-  sheet.insertRule(`
-    input {
-      color: #6c6c6c !important;
-    }
-  `);
-} else {
-  sheet.addRule('input', 'color: #6c6c6c !important;'); 
-}
+const cssList = [
+  { label: 'input', value: 'color: #6c6c6c !important;' }
+]
+cssList.map(item => {
+  if (sheet.insertRule) {
+    sheet.insertRule(`${item.label} { ${item.value} }`);
+  } else {
+    sheet.addRule(`${item.label} { ${item.value} }`);
+  }
+})
 
 // document.querySelectorAll('.video-items')
 // video-item

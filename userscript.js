@@ -32,40 +32,20 @@ a[checked]::before {
 var style = document.createElement('style');
 document.head.appendChild(style);
 let sheet = style.sheet;
-if (sheet.insertRule) {
-  sheet.insertRule(`
-    a:visited {
-      color: #b58226 !important;
-    }
-  `);
-  sheet.insertRule(`
-    a[checked] {
-      color: #b58226 !important;
-    }
-  `);
-  sheet.insertRule(`
-    #main a {
-      font-size: 14px;
-      font-weight: 800;
-    }
-  `);
-  sheet.insertRule(`
-    #tbody .tal a[local] {
-      color: #9126b5 !important;
-    }
-  `);
-  sheet.insertRule(`
-    #tbody .tr3 a[btn] {
-      padding: 6px 14px;color: #3c3c3c !important;
-    }
-  `);
-} else {
-  sheet.addRule('a:visited', 'color: #b58226 !important;');
-  sheet.addRule('a[checked]', 'color: #b58226 !important;');
-  sheet.addRule('#main a', 'font-size: 14px;font-weight: 800;');
-  sheet.addRule('#tbody .tal a[local]', 'color: #9126b5 !important;');
-  sheet.addRule('#tbody .tr3 a[btn]', 'padding: 6px 14px;color: #3c3c3c !important;');
-}
+const cssList = [
+  { label: 'a:visited', value: 'color: #b58226 !important;' },
+  { label: 'a[checked]', value: 'color: #b58226 !important;' },
+  { label: '#main a', value: 'font-size: 14px;font-weight: 800;' },
+  { label: '#tbody .tal a[local]', value: 'color: #9126b5 !important;' },
+  { label: '#tbody .tr3 a[btn]', value: 'padding: 6px 14px;color: #3c3c3c !important;' },
+]
+cssList.map(item => {
+  if (sheet.insertRule) {
+    sheet.insertRule(`${item.label} { ${item.value} }`);
+  } else {
+    sheet.addRule(`${item.label} { ${item.value} }`);
+  }
+})
 
 console.log('等待脚本执行');
 

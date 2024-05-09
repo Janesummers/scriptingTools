@@ -56,15 +56,16 @@ GM_addStyle(css);
 var style = document.createElement('style');
 document.head.appendChild(style);
 let sheet = style.sheet;
-if (sheet.insertRule) {
-  sheet.insertRule(`
-    div[checked] {
-      color: #b58226 !important;
-    }
-  `);
-} else {
-  sheet.addRule('div[checked]', 'color: #b58226 !important;');
-}
+const cssList = [
+  { label: 'div[checked]', value: 'color: #b58226 !important;' }
+]
+cssList.map(item => {
+  if (sheet.insertRule) {
+    sheet.insertRule(`${item.label} { ${item.value} }`);
+  } else {
+    sheet.addRule(`${item.label} { ${item.value} }`);
+  }
+})
 window.isRecord = false
 window.isLoading = false
 

@@ -66,27 +66,18 @@ let resizeObserver;
 var style = document.createElement('style');
 document.head.appendChild(style);
 let sheet = style.sheet;
-if (sheet.insertRule) {
-  sheet.insertRule(`
-    .title a:visited {
-      color: #d34141 !important;
-    }
-  `);
-  sheet.insertRule(`
-    .metadata a.ytd-compact-video-renderer h3.ytd-compact-video-renderer[checked] {
-      color: #d36141 !important;
-    }
-  `);
-  sheet.insertRule(`
-    div#dismissible.ytd-rich-grid-media #video-title[checked] {
-      color: #d36141 !important;
-    }
-  `);
-} else {
-  sheet.addRule('.title a:visited', 'color: #d34141 !important;');
-  sheet.addRule('.metadata a.ytd-compact-video-renderer h3.ytd-compact-video-renderer[checked]', 'color: #d36141 !important;');
-  sheet.addRule('div#dismissible.ytd-rich-grid-media #video-title[checked]', 'color: #d36141 !important;');
-}
+const cssList = [
+  { label: '.title a:visited', value: 'color: #d34141 !important;' },
+  { label: '.metadata a.ytd-compact-video-renderer h3.ytd-compact-video-renderer[checked]', value: 'color: #d36141 !important;' },
+  { label: 'div#dismissible.ytd-rich-grid-media #video-title[checked]', value: 'color: #d36141 !important;' },
+]
+cssList.map(item => {
+  if (sheet.insertRule) {
+    sheet.insertRule(`${item.label} { ${item.value} }`);
+  } else {
+    sheet.addRule(`${item.label} { ${item.value} }`);
+  }
+})
 
 console.log('等待脚本执行');
 
