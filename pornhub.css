@@ -1,0 +1,29 @@
+.video-wrapper .title .inlineFree[oldChecked]::before {
+  content: '[早期已看]';
+  font-size: 18px;
+}
+
+.video-wrapper .title .inlineFree[checked]::before {
+  content: '[已看]';
+  font-size: 18px;
+}
+
+.vcVideoTitle[oldChecked]::before {
+  content: '[早期已看]';
+  font-size: 18px;
+}
+
+.vcVideoTitle[checked]::before {
+  content: '[已看]';
+  font-size: 18px;
+}
+
+.thumbnail-info-wrapper .title[oldChecked]::before {
+  content: '[早期已看]';
+  font-size: 14px;
+}
+
+.thumbnail-info-wrapper .title[checked]::before {
+  content: '[已看]';
+  font-size: 14px;
+}

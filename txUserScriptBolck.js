@@ -6,13 +6,15 @@
 // @author       You
 // @match        https://*.txh041.com/movie/block/*
 // @match        https://txh041.com/movie/block/*
-// @resource customCSS https://chiens.cn/recordApi/message.css
+// @resource     customCSS https://chiens.cn/recordApi/message.css
 // @require      https://chiens.cn/recordApi/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @connect      *
 // ==/UserScript==
+
+/* globals GM_addStyle, GM_getResourceText, GM_xmlhttpRequest, Qmsg */
 
 // @connect * 表示允许任何域名的跨域请求
 
@@ -21,7 +23,7 @@ sessionStorage.setItem('noticeDialog', 'sonofbitch');
 sessionStorage.setItem('splashAd', 'sonofbitch');
 
 const css = GM_getResourceText("customCSS");
-const dataSource = GM_getResourceText("dataSource");
+// const dataSource = GM_getResourceText("dataSource");
 GM_addStyle(css);
 // GM_addStyle(`
 // a[checked]::before {
@@ -67,67 +69,67 @@ function initTitle () {
 function listHandle() {
   globalHint.close()
   globalHint = Qmsg.success("请求成功，等待页面加载完成", {autoClose: false, onClose: () => {  }});
-    let child = document.querySelector('.video-list').querySelectorAll('.video-item')
-    if (child.length > 0) {
-      const box = document.querySelector('.video-list')
-      box.addEventListener('DOMNodeInserted', function(){
-        const currentHeight = document.getElementsByClassName('video-list')[0].scrollHeight;
-        if (scrollHeight !== 0 && currentHeight > (scrollHeight + 50)) {
-          getListHandle()
-        }
-      }, false);
+  let child = document.querySelector('.video-list').querySelectorAll('.video-item')
+  if (child.length > 0) {
+    const box = document.querySelector('.video-list')
+    box.addEventListener('DOMNodeInserted', function(){
+      const currentHeight = document.getElementsByClassName('video-list')[0].scrollHeight;
+      if (scrollHeight !== 0 && currentHeight > (scrollHeight + 50)) {
+        getListHandle()
+      }
+    }, false);
       
-      for (let i = 0; i < child.length; i++) {
-        let item = child[i]
-        // console.log('item', item.getAttribute('id'))
-        item.querySelector('.aspect-ratio').setAttribute('title', item.querySelector('.info .title').innerText)
-        // item.querySelector('.aspect-ratio').addEventListener('click', function(){
-        //     // console.log('123', this)
-        //     // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
-        //     recordText(this.getAttribute('title'))
-        //     // if (this.querySelector('.info .title').getAttribute('checked')) {
+    for (let i = 0; i < child.length; i++) {
+      let item = child[i]
+      // console.log('item', item.getAttribute('id'))
+      item.querySelector('.aspect-ratio').setAttribute('title', item.querySelector('.info .title').innerText)
+      // item.querySelector('.aspect-ratio').addEventListener('click', function(){
+      //     // console.log('123', this)
+      //     // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
+      //     recordText(this.getAttribute('title'))
+      //     // if (this.querySelector('.info .title').getAttribute('checked')) {
               
-        //     // } else {
-        //     //     this.querySelector('.info .title').setAttribute('checked','')
-        //     // }
-        // }, false)
-        // item.querySelector('.info .title').addEventListener('click', function(){
-        //     // console.log('123', this)
-        //     // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
-        //     recordText(this.innerText)
-        //     this.setAttribute('checked','1')
-        //     // if (this.querySelector('.info .title').getAttribute('checked')) {
+      //     // } else {
+      //     //     this.querySelector('.info .title').setAttribute('checked','')
+      //     // }
+      // }, false)
+      // item.querySelector('.info .title').addEventListener('click', function(){
+      //     // console.log('123', this)
+      //     // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
+      //     recordText(this.innerText)
+      //     this.setAttribute('checked','1')
+      //     // if (this.querySelector('.info .title').getAttribute('checked')) {
               
-        //     // } else {
-        //     //     this.querySelector('.info .title').setAttribute('checked','')
-        //     // }
-        // }, false)
-        if (codeList.length) {
-          const text = item.querySelector('.info .title').innerText
-          for (let n = 0; n < codeList.length; n++) {
-            if(codeList[n].includes(text)) {
-              item.querySelector('.info .title').setAttribute('checked','1')
-              break
-            }
+      //     // } else {
+      //     //     this.querySelector('.info .title').setAttribute('checked','')
+      //     // }
+      // }, false)
+      if (codeList.length) {
+        const text = item.querySelector('.info .title').innerText
+        for (let n = 0; n < codeList.length; n++) {
+          if(codeList[n].includes(text)) {
+            item.querySelector('.info .title').setAttribute('checked','1')
+            break
           }
         }
       }
-      globalHint.close()
-      globalHint = Qmsg.success("处理完成", {autoClose: true, onClose: () => {  }});
-      document.querySelector('.video-list').setAttribute('checkedList', '1')
-      isLoading = false
-      scrollHeight = document.querySelector('.video-list').scrollHeight
-    } else {
-      globalHint.close()
-      if (document.querySelector('.van-list__finished-text .empty')) {
-        globalHint = Qmsg.error("处理失败，未发布视频", {autoClose: true, onClose: () => {  }});
-        return
-      }
-      globalHint = Qmsg.error("处理失败，未获得子元素", {autoClose: true, onClose: () => {  }});
-      setTimeout(() => {
-        listHandle()
-      }, 1000);
     }
+    globalHint.close()
+    globalHint = Qmsg.success("处理完成", {autoClose: true, onClose: () => {  }});
+    document.querySelector('.video-list').setAttribute('checkedList', '1')
+    isLoading = false
+    scrollHeight = document.querySelector('.video-list').scrollHeight
+  } else {
+    globalHint.close()
+    if (document.querySelector('.van-list__finished-text .empty')) {
+      globalHint = Qmsg.error("处理失败，未发布视频", {autoClose: true, onClose: () => {  }});
+      return
+    }
+    globalHint = Qmsg.error("处理失败，未获得子元素", {autoClose: true, onClose: () => {  }});
+    setTimeout(() => {
+      listHandle()
+    }, 1000);
+  }
 }
 
 function getListHandle() {
@@ -139,27 +141,27 @@ function getListHandle() {
   isLoading = true
   globalHint = Qmsg.info("正在发请求", {autoClose: false});
   GM_xmlhttpRequest({
-      method: "get",
-      url: "https://chiens.cn/recordApi/tx_log.json",
-      data: '',
-      headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-      },
+    method: "get",
+    url: "https://chiens.cn/recordApi/tx_log.json",
+    data: '',
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
 
-      onload: (req) => {
-        const result = JSON.parse(req.response)
-        if (req.readyState === 4 && req.status === 200) {
-          const list = Object.values(result)
-          codeList = list || []
-          console.log('ddsss', list)
-          listHandle()
-        }
-      },
-      onerror: (response) => {
-          globalHint.close()
-          isLoading = false
-          Qmsg.error("请求失败", {autoClose: true });
+    onload: (req) => {
+      const result = JSON.parse(req.response)
+      if (req.readyState === 4 && req.status === 200) {
+        const list = Object.values(result)
+        codeList = list || []
+        console.log('ddsss', list)
+        listHandle()
       }
+    },
+    onerror: (response) => {
+      globalHint.close()
+      isLoading = false
+      Qmsg.error("请求失败", {autoClose: true });
+    }
   });
 }
 
@@ -204,7 +206,7 @@ function recordText(title) {
           // }
         }
       },
-      onerror: function(response){
+      onerror: function(){
         Qmsg.error("请求失败", {autoClose: true });
       }
     });
@@ -225,7 +227,7 @@ function handleScroll () {
   //   getListHandle()
   // }
   // console.log('【滚动条高度】', scrollHeight);
-    /*scrollTop + ch = sh*/
+  /*scrollTop + ch = sh*/
 }
 window.addEventListener('scroll', handleScroll, false)
 

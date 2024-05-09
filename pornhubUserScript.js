@@ -7,57 +7,36 @@
 // @match        https://cn.pornhub.com/*
 // @match        https://www.pornhub.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=pornhub.com
-// @resource customCSS https://chiens.cn/recordApi/message.css
+// @resource     customCSS https://chiens.cn/recordApi/message.css
+// @resource     customPornhubCSS https://chiens.cn/recordApi/pornhub.css
 // @require      https://chiens.cn/recordApi/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @connect      *
-// @downloadURL https://chiens.cn/recordApi/pornhubUserScript.js
-// @updateURL https://chiens.cn/recordApi/pornhubUserScript.js
+// @downloadURL  https://chiens.cn/recordApi/pornhubUserScript.js
+// @updateURL    https://chiens.cn/recordApi/pornhubUserScript.js
 // ==/UserScript==
 
 // @connect * 表示允许任何域名的跨域请求
 
-const css = GM_getResourceText("customCSS");
-GM_addStyle(css);
-GM_addStyle(`
-.video-wrapper .title .inlineFree[oldChecked]::before {
-  content: '[早期已看]';
-  font-size: 18px;
-}
-.video-wrapper .title .inlineFree[checked]::before {
-  content: '[已看]';
-  font-size: 18px;
-}
-.vcVideoTitle[oldChecked]::before {
-  content: '[早期已看]';
-  font-size: 18px;
-}
-.vcVideoTitle[checked]::before {
-  content: '[已看]';
-  font-size: 18px;
-}
-.thumbnail-info-wrapper .title[oldChecked]::before {
-  content: '[早期已看]';
-  font-size: 14px;
-}
-.thumbnail-info-wrapper .title[checked]::before {
-  content: '[已看]';
-  font-size: 14px;
-}
-`);
+/* globals GM_addStyle, GM_getResourceText, GM_xmlhttpRequest, Qmsg */
 
-let isHidden = false
+const css = GM_getResourceText("customCSS");
+const customPornhubCSS = GM_getResourceText("customPornhubCSS");
+GM_addStyle(css);
+GM_addStyle(customPornhubCSS);
+
+// let isHidden = false
 
 document.addEventListener("visibilitychange", function() {
   var string = document.visibilityState
   console.log(string)
   if (string === 'hidden') {  // 当页面由前端运行在后端时，出发此代码
-    isHidden = true
+    // isHidden = true
   }
   if (string === 'visible') {   // 当页面由隐藏至显示时
-    isHidden = false
+    // isHidden = false
     if (location.pathname.indexOf('/pornstars') === -1) {
       getData()
     }
@@ -72,14 +51,28 @@ let competitionVideosCenterHeight = 0
 let isRecord = false
 let isChecked = false
 let isHandlePlayList = false
-let insertTime = new Date().getTime()
+// let insertTime = new Date().getTime()
 let timer = null
+let resizeObserver;
 
 var style = document.createElement('style');
 document.head.appendChild(style);
 let sheet = style.sheet;
-sheet.addRule('.title a:visited', 'color: #d34141 !important;');
-sheet.addRule('.title a[checked]', 'color: #d36141 !important;');
+if (sheet.insertRule) {
+  sheet.insertRule(`
+    .title a:visited {
+      color: #d34141 !important;
+    }
+  `);
+  sheet.insertRule(`
+    .title a[checked] {
+      color: #d36141 !important;
+    }
+  `);
+} else {
+  sheet.addRule('.title a:visited', 'color: #d34141 !important;');
+  sheet.addRule('.title a[checked]', 'color: #d36141 !important;');
+}
 
 console.log('等待脚本执行');
 
@@ -115,32 +108,32 @@ function record(keyCode) {
   if (code) {
     console.log('发请求')
     GM_xmlhttpRequest({
-        method: "post",
-        url: "https://chiens.cn/recordApi/pornhubLog",
-        data: `code=${code}`,
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
+      method: "post",
+      url: "https://chiens.cn/recordApi/pornhubLog",
+      data: `code=${code}`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
 
-        onload: function(req){
-          console.log('dd', req)
-          const result = JSON.parse(req.response)
-          if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
-            console.log("记录成功");
-            Qmsg.success("成功记录", {autoClose: true, onClose: () => {  }});
-            if (document.querySelector('.video-wrapper .title .inlineFree')) {
-              document.querySelector('.video-wrapper .title .inlineFree').setAttribute('checked', '1')
-            } else if (document.querySelector('.vcVideoTitle')) {
-              document.querySelector('.vcVideoTitle').setAttribute('checked', '1')
-            }
-            isRecord = false
-            isChecked = true
+      onload: function(req){
+        console.log('dd', req)
+        const result = JSON.parse(req.response)
+        if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+          console.log("记录成功");
+          Qmsg.success("成功记录", {autoClose: true, onClose: () => {  }});
+          if (document.querySelector('.video-wrapper .title .inlineFree')) {
+            document.querySelector('.video-wrapper .title .inlineFree').setAttribute('checked', '1')
+          } else if (document.querySelector('.vcVideoTitle')) {
+            document.querySelector('.vcVideoTitle').setAttribute('checked', '1')
           }
-        },
-        onerror: function(response){
-          Qmsg.error("记录失败", {autoClose: true });
           isRecord = false
+          isChecked = true
         }
+      },
+      onerror: function(){
+        Qmsg.error("记录失败", {autoClose: true });
+        isRecord = false
+      }
     });
   }
   // const query = location.search.match(/q=(.*)/)[1];console.log(query);
@@ -231,7 +224,7 @@ function getData() {
           // listHandle()
         }
       },
-      onerror: function(response){
+      onerror: function(){
         globalHint.close()
         Qmsg.error("获取数据请求失败", {autoClose: true });
       }

@@ -7,13 +7,22 @@
 // @match        https://*.txh041.com/*
 // @match        https://txh041.com/*
 // ==/UserScript==
+
 sessionStorage.setItem('dialogAd', 'sonofbitch');
 sessionStorage.setItem('noticeDialog', 'sonofbitch');
 sessionStorage.setItem('splashAd', 'sonofbitch');
 
-
+var style = document.createElement('style');
 let sheet = style.sheet;
-sheet.addRule('input', 'color: #6c6c6c !important;');
+if (sheet.insertRule) {
+  sheet.insertRule(`
+    input {
+      color: #6c6c6c !important;
+    }
+  `);
+} else {
+  sheet.addRule('input', 'color: #6c6c6c !important;'); 
+}
 
 // document.querySelectorAll('.video-items')
 // video-item

@@ -1,0 +1,13 @@
+.watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata[oldChecked]::before {
+  content: '[早期已看]';
+  font-size: 20px;
+}
+
+.watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata[checked]::before {
+  content: '[已看]';
+  font-size: 20px;
+}
+
+.qmsg.qmsg-wrapper {
+  z-index: 3000;
+}

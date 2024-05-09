@@ -10,10 +10,12 @@
 // @match        https://t66y.com/*
 // @match        http://wcsntz.swj.wuch.gov.cn:9987/*
 // @match        http://10.12.120.11:8080/#/*
-// @downloadURL https://chiens.cn/recordApi/vConsoleScript.js
-// @updateURL https://chiens.cn/recordApi/vConsoleScript.js
+// @downloadURL  https://chiens.cn/recordApi/vConsoleScript.js
+// @updateURL    https://chiens.cn/recordApi/vConsoleScript.js
 // @grant        GM_addElement
 // ==/UserScript==
+
+/* globals GM_addElement */
 
 // GM_addStyle(`
 // .icon-locate {

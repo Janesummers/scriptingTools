@@ -6,17 +6,19 @@
 // @author       You
 // @match        https://*.txh041.com/movie/detail/*
 // @match        https://txh041.com/movie/detail/*
-// @resource customCSS https://chiens.cn/recordApi/message.css
+// @resource     customCSS https://chiens.cn/recordApi/message.css
 // @require      https://chiens.cn/recordApi/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @connect      *
-// @downloadURL https://chiens.cn/recordApi/txUserScript2.js
-// @updateURL https://chiens.cn/recordApi/txUserScript2.js
+// @downloadURL  https://chiens.cn/recordApi/txUserScript2.js
+// @updateURL    https://chiens.cn/recordApi/txUserScript2.js
 // ==/UserScript==
 
 // @connect * 表示允许任何域名的跨域请求
+
+/* globals GM_addStyle, GM_getResourceText, GM_xmlhttpRequest, Qmsg */
 
 sessionStorage.setItem('dialogAd', 'sonofbitch');
 sessionStorage.setItem('noticeDialog', 'sonofbitch');
@@ -43,9 +45,9 @@ sheet.addRule('div[checked]', 'color: #b58226 !important;');
 
 console.log('等待详情脚本执行');
 
-let codeList = []
+// let codeList = []
 let globalHint = null
-let scrollHeight = 0;
+// let scrollHeight = 0;
 
 function recordText() {
   let userCode = ''
@@ -92,7 +94,7 @@ function recordText() {
           // }
         }
       },
-      onerror: function(response){
+      onerror: function(){
         Qmsg.error("请求失败", {autoClose: true });
       }
     });

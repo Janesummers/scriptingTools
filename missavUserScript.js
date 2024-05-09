@@ -7,6 +7,7 @@
 // @match        https://missav.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=missav.com
 // @resource     customCSS https://chiens.cn/recordApi/message.css
+// @resource     customMissAvCSS https://chiens.cn/recordApi/missAv.css
 // @require      https://chiens.cn/recordApi/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
@@ -18,110 +19,12 @@
 
 // @connect * 表示允许任何域名的跨域请求
 
+/* globals GM_addStyle, GM_getResourceText, GM_xmlhttpRequest, Qmsg */
+
 const css = GM_getResourceText("customCSS");
+const customMissAvCSS = GM_getResourceText("customMissAvCSS")
 GM_addStyle(css);
-GM_addStyle(`
-a:visited {
-  color: #d36141 !important;
-}
-.movie-list .box:visited .video-title {
-  color: #d36141 !important;
-}
-.movie-list .item a:visited strong {
-  color: inherit !important;
-}
-.text-sm {
-  color: #fff;
-  white-space: normal !important;
-  font-size: 18px;
-  overflow-y: visible !important;
-  max-height: none !important;
-  line-height: 24px;
-}
-.text-sm[checked='0']::before,
-.text-sm>a[checked='0']::before,
-.text-base[checked='0']::before,
-.video-number[checked='0']::before,
-.movie-panel-info .panel-block .value[checked='0']::before {
-  content: '[未录入]';
-}
-.text-sm[checked='1']::before,
-.text-sm>a[checked='1']::before,
-.text-base[checked='1']::before,
-.video-number[checked='1']::before,
-.movie-panel-info .panel-block .value[checked='1']::before {
-  content: '[已阅]';
-}
-.text-sm[checked='2']::before,
-.text-sm>a[checked='2']::before,
-.text-base[checked='2']::before,
-.video-number[checked='2']::before,
-.movie-panel-info .panel-block .value[checked='2']::before {
-  content: '[未下]';
-}
-.text-sm[checked='3']::before,
-.text-sm>a[checked='3']::before,
-.text-base[checked='3']::before,
-.video-number[checked='3']::before,
-.movie-panel-info .panel-block .value[checked='3']::before {
-  content: '[无码]';
-}
-.text-sm[checked='4']::before,
-.text-sm>a[checked='4']::before,
-.text-base[checked='4']::before,
-.video-number[checked='4']::before,
-.movie-panel-info .panel-block .value[checked='4']::before {
-  content: '[无码未下]';
-}
-.text-sm[checked='5']::before,
-.text-sm>a[checked='5']::before,
-.text-base[checked='5']::before,
-.video-number[checked='5']::before,
-.movie-panel-info .panel-block .value[checked='5']::before {
-  content: '[流出]';
-}
-.text-sm[checked='6']::before,
-.text-sm>a[checked='6']::before,
-.text-base[checked='6']::before,
-.video-number[checked='6']::before,
-.movie-panel-info .panel-block .value[checked='6']::before {
-  content: '[流出未下]';
-}
-.text-sm[checked='7']::before,
-.text-sm>a[checked='7']::before,
-.text-base[checked='7']::before,
-.video-number[checked='7']::before,
-.movie-panel-info .panel-block .value[checked='7']::before {
-  content: '[星级未下]';
-}
-.text-sm[exits='1'],
-.text-sm[exits='1']>a,
-.video-number[exits='1'] {
-  color: #b58226 !important;
-  text-decoration: underline !important;
-}
-.qmsg.qmsg-wrapper {
-  z-index: 999999;
-}
-@media (min-width: 1280px) {
-  .grid-cols-2.gap-5 {
-    grid-template-columns: repeat(2,minmax(0,1fr));
-  }
-  .mx-auto .grid-cols-2.gap-5 {
-    grid-template-columns: repeat(4,minmax(0,1fr));
-  }
-  .order-last .flex-none {
-    width: 240px !important;
-  }
-  .order-last .flex-none+div.flex-1 {
-    width: auto !important;
-  }
-  .order-last {
-    max-width: 400px !important;
-    min-width: 400px !important;
-  }
-}
-`);
+GM_addStyle(customMissAvCSS);
 
 /*
   0：未录入
@@ -134,7 +37,7 @@ a:visited {
   7：星级未下
 */
 
-const numberExtraction = /([0-9A-Za-z][a-zA-Z0-9\_\-]+[0-9A-Za-z])|([n|k][0-9]+)/ig
+const numberExtraction = /([0-9A-Za-z][a-zA-Z0-9_-]+[0-9A-Za-z])|([n|k][0-9]+)/ig
 
 let isChecking = false
 let globalResult = {}
@@ -142,11 +45,11 @@ let globalHint = null
 let isHandle = false
 
 // 判断是否是dm后面加数字的路径
-const reg = /(?<=\/)dm\d+\//
+// const reg = /(?<=\/)dm\d+\//
 
 const homeList = ['/', '/genres/VR']
 const skip = ['/actresses', '/genres', '/makers', '/dm15/madou', '/dm3/twav', '/dm1/furuke', '/actresses/search', '/actresses/ranking']
-const classificationList = ['/uncensored-leak', '/fc2', '/heyzo', '/tokyohot', '/1pondo', '/caribbeancom', '/caribbeancompr', '/10musume', '/pacopacomama', '/gachinco', '/xxxav', '/marriedslash', '/naughty4610', '/naughty0930', '/siro', '/luxu', '/gana', '/maan', '/scute', '/ara', '/new', '/release', '/genres/VR', '/today-hot', '/weekly-hot', '/monthly-hot', '/chinese-subtitle']
+// const classificationList = ['/uncensored-leak', '/fc2', '/heyzo', '/tokyohot', '/1pondo', '/caribbeancom', '/caribbeancompr', '/10musume', '/pacopacomama', '/gachinco', '/xxxav', '/marriedslash', '/naughty4610', '/naughty0930', '/siro', '/luxu', '/gana', '/maan', '/scute', '/ara', '/new', '/release', '/genres/VR', '/today-hot', '/weekly-hot', '/monthly-hot', '/chinese-subtitle']
 
 function urlIncludes(url) {
   if (url === '/') return true
@@ -175,12 +78,12 @@ document.addEventListener("visibilitychange", function() {
       if (isHandle) return
       detailPageListHandle()
     }
-    if (location.pathname === '/articles') {
+    // if (location.pathname === '/articles') {
 
-    }
-    if (reg.test(url)) {
-      console.log('在这');
-    }
+    // }
+    // if (reg.test(url)) {
+    //   console.log('在这');
+    // }
   }
 });
 
@@ -192,9 +95,9 @@ window.onload = () => {
     if (location.pathname !== '/' && !skip.includes(location.pathname) && !urlIncludes(location.pathname)) {
       detailPageListHandle()
     }
-    if (location.pathname === '/articles') {
+    // if (location.pathname === '/articles') {
 
-    }
+    // }
   }
 }
 
@@ -251,7 +154,7 @@ function checkDesignationHandle(code) {
           listHandle()
         }
       },
-      onerror: function(response){
+      onerror: function(){
         Qmsg.error("获取失败", {autoClose: true });
         isChecking = false
       }
@@ -350,9 +253,9 @@ function listHandle () {
     globalHint.close()
     globalHint = Qmsg.success("详情页数据 - 处理完成", {autoClose: true, onClose: () => {  }});
   }
-  if (location.pathname === '/articles') {
+  // if (location.pathname === '/articles') {
 
-  }
+  // }
   isHandle = true
 }
 

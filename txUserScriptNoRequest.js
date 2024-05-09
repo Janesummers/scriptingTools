@@ -6,14 +6,16 @@
 // @author       You
 // @match        https://*.txh016.com/user/*
 // @match        https://txh016.com/user/*
-// @resource customCSS https://chiens.cn/recordApi/message.css
-// @resource source https://chiens.cn/recordApi/tx_log.json
+// @resource     customCSS https://chiens.cn/recordApi/message.css
+// @resource     source https://chiens.cn/recordApi/tx_log.json
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
 // @run-at       document-end
-// @downloadURL https://chiens.cn/recordApi/txUserScriptNoRequest.js
-// @updateURL https://chiens.cn/recordApi/txUserScriptNoRequest.js
+// @downloadURL  https://chiens.cn/recordApi/txUserScriptNoRequest.js
+// @updateURL    https://chiens.cn/recordApi/txUserScriptNoRequest.js
 // ==/UserScript==
+
+/* globals GM_addStyle, GM_getResourceText, Qmsg */
 
 let messageScript = document.createElement('script');
 messageScript.type = 'text/javascript';
@@ -54,7 +56,15 @@ GM_addStyle(css);
 var style = document.createElement('style');
 document.head.appendChild(style);
 let sheet = style.sheet;
-sheet.addRule('div[checked]', 'color: #b58226 !important;');
+if (sheet.insertRule) {
+  sheet.insertRule(`
+    div[checked] {
+      color: #b58226 !important;
+    }
+  `);
+} else {
+  sheet.addRule('div[checked]', 'color: #b58226 !important;');
+}
 window.isRecord = false
 window.isLoading = false
 
@@ -82,66 +92,66 @@ function initTitle () {
 function listHandle() {
   window.globalHint.close()
   window.globalHint = Qmsg.success("处理成功，等待页面加载完成", {autoClose: false, onClose: () => {  }});
-    let child = document.querySelector('.video-list').querySelectorAll('.video-item')
-    if (child.length > 0) {
-      const box = document.querySelector('.video-list')
-      box.addEventListener('DOMNodeInserted', function(){
-        const currentHeight = document.getElementsByClassName('video-list')[0].scrollHeight;
-        if (scrollHeight !== 0 && currentHeight > (scrollHeight + 50)) {
-          getListHandle()
-        }
-      }, false);
+  let child = document.querySelector('.video-list').querySelectorAll('.video-item')
+  if (child.length > 0) {
+    const box = document.querySelector('.video-list')
+    box.addEventListener('DOMNodeInserted', function(){
+      const currentHeight = document.getElementsByClassName('video-list')[0].scrollHeight;
+      if (scrollHeight !== 0 && currentHeight > (scrollHeight + 50)) {
+        getListHandle()
+      }
+    }, false);
       
-      for (let i = 0; i < child.length; i++) {
-          let item = child[i]
-          // console.log('item', item.getAttribute('id'))
-          item.querySelector('.aspect-ratio').setAttribute('title', item.querySelector('.info .title').innerText)
-          item.querySelector('.aspect-ratio').addEventListener('click', function(){
-              // console.log('123', this)
-              // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
-              recordText(this.getAttribute('title'))
-              // if (this.querySelector('.info .title').getAttribute('checked')) {
+    for (let i = 0; i < child.length; i++) {
+      let item = child[i]
+      // console.log('item', item.getAttribute('id'))
+      item.querySelector('.aspect-ratio').setAttribute('title', item.querySelector('.info .title').innerText)
+      item.querySelector('.aspect-ratio').addEventListener('click', function(){
+        // console.log('123', this)
+        // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
+        recordText(this.getAttribute('title'))
+        // if (this.querySelector('.info .title').getAttribute('checked')) {
                 
-              // } else {
-              //     this.querySelector('.info .title').setAttribute('checked','')
-              // }
-          }, false)
-          item.querySelector('.info .title').addEventListener('click', function(){
-              // console.log('123', this)
-              // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
-              recordText(this.innerText)
-              this.setAttribute('checked','1')
-              // if (this.querySelector('.info .title').getAttribute('checked')) {
+        // } else {
+        //     this.querySelector('.info .title').setAttribute('checked','')
+        // }
+      }, false)
+      item.querySelector('.info .title').addEventListener('click', function(){
+        // console.log('123', this)
+        // userCode = document.querySelector('.nav-content').href.match(/(\d{5,})/)
+        recordText(this.innerText)
+        this.setAttribute('checked','1')
+        // if (this.querySelector('.info .title').getAttribute('checked')) {
                 
-              // } else {
-              //     this.querySelector('.info .title').setAttribute('checked','')
-              // }
-          }, false)
-          // console.log('codeList', codeList);
-          if (codeList.length) {
-              const text = item.querySelector('.info .title').innerText
-              if (codeList.includes(text)) {
+        // } else {
+        //     this.querySelector('.info .title').setAttribute('checked','')
+        // }
+      }, false)
+      // console.log('codeList', codeList);
+      if (codeList.length) {
+        const text = item.querySelector('.info .title').innerText
+        if (codeList.includes(text)) {
               
-                  item.querySelector('.info .title').setAttribute('checked','')
-              }
-          }
+          item.querySelector('.info .title').setAttribute('checked','')
+        }
       }
-      window.globalHint.close()
-      window.globalHint = Qmsg.success("处理完成", {autoClose: true, onClose: () => {  }});
-      document.querySelector('.video-list').setAttribute('checkedList', '1')
-      window.isLoading = false
-      scrollHeight = document.querySelector('.video-list').scrollHeight
-    } else {
-      window.globalHint.close()
-      if (document.querySelector('.van-list__finished-text .empty')) {
-        window.globalHint = Qmsg.error("处理失败，未发布视频", {autoClose: true, onClose: () => {  }});
-        return
-      }
-      window.globalHint = Qmsg.error("处理失败，未获得子元素", {autoClose: true, onClose: () => {  }});
-      setTimeout(() => {
-        listHandle()
-      }, 1000);
     }
+    window.globalHint.close()
+    window.globalHint = Qmsg.success("处理完成", {autoClose: true, onClose: () => {  }});
+    document.querySelector('.video-list').setAttribute('checkedList', '1')
+    window.isLoading = false
+    scrollHeight = document.querySelector('.video-list').scrollHeight
+  } else {
+    window.globalHint.close()
+    if (document.querySelector('.van-list__finished-text .empty')) {
+      window.globalHint = Qmsg.error("处理失败，未发布视频", {autoClose: true, onClose: () => {  }});
+      return
+    }
+    window.globalHint = Qmsg.error("处理失败，未获得子元素", {autoClose: true, onClose: () => {  }});
+    setTimeout(() => {
+      listHandle()
+    }, 1000);
+  }
 }
 
 function getListHandle() {
@@ -193,7 +203,7 @@ function handleScroll () {
   //   getListHandle()
   // }
   // console.log('【滚动条高度】', scrollHeight);
-    /*scrollTop + ch = sh*/
+  /*scrollTop + ch = sh*/
 }
 window.addEventListener('scroll', handleScroll, false)
 

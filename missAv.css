@@ -1,0 +1,118 @@
+a:visited {
+  color: #d36141 !important;
+}
+
+.movie-list .box:visited .video-title {
+  color: #d36141 !important;
+}
+
+.movie-list .item a:visited strong {
+  color: inherit !important;
+}
+
+.text-sm {
+  color: #fff;
+  white-space: normal !important;
+  font-size: 18px;
+  overflow-y: visible !important;
+  max-height: none !important;
+  line-height: 24px;
+}
+
+.text-sm[checked='0']::before,
+.text-sm>a[checked='0']::before,
+.text-base[checked='0']::before,
+.video-number[checked='0']::before,
+.movie-panel-info .panel-block .value[checked='0']::before {
+  content: '[未录入]';
+}
+
+.text-sm[checked='1']::before,
+.text-sm>a[checked='1']::before,
+.text-base[checked='1']::before,
+.video-number[checked='1']::before,
+.movie-panel-info .panel-block .value[checked='1']::before {
+  content: '[已阅]';
+}
+
+.text-sm[checked='2']::before,
+.text-sm>a[checked='2']::before,
+.text-base[checked='2']::before,
+.video-number[checked='2']::before,
+.movie-panel-info .panel-block .value[checked='2']::before {
+  content: '[未下]';
+}
+
+.text-sm[checked='3']::before,
+.text-sm>a[checked='3']::before,
+.text-base[checked='3']::before,
+.video-number[checked='3']::before,
+.movie-panel-info .panel-block .value[checked='3']::before {
+  content: '[无码]';
+}
+
+.text-sm[checked='4']::before,
+.text-sm>a[checked='4']::before,
+.text-base[checked='4']::before,
+.video-number[checked='4']::before,
+.movie-panel-info .panel-block .value[checked='4']::before {
+  content: '[无码未下]';
+}
+
+.text-sm[checked='5']::before,
+.text-sm>a[checked='5']::before,
+.text-base[checked='5']::before,
+.video-number[checked='5']::before,
+.movie-panel-info .panel-block .value[checked='5']::before {
+  content: '[流出]';
+}
+
+.text-sm[checked='6']::before,
+.text-sm>a[checked='6']::before,
+.text-base[checked='6']::before,
+.video-number[checked='6']::before,
+.movie-panel-info .panel-block .value[checked='6']::before {
+  content: '[流出未下]';
+}
+
+.text-sm[checked='7']::before,
+.text-sm>a[checked='7']::before,
+.text-base[checked='7']::before,
+.video-number[checked='7']::before,
+.movie-panel-info .panel-block .value[checked='7']::before {
+  content: '[星级未下]';
+}
+
+.text-sm[exits='1'],
+.text-sm[exits='1']>a,
+.video-number[exits='1'] {
+  color: #b58226 !important;
+  text-decoration: underline !important;
+}
+
+.qmsg.qmsg-wrapper {
+  z-index: 999999;
+}
+
+@media (min-width: 1280px) {
+  .grid-cols-2.gap-5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mx-auto .grid-cols-2.gap-5 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .order-last .flex-none {
+    width: 240px !important;
+  }
+
+  .order-last .flex-none+div.flex-1 {
+    width: auto !important;
+  }
+
+  .order-last {
+    max-width: 400px !important;
+    min-width: 400px !important;
+  }
+}
