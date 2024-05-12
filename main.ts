@@ -5,9 +5,17 @@ const msgResult = require('./msgResult.ts');
 const fs = require("fs");
 const path = require('path');
 const {getTime , getLocalAddress, fileIsExist, writeFileFn, readFileFn, writeTxFileFn, jsonToString} = require('./utils.ts');
+const monent = require('moment')
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.disable('x-powered-by');
+
+app.all('*', (req, resp, next) => {
+  resp.header('Access-Control-Allow-Origin', '*');
+  resp.header('Access-Control-Allow-Headers', '*');
+  resp.header('Access-Control-Allow-Methods', '*');
+  req.method.toLowerCase() === 'options' ? resp.send(200) : next();
+});
 
 // t66y 记录
 app.all('/log', (req: Recordable, resp: Recordable) => {
@@ -329,10 +337,10 @@ app.post('/updateDesignationLog', (req: Recordable, resp: Recordable) => {
 
   data[changeKey].push(...code)
 
-  console.log("updateDesignationLog - 准备写入", type, code);
+  console.log(`updateDesignationLog - ${monent().format('YYYY-MM-DD HH:mm:ss')} - 准备写入`, type, code);
   const toJson = jsonToString(data, true)
   fs.writeFileSync(path.resolve(__dirname, 'merge.json'), toJson);
-  console.log("updateDesignationLog - 写入完成");
+  console.log(`updateDesignationLog - ${monent().format('YYYY-MM-DD HH:mm:ss')} - 写入完成`);
   resp.json(msgResult.msg({status: 200, message: result}));
 })
 
@@ -345,7 +353,7 @@ app.all('/youtubeLog', (req: Recordable, resp: Recordable) => {
     param = req.query || req.params; 
   }
   let result = ''
-  console.log('youtube', req.body);
+  console.log(`youtube -> ${monent().format('YYYY-MM-DD HH:mm:ss')}`, req.body);
   const _fileIsExist = fileIsExist('youtube_log', 'json')
   if (_fileIsExist) {
     const text = readFileFn('youtube_log.json')
@@ -408,7 +416,7 @@ app.post('/getYoutubeLog', (_: Recordable, resp: Recordable) => {
 })
 
 app.get('*', (req: Recordable, resp: Recordable) => {
-  console.log('req', req.params[0])
+  console.log(`req --> ${monent().format('YYYY-MM-DD HH:mm:ss')}`, req.params[0])
   resp.writeHead(200, { "Content-Type": "text/plain;charset=utf-8" });
   if (/[\.js|\.css|\.json|\.out]$/.test(req.params[0])) {
     const file = req.params[0].replace(/\/(.*)/, '$1')
@@ -420,6 +428,6 @@ app.get('*', (req: Recordable, resp: Recordable) => {
 })
 
 app.listen(2048, () => {
-  console.log(`开启成功：http://${getLocalAddress()}:2048`);
+  console.log(`开启成功(${monent().format('YYYY-MM-DD HH:mm:ss')})：http://${getLocalAddress()}:2048`);
   // reptile.saveJobs();
 });
