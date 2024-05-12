@@ -6,13 +6,15 @@
 // @author       You
 // @match        https://*.txh016.com/movie/detail/*
 // @match        https://txh016.com/movie/detail/*
-// @resource customCSS https://chiens.cn/recordApi/message.css
+// @resource     customCSS https://chiens.cn/recordApi/message.css
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @run-at       document-end
-// @downloadURL https://chiens.cn/recordApi/txUserScriptNoRequest2.js
-// @updateURL https://chiens.cn/recordApi/txUserScriptNoRequest2.js
+// @downloadURL  https://chiens.cn/recordApi/txUserScriptNoRequest2.js
+// @updateURL    https://chiens.cn/recordApi/txUserScriptNoRequest2.js
 // ==/UserScript==
+
+/* globals GM_addStyle, GM_getResourceText, Qmsg */
 
 let messageScript = document.createElement('script');
 messageScript.type = 'text/javascript';
@@ -41,7 +43,16 @@ GM_addStyle(css);
 var style = document.createElement('style');
 document.head.appendChild(style);
 let sheet = style.sheet;
-sheet.addRule('div[checked]', 'color: #b58226 !important;');
+const cssList = [
+  { label: 'div[checked]', value: 'color: #b58226 !important;' }
+]
+cssList.map(item => {
+  if (sheet.insertRule) {
+    sheet.insertRule(`${item.label} { ${item.value} }`);
+  } else {
+    sheet.addRule(`${item.label} { ${item.value} }`);
+  }
+})
 
 console.log('等待详情脚本执行');
 

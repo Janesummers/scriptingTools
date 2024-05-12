@@ -16,6 +16,8 @@
 // @updateURL    https://chiens.cn/recordApi/vConsoleScript.js
 // ==/UserScript==
 
+/* globals GM_addStyle */
+
 GM_addStyle(`
 .icon-locate {
   bottom: 130px !important;
