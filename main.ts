@@ -1,17 +1,17 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const msgResult = require('./msgResult');
+const msgResult = require('./msgResult.ts');
 const fs = require("fs");
 const path = require('path');
-const {getTime , getLocalAddress, fileIsExist, writeFileFn, readFileFn, writeTxFileFn, jsonToString} = require('./utils');
+const {getTime , getLocalAddress, fileIsExist, writeFileFn, readFileFn, writeTxFileFn, jsonToString} = require('./utils.ts');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.disable('x-powered-by');
 
 // t66y 记录
-app.all('/log', (req, resp) => {
-  let param = {}
+app.all('/log', (req: Recordable, resp: Recordable) => {
+  let param: Recordable = {}
   if (req.method == "POST") {
     param = req.body;
   } else{
@@ -55,7 +55,7 @@ app.all('/log', (req, resp) => {
 })
 
 // t66y 获取
-app.post('/getLog', (req, resp) => {
+app.post('/getLog', (_: Recordable, resp: Recordable) => {
   let result = ''
   const _fileIsExist = fileIsExist('log', 'json')
   if (_fileIsExist) {
@@ -80,8 +80,8 @@ app.post('/getLog', (req, resp) => {
 })
 
 // 糖心 记录
-app.all('/txLog', (req, resp) => {
-  let param = {}
+app.all('/txLog', (req: Recordable, resp: Recordable) => {
+  let param: Recordable = {}
   if (req.method == "POST") {
     param = req.body;
   } else{
@@ -125,7 +125,7 @@ app.all('/txLog', (req, resp) => {
 })
 
 // 糖心 获取
-app.post('/getTxLog', (req, resp) => {
+app.post('/getTxLog', (req: Recordable, resp: Recordable) => {
   // console.log('req', req.body.userCode);
   let result = ''
   const _fileIsExist = fileIsExist('tx_log', 'json')
@@ -157,8 +157,8 @@ app.post('/getTxLog', (req, resp) => {
 })
 
 // pornhub 记录
-app.all('/pornhubLog', (req, resp) => {
-  let param = {}
+app.all('/pornhubLog', (req: Recordable, resp: Recordable) => {
+  let param: Recordable = {}
   if (req.method == "POST") {
     param = req.body;
   } else{
@@ -202,7 +202,7 @@ app.all('/pornhubLog', (req, resp) => {
 })
 
 // pornhub 获取
-app.all('/getPornhubLog', (req, resp) => {
+app.all('/getPornhubLog', (_: Recordable, resp: Recordable) => {
   let result = ''
   const _fileIsExist = fileIsExist('pornhub_log', 'json')
   if (_fileIsExist) {
@@ -227,8 +227,8 @@ app.all('/getPornhubLog', (req, resp) => {
 })
 
 // 番号 获取
-app.all('/checkDesignationLog', (req, resp) => {
-  let result = {}
+app.all('/checkDesignationLog', (req: Recordable, resp: Recordable) => {
+  let result: Recordable = {}
   const text = readFileFn('merge.json')
   let data = JSON.parse(text)
 
@@ -245,18 +245,19 @@ app.all('/checkDesignationLog', (req, resp) => {
 
   const reg = new RegExp('^\\[.+\\]$')
   const reg2 = new RegExp('\\s')
+  let codeList: Recordable = []
   if (reg.test(code)) {
     code = code.replace(/'/g, '"')
-    code = JSON.parse(code)
+    codeList = JSON.parse(code)
   } else if (reg2.test(code)) {
-    code = code.split(' ')
+    codeList = code.split(' ')
   } else {
-    code = code.split(',')
+    codeList = code.split(',')
   }
 
-  code = code.map(item => item.toUpperCase())
+  codeList = codeList.map((item: string) => item.toUpperCase())
 
-  code.map(item => {
+  codeList.map((item: string) => {
     item = item.toUpperCase()
     let check = '0'
     if (data.read.includes(item)) {
@@ -286,7 +287,7 @@ app.all('/checkDesignationLog', (req, resp) => {
 })
 
 // 番号 保存
-app.post('/updateDesignationLog', (req, resp) => {
+app.post('/updateDesignationLog', (req: Recordable, resp: Recordable) => {
   let result = 'ok'
   const text = readFileFn('merge.json')
   let data = JSON.parse(text)
@@ -313,18 +314,18 @@ app.post('/updateDesignationLog', (req, resp) => {
 
   let changeKey = keyArray[type]
 
-  code.map(item => {
+  code.map((item: string) => {
     item = item.toUpperCase()
-    data.unDown = data.unDown.filter(codes => codes !== item)
-    data.read = data.read.filter(codes => codes !== item)
-    data.wm = data.wm.filter(codes => codes !== item)
-    data.wmUnDown = data.wmUnDown.filter(codes => codes !== item)
-    data.lc = data.lc.filter(codes => codes !== item)
-    data.lcUnDown = data.lcUnDown.filter(codes => codes !== item)
-    data.starUnDown = data.starUnDown.filter(codes => codes !== item)
+    data.unDown = data.unDown.filter((codes: string) => codes !== item)
+    data.read = data.read.filter((codes: string) => codes !== item)
+    data.wm = data.wm.filter((codes: string) => codes !== item)
+    data.wmUnDown = data.wmUnDown.filter((codes: string) => codes !== item)
+    data.lc = data.lc.filter((codes: string) => codes !== item)
+    data.lcUnDown = data.lcUnDown.filter((codes: string) => codes !== item)
+    data.starUnDown = data.starUnDown.filter((codes: string) => codes !== item)
   })
 
-  code = code.map(item => item.toUpperCase())
+  code = code.map((item: string) => item.toUpperCase())
 
   data[changeKey].push(...code)
 
@@ -336,8 +337,8 @@ app.post('/updateDesignationLog', (req, resp) => {
 })
 
 // youtube 记录
-app.all('/youtubeLog', (req, resp) => {
-  let param = {}
+app.all('/youtubeLog', (req: Recordable, resp: Recordable) => {
+  let param: Recordable = {}
   if (req.method == "POST") {
     param = req.body;
   } else{
@@ -382,7 +383,7 @@ app.all('/youtubeLog', (req, resp) => {
 })
 
 // youtube 获取
-app.post('/getYoutubeLog', (req, resp) => {
+app.post('/getYoutubeLog', (_: Recordable, resp: Recordable) => {
   let result = ''
   const _fileIsExist = fileIsExist('youtube_log', 'json')
   if (_fileIsExist) {
@@ -406,7 +407,7 @@ app.post('/getYoutubeLog', (req, resp) => {
   resp.json(msgResult.msg({status: 200, message: result}));
 })
 
-app.get('*', (req, resp) => {
+app.get('*', (req: Recordable, resp: Recordable) => {
   console.log('req', req.params[0])
   resp.writeHead(200, { "Content-Type": "text/plain;charset=utf-8" });
   if (/[\.js|\.css|\.json|\.out]$/.test(req.params[0])) {

@@ -6,35 +6,27 @@
 // @author       You
 // @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
-// @resource customCSS https://chiens.cn/recordApi/message.css
+// @resource     customCSS https://chiens.cn/recordApi/message.css
+// @resource     customYoutubeCSS https://chiens.cn/recordApi/message.css
 // @require      https://chiens.cn/recordApi/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @connect      *
-// @downloadURL https://chiens.cn/recordApi/youtubeUserScript.js
-// @updateURL https://chiens.cn/recordApi/youtubeUserScript.js
+// @downloadURL  https://chiens.cn/recordApi/youtubeUserScript.js
+// @updateURL    https://chiens.cn/recordApi/youtubeUserScript.js
 // ==/UserScript==
+
+/* globals GM_addStyle, GM_getResourceText, GM_xmlhttpRequest, Qmsg */
 
 // @connect * 表示允许任何域名的跨域请求
 
 const css = GM_getResourceText("customCSS");
+const customYoutubeCSS = GM_getResourceText("customYoutubeCSS");
 GM_addStyle(css);
-GM_addStyle(`
-.watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata[oldChecked]::before {
-  content: '[早期已看]';
-  font-size: 20px;
-}
-.watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata[checked]::before {
-  content: '[已看]';
-  font-size: 20px;
-}
-.qmsg.qmsg-wrapper {
-  z-index: 3000;
-}
-`);
+GM_addStyle(customYoutubeCSS);
 
-let isHidden = false
+// let isHidden = false
 
 const skipUrls = ['/live_chat_replay']
 
@@ -42,10 +34,10 @@ document.addEventListener("visibilitychange", function() {
   var string = document.visibilityState
   console.log(string)
   if (string === 'hidden') {
-    isHidden = true
+    // isHidden = true
   }
   if (string === 'visible') {
-    isHidden = false
+    // isHidden = false
     if (!skipUrls.includes(location.pathname)) {
       getData()
     }
@@ -60,21 +52,32 @@ let homePageListHeight = 0
 let viewPageListHeight = 0
 let isRecord = false
 let isChecked = false
-let isHandlePlayList = false
-let insertTime = new Date().getTime()
-let timer = null
+// let isHandlePlayList = false
+// let insertTime = new Date().getTime()
+// let timer = null
 let search = ''
 // 首页列表
 let homeContents = null
 // 详情页右侧列表
 let itemsContents = null
 
+let resizeObserver;
+
 var style = document.createElement('style');
 document.head.appendChild(style);
 let sheet = style.sheet;
-sheet.addRule('.title a:visited', 'color: #d34141 !important;');
-sheet.addRule('.metadata a.ytd-compact-video-renderer h3.ytd-compact-video-renderer[checked]', 'color: #d36141 !important;');
-sheet.addRule('div#dismissible.ytd-rich-grid-media #video-title[checked]', 'color: #d36141 !important;');
+const cssList = [
+  { label: '.title a:visited', value: 'color: #d34141 !important;' },
+  { label: '.metadata a.ytd-compact-video-renderer h3.ytd-compact-video-renderer[checked]', value: 'color: #d36141 !important;' },
+  { label: 'div#dismissible.ytd-rich-grid-media #video-title[checked]', value: 'color: #d36141 !important;' },
+]
+cssList.map(item => {
+  if (sheet.insertRule) {
+    sheet.insertRule(`${item.label} { ${item.value} }`);
+  } else {
+    sheet.addRule(`${item.label} { ${item.value} }`);
+  }
+})
 
 console.log('等待脚本执行');
 
@@ -105,30 +108,30 @@ function record() {
   if (code) {
     console.log('发请求')
     GM_xmlhttpRequest({
-        method: "post",
-        url: "https://chiens.cn/recordApi/youtubeLog",
-        data: `code=${code}`,
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
+      method: "post",
+      url: "https://chiens.cn/recordApi/youtubeLog",
+      data: `code=${code}`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
 
-        onload: function(req){
-          console.log('dd', req)
-          const result = JSON.parse(req.response)
-          if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
-            console.log("记录成功");
-            Qmsg.success("成功记录", {autoClose: true, onClose: () => {  }});
-            if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
-              document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('checked', '1')
-            }
-            isRecord = false
-            isChecked = true
+      onload: function(req){
+        console.log('dd', req)
+        const result = JSON.parse(req.response)
+        if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+          console.log("记录成功");
+          Qmsg.success("成功记录", {autoClose: true, onClose: () => {  }});
+          if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
+            document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('checked', '1')
           }
-        },
-        onerror: function(response){
-          Qmsg.error("记录失败", {autoClose: true });
           isRecord = false
+          isChecked = true
         }
+      },
+      onerror: function(){
+        Qmsg.error("记录失败", {autoClose: true });
+        isRecord = false
+      }
     });
   }
   // const query = location.search.match(/q=(.*)/)[1];console.log(query);
