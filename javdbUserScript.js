@@ -154,24 +154,28 @@ function urlIncludes(list, url) {
 document.addEventListener("visibilitychange", function() {
   var string = document.visibilityState
   if (string === 'visible') {   // 当页面由隐藏至显示时
-    if (urlIncludes(homeList, location.pathname)) {
-      if (isHandle) return
-      homePageListHandle()
-    }
-    if (location.pathname.indexOf('/v/') !== -1) {
-      detailPageListHandle()
-    }
+    setTimeout(() => {
+      if (urlIncludes(homeList, location.pathname)) {
+        if (isHandle) return
+        homePageListHandle()
+      }
+      if (location.pathname.indexOf('/v/') !== -1) {
+        detailPageListHandle()
+      }
+    })
   }
 });
 
 window.onload = () => {
   if (document.visibilityState === 'visible') {
-    if (urlIncludes(homeList, location.pathname)) {
-      homePageListHandle()
-    }
-    if (location.pathname.indexOf('/v/') !== -1) {
-      detailPageListHandle()
-    }
+    setTimeout(() => {
+      if (urlIncludes(homeList, location.pathname)) {
+        homePageListHandle()
+      }
+      if (location.pathname.indexOf('/v/') !== -1) {
+        detailPageListHandle()
+      }
+    }, 1200)
   }
 }
 

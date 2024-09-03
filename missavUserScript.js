@@ -5,6 +5,7 @@
 // @description  try to take over the world!
 // @author       You
 // @match        https://missav.com/*
+// @match        https://thisav.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=missav.com
 // @resource     customCSS https://chiens.cn/recordApi/message.css
 // @resource     customMissAvCSS https://chiens.cn/recordApi/missAv.css
