@@ -75,11 +75,11 @@ function recordText() {
     title = document.querySelector('.video-info .info-actions .title').innerText
   }
   if (userCode && title !== '') {
-    
     setTimeout(async () => {
       let test = document.querySelector('.ybd_video_slide_d_ownItem_btn').getAttribute('data-ourl')
-      let test2 = document.querySelector('.introduction .name').innerText
-      Qmsg.info(`kk-${test}-${test2}`, {autoClose: true});
+      let test2 = document.querySelector('.introduction .name') ? document.querySelector('.introduction .name').innerText : document.querySelector('.info-actions .info .title').innerText
+      let test3 = document.querySelector('.nav-content .info .username').innerText
+      Qmsg.info(`${test3}-${test}-${test2}`, {autoClose: true});
       // await navigator.clipboard.writeText(test)
       Qmsg.success("准备拷贝", {autoClose: true});
       
@@ -97,7 +97,7 @@ function recordText() {
             GM_xmlhttpRequest({
               method: "post",
               url: "https://chiens.cn/getText/write?id=1O37c",
-              data: `data=${result.data}\n\n${test}\n${test2}`,
+              data: `data=${result.data}\n\n${test}\n【${test3.trim()}】${test2}`,
               headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
               },
