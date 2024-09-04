@@ -75,6 +75,53 @@ function recordText() {
     title = document.querySelector('.video-info .info-actions .title').innerText
   }
   if (userCode && title !== '') {
+    
+    setTimeout(async () => {
+      let test = document.querySelector('.ybd_video_slide_d_ownItem_btn').getAttribute('data-ourl')
+      let test2 = document.querySelector('.introduction .name').innerText
+      Qmsg.info(`kk-${test}-${test2}`, {autoClose: true});
+      // await navigator.clipboard.writeText(test)
+      Qmsg.success("准备拷贝", {autoClose: true});
+      
+      GM_xmlhttpRequest({
+        method: "get",
+        url: "https://chiens.cn/getText/1O37c",
+        data: '',
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        onload: function(req){
+          console.log('dd', req)
+          const result = JSON.parse(req.response)
+          if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+            GM_xmlhttpRequest({
+              method: "post",
+              url: "https://chiens.cn/getText/write?id=1O37c",
+              data: `data=${result.data}\n\n${test}\n${test2}`,
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              onload: function(req2){
+                console.log('dd', req2)
+                Qmsg.success("即将拷贝成功", {autoClose: true});
+                const result2 = JSON.parse(req2.response)
+                if (req2.readyState === 4 && req2.status === 200 && result2.code === 'ok') {
+                  //hint.close()
+                  Qmsg.success("拷贝成功", {autoClose: true});
+                }
+              },
+              onerror: function(){
+                Qmsg.error("拷贝失败", {autoClose: true });
+              }
+            });
+          }
+        },
+        onerror: function(){
+          Qmsg.error("拷贝失败", {autoClose: true });
+        }
+      });
+    }, 3000);
+    
     userCode = userCode[0]
     console.log('发请求')
     globalHint = Qmsg.info("正在发请求", {autoClose: false});
