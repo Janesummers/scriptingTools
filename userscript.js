@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -190,6 +190,10 @@ function listHandle() {
 
 function getContainer() {
   detailRouterPathList.includes(path)
+}
+
+if (document.body.clientWidth >= 1080) {
+  document.documentElement.style.zoom = '1.4'
 }
 
 window.onload = function () {
