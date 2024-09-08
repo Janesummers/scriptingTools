@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
