@@ -1,7 +1,7 @@
 #!/bin/bash
 # 将执行结果追加到日志文件
 cd /home/janesummer/scriptingTools
-echo "准备执行" >> git.log
+echo "准备执行自动更新文档" >> git.log
 git add *.json
 git commit -m "自动更新文档"
 git push >> git.log
