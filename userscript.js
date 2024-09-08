@@ -193,7 +193,7 @@ function getContainer() {
 }
 
 if (document.body.clientWidth >= 1080) {
-  document.documentElement.style.zoom = '1.4'
+  document.documentElement.style.zoom = '1.3'
 }
 
 window.onload = function () {
