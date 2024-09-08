@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -54,7 +54,7 @@ let globalHint = null
 let isRecord = false
 let isLoading = false
 // 详情页路由
-const detailRouterPathList = ['htm_data', 'htm_mob', '/read.php']
+const detailRouterPathList = ['/htm_data', '/htm_mob', '/read.php']
 
 // 获取当前页面路由
 function getCurrentPagePath() {
@@ -63,7 +63,9 @@ function getCurrentPagePath() {
 
 // 视频详情页
 if (location.pathname) {
-  const path = getCurrentPagePath()
+  let path = getCurrentPagePath()
+  path = path.length && path[0]
+  console.log('path', path);
   if (detailRouterPathList.includes(path)) {
     getCodeHandle()
   }
@@ -156,9 +158,10 @@ function listHandle() {
             this.setAttribute('checked','1')
           }
         }, false)
-
+        console.log('codeList', codeList);
         if (codeList.length) {
           let id = item.getAttribute('id')
+          console.log('dsd', id);
           if (id) {
             id = id.replace(/[^\d]*(\d+)/, "$1")
           } else {
