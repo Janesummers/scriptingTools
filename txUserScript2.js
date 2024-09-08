@@ -80,9 +80,9 @@ function recordText() {
   // Qmsg.success(`5-${userCode}-${title}`, {autoClose: true});
   if (userCode && title !== '') {
     // customBtn()
-    // setTimeout(async () => {
-    //   getDataHandle()
-    // }, 900);
+    setTimeout(async () => {
+      getDataHandle()
+    }, 900);
     // Qmsg.info(`userCode-${userCode}`, {autoClose: false});
     userCode = userCode[0]
     console.log('发请求')
@@ -151,7 +151,7 @@ function getDataHandle() {
   Qmsg.info(`${test3}-${test}-${test2}`, {autoClose: true});
   // await navigator.clipboard.writeText(test)
   Qmsg.success("准备拷贝", {autoClose: true});
-  Qmsg.success(`body-${document.querySelector('body')}`, {autoClose: true});
+  // Qmsg.success(`body-${document.querySelector('body')}`, {autoClose: true});
   // let aaa = document.querySelector('.vjs-tech').getAttribute('src')
   
   GM_xmlhttpRequest({

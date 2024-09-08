@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      1.96
+// @version      2.1
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -161,6 +161,7 @@ document.addEventListener("visibilitychange", function() {
       }
       if (location.pathname.indexOf('/v/') !== -1) {
         detailPageListHandle()
+        magnetsHandle()
       }
     })
   }
@@ -168,12 +169,16 @@ document.addEventListener("visibilitychange", function() {
 
 window.onload = () => {
   if (document.visibilityState === 'visible') {
+    if (document.body.clientWidth >= 1080) {
+      document.documentElement.style.zoom = '1.4'
+    }
     setTimeout(() => {
       if (urlIncludes(homeList, location.pathname)) {
         homePageListHandle()
       }
       if (location.pathname.indexOf('/v/') !== -1) {
         detailPageListHandle()
+        magnetsHandle()
       }
     }, 1200)
   }
@@ -297,6 +302,79 @@ function detailPageListHandle() {
   }
   console.log('checkList', checkList);
   checkDesignationHandle(checkList)
+}
+
+// 详情页种子
+function magnetsHandle() {
+  if (!document.querySelector('#magnets-content').getAttribute('check')) {
+    let child = document.querySelector('#magnets-content').querySelectorAll('.columns.item')
+    for (let i = 0; i < child.length; i++) {
+      let btn = document.createElement('div') 
+      btn.className = 'js-custom-btn-magnets'
+      btn.innerText = 'Go'
+      btn.style.width = '60px'
+      btn.style.height = '30px'
+      btn.style.fontSize = '16px'
+      btn.style.textAlign = 'center'
+      btn.style.lineHeight = '30px'
+      btn.style.backgroundColor = 'rgb(25, 137, 250)'
+      btn.style.borderRadius = '2px'
+      btn.style.cursor = 'pointer'
+      btn.style.color = '#fff'
+      btn.addEventListener('click', () => {
+        Qmsg.success("okk", {autoClose: true});
+        let text = child[i].querySelector('.copy-to-clipboard').getAttribute('data-clipboard-text')
+        if (text) {
+          // Qmsg.success(text, {autoClose: false});
+          GM_xmlhttpRequest({
+            method: "get",
+            url: "https://chiens.cn/getText/oabyy",
+            data: '',
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            onload: function(req){
+              // console.log('dd', req)
+              const result = JSON.parse(req.response)
+              if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+                // console.log('okk', result.data)
+                GM_xmlhttpRequest({
+                  method: "post",
+                  url: "https://chiens.cn/getText/write?id=oabyy",
+                  data: `data=(${encodeURIComponent(result.data)})\n${encodeURIComponent(text)})`,
+                  headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                  },
+                  onload: function(req2){
+                    console.log('dd', req2)
+                    // Qmsg.success("即将拷贝成功", {autoClose: true});
+                    const result2 = JSON.parse(req2.response)
+                    if (req2.readyState === 4 && req2.status === 200 && result2.code === 'ok') {
+                      //hint.close()
+                      Qmsg.success("拷贝成功", {autoClose: true});
+                    }
+                  },
+                  onerror: function(){
+                    Qmsg.error("拷贝失败", {autoClose: true });
+                  }
+                });
+              }
+            },
+            onerror: function(){
+              Qmsg.error("拷贝失败", {autoClose: true });
+            }
+          });
+        }
+
+      })
+      let box = document.createElement('div') 
+      box.className = 'buttons column'
+      box.appendChild(btn)
+      child[i].appendChild(box)
+    }
+
+    document.querySelector('#magnets-content').setAttribute('check', '1')
+  }
 }
 
 if (document.querySelector(".moj-content")) {
