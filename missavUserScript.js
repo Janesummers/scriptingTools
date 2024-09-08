@@ -5,6 +5,7 @@
 // @description  try to take over the world!
 // @author       You
 // @match        https://missav.com/*
+// @match        https://thisav.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=missav.com
 // @resource     customCSS https://chiens.cn/recordApi/message.css
 // @resource     customMissAvCSS https://chiens.cn/recordApi/missAv.css
@@ -213,13 +214,15 @@ function listHandle () {
       if (x) {
         x = x[0]
         if (list[i].parentElement.querySelector('div.text-sm')) {
-          const text = list[i].parentElement.querySelector('div.text-sm a').innerText
+          let text = list[i].parentElement.querySelector('div.text-sm a').innerText.toUpperCase()
+          text = text.replace('FC2-PPV', 'FC2')
           if (text.indexOf(x) === -1) {
             list[i].parentElement.querySelector('div.text-sm a').innerText =` ${x} ${text}`
           }
           list[i].parentElement.querySelector('div.text-sm').setAttribute('checked', globalResult[x] || '0')
         } else {
-          const text = list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText
+          let text = list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText.toUpperCase()
+          text = text.replace('FC2-PPV', 'FC2')
           if (text.indexOf(x) === -1) {
             list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText = ` ${x} ${text}`
           }
@@ -227,13 +230,15 @@ function listHandle () {
         }
         if (globalResult[x] && globalResult[x] !== '0') {
           if (list[i].parentElement.querySelector('div.text-sm')) {
-            const text = list[i].parentElement.querySelector('div.text-sm a').innerText
+            let text = list[i].parentElement.querySelector('div.text-sm a').innerText.toUpperCase()
+            text = text.replace('FC2-PPV', 'FC2')
             if (text.indexOf(x) === -1) {
               list[i].parentElement.querySelector('div.text-sm a').innerText = ` ${x} ${text}`
             }
             list[i].parentElement.querySelector('div.text-sm').setAttribute('exits', '1')
           } else {
-            const text = list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText
+            let text = list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText.toUpperCase()
+            text = text.replace('FC2-PPV', 'FC2')
             if (text.indexOf(x) === -1) {
               list[i].parentElement.parentElement.parentElement.querySelector('div.text-sm a').innerText = ` ${x} ${text}`
             }
@@ -243,8 +248,10 @@ function listHandle () {
       }
       
     }
-
-    let t = document.querySelector('h1.text-base').innerText.match(numberExtraction);
+    
+    let t = document.querySelector('h1.text-base').innerText.toUpperCase()
+    t = t.replace('FC2-PPV', 'FC2')
+    t = t.match(numberExtraction);
     t = t ? t[0] : "";
     if (t != "") {
       document.querySelector('h1.text-base').setAttribute('checked', globalResult[t]);

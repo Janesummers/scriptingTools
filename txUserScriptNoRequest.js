@@ -4,8 +4,8 @@
 // @version      0.7
 // @description  try to take over the world!
 // @author       You
-// @match        https://*.txh016.com/user/*
-// @match        https://txh016.com/user/*
+// @match        https://*.txh049.com/user/*
+// @match        https://txh049.com/user/*
 // @resource     customCSS https://chiens.cn/recordApi/message.css
 // @resource     source https://chiens.cn/recordApi/tx_log.json
 // @grant        GM_getResourceText

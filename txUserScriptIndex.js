@@ -4,8 +4,8 @@
 // @version      0.1
 // @description  try to take over the world!
 // @author       You
-// @match        https://*.txh041.com/*
-// @match        https://txh041.com/*
+// @match        https://*.txh049.com/*
+// @match        https://txh049.com/*
 // ==/UserScript==
 
 sessionStorage.setItem('dialogAd', 'sonofbitch');
