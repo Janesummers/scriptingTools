@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      2.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -167,11 +167,12 @@ document.addEventListener("visibilitychange", function() {
   }
 });
 
+if (document.body.clientWidth >= 1080) {
+  document.documentElement.style.zoom = '1.4'
+}
+
 window.onload = () => {
   if (document.visibilityState === 'visible') {
-    if (document.body.clientWidth >= 1080) {
-      document.documentElement.style.zoom = '1.4'
-    }
     setTimeout(() => {
       if (urlIncludes(homeList, location.pathname)) {
         homePageListHandle()
