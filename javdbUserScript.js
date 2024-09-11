@@ -153,6 +153,7 @@ function urlIncludes(list, url) {
 
 document.addEventListener("visibilitychange", function() {
   var string = document.visibilityState
+  Qmsg.success(`页面回来ok-${string}`, {autoClose: true });
   if (string === 'visible') {   // 当页面由隐藏至显示时
     Qmsg.success("重新显示页面", {autoClose: true }); 
     setTimeout(() => {
@@ -175,6 +176,7 @@ if (document.body.clientWidth >= 1080) {
 }
 
 window.onload = () => {
+  Qmsg.success(`页面加载ok-${document.visibilityState}`, {autoClose: true });
   if (document.visibilityState === 'visible') {
     Qmsg.success("加载完成", {autoClose: true });
     setTimeout(() => {
@@ -345,10 +347,16 @@ function magnetsHandle() {
               const result = JSON.parse(req.response)
               if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
                 // console.log('okk', result.data)
+                let data = result.data
+                if (data) {
+                  data = `${encodeURIComponent(result.data)}\n(${encodeURIComponent(text)})`
+                } else {
+                  data = `(${encodeURIComponent(text)})`
+                }
                 GM_xmlhttpRequest({
                   method: "post",
                   url: "https://chiens.cn/getText/write?id=oabyy",
-                  data: `data=(${encodeURIComponent(result.data)})\n${encodeURIComponent(text)})`,
+                  data: `data=${data}`,
                   headers: {
                     "Content-Type": "application/x-www-form-urlencoded"
                   },
