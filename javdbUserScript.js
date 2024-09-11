@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.2
+// @version      2.3
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -154,12 +154,15 @@ function urlIncludes(list, url) {
 document.addEventListener("visibilitychange", function() {
   var string = document.visibilityState
   if (string === 'visible') {   // 当页面由隐藏至显示时
+    Qmsg.success("重新显示页面", {autoClose: true }); 
     setTimeout(() => {
       if (urlIncludes(homeList, location.pathname)) {
         if (isHandle) return
+        Qmsg.success("首页", {autoClose: true });
         homePageListHandle()
       }
       if (location.pathname.indexOf('/v/') !== -1) {
+        Qmsg.success("详情页面", {autoClose: true });
         detailPageListHandle()
         magnetsHandle()
       }
@@ -173,11 +176,14 @@ if (document.body.clientWidth >= 1080) {
 
 window.onload = () => {
   if (document.visibilityState === 'visible') {
+    Qmsg.success("加载完成", {autoClose: true });
     setTimeout(() => {
       if (urlIncludes(homeList, location.pathname)) {
+        Qmsg.success("首页", {autoClose: true });
         homePageListHandle()
       }
       if (location.pathname.indexOf('/v/') !== -1) {
+        Qmsg.success("详情页面", {autoClose: true });
         detailPageListHandle()
         magnetsHandle()
       }
