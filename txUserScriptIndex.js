@@ -1,11 +1,14 @@
 // ==UserScript==
 // @name         JSummer - 糖心
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh049.com/*
 // @match        https://txh049.com/*
+// @connect      *
+// @downloadURL  https://chiens.cn/recordApi/txUserScriptIndex.js
+// @updateURL    https://chiens.cn/recordApi/txUserScriptIndex.js
 // ==/UserScript==
 
 sessionStorage.setItem('dialogAd', 'sonofbitch');

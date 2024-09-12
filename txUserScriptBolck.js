@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 万花筒
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh049.com/movie/block/*
@@ -12,6 +12,8 @@
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
 // @connect      *
+// @downloadURL  https://chiens.cn/recordApi/txUserScriptBolck.js
+// @updateURL    https://chiens.cn/recordApi/txUserScriptBolck.js
 // ==/UserScript==
 
 /* globals GM_addStyle, GM_getResourceText, GM_xmlhttpRequest, Qmsg */
