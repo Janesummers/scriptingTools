@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - missav
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  try to take over the world!
 // @author       You
 // @match        https://missav.com/*
@@ -13,8 +13,8 @@
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
-// @downloadURL  https://chiens.cn/recordApi/javdbUserScript.js
-// @updateURL    https://chiens.cn/recordApi/javdbUserScript.js
+// @downloadURL  https://chiens.cn/recordApi/missavUserScript.js
+// @updateURL    https://chiens.cn/recordApi/missavUserScript.js
 // @connect      *
 // ==/UserScript==
 
