@@ -81,7 +81,7 @@ const txUserConfig = {
   "Highsstn": "https://txh049.com/user/3273295",
   "爱丝袜的Vivian姐": "https://txh049.com/user/1301308",
   "夏晴子Candybaby": "https://txh049.com/user/33448146",
-  "小辣椒": "https://txh049.com/user/5039927",
+  // "小辣椒": "https://txh049.com/user/5039927",
   "鹤7": "https://txh049.com/user/30063555",
   "rabbyjay": "https://txh049.com/user/19799514",
   "芋圆": "https://txh049.com/user/30826198",
@@ -243,6 +243,7 @@ const txUserConfig = {
   "下面有根棒棒糖": "https://txh049.com/user/2956064",
   "井川里野": "https://txh049.com/user/16747156",
   "琪琪有理（接1v1）": "https://txh049.com/user/87740291",
+  "小辣椒": "https://txh049.com/user/67195623",
 }
 // const dataSource = GM_getResourceText("dataSource");
 GM_addStyle(css);
