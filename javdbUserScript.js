@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.5
+// @version      2.51
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -290,7 +290,7 @@ function listHandle () {
         let btn = document.createElement('span')
         btn.className = 'record-code'
         btn.innerText = '记录'
-        btn.onClick = () => {
+        btn.addEventListener('click', () => {
           GM_xmlhttpRequest({
             method: "post",
             url: "https://chiens.cn/recordApi/updateDesignationLog",
@@ -309,8 +309,8 @@ function listHandle () {
             onerror: function(response){
               Qmsg.error("记录失败", {autoClose: true });
             }
-          });
-        }
+          })
+        })
         document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").appendChild(btn)
       }
     }
