@@ -115,10 +115,10 @@ div[data-controller="movie-tab"] li[data-movie-tab-target="listTab"] {
   .video-number[checked]::before {
     display: block;
   }
-  .record-code {
-    cursor: pointer;
-    margin-left: 20px;
-  }
+}
+.record-code {
+  cursor: pointer;
+  margin-left: 20px;
 }
 `);
 
