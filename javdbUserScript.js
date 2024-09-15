@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.4
+// @version      2.5
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -114,6 +114,10 @@ div[data-controller="movie-tab"] li[data-movie-tab-target="listTab"] {
   }
   .video-number[checked]::before {
     display: block;
+  }
+  .record-code {
+    cursor: pointer;
+    margin-left: 20px;
   }
 }
 `);
@@ -282,6 +286,33 @@ function listHandle () {
     if (t != "") {
       t = t.toUpperCase()
       document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block .value").setAttribute('checked', globalResult[t]);
+      if (['0', '2', '4', '6', '7'].includes(globalResult[t])) {
+        let btn = document.createElement('span')
+        btn.className = 'record-code'
+        btn.innerText = '记录'
+        btn.onClick = () => {
+          GM_xmlhttpRequest({
+            method: "post",
+            url: "https://chiens.cn/recordApi/updateDesignationLog",
+            data: `code=${t}&type=1`,
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+
+            onload: function(req){
+              console.log('dd', req)
+              const result = JSON.parse(req.response)
+              if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+                Qmsg.success("记录成功", {autoClose: true});
+              }
+            },
+            onerror: function(response){
+              Qmsg.error("记录失败", {autoClose: true });
+            }
+          });
+        }
+        document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").appendChild(btn)
+      }
     }
     globalHint.close()
     globalHint = Qmsg.success("详情页数据 - 处理完成", {autoClose: true, onClose: () => {  }});
