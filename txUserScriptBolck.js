@@ -242,7 +242,7 @@ const txUserConfig = {
   "玩偶姐姐": "https://txh049.com/user/3417449",
   "下面有根棒棒糖": "https://txh049.com/user/2956064",
   "井川里野": "https://txh049.com/user/16747156",
-  "琪琪有理（接1v1)": "https://txh049.com/user/87740291",
+  "琪琪有理（接1v1）": "https://txh049.com/user/87740291",
 }
 // const dataSource = GM_getResourceText("dataSource");
 GM_addStyle(css);
