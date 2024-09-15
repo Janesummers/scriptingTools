@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.51
+// @version      2.52
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -283,7 +283,7 @@ function listHandle () {
     }
     let t = document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").innerText.match(numberExtraction);
     t = t ? t[0] : "";
-    if (t != "") {
+    if (t != "" && !document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block .value[checked]")) {
       t = t.toUpperCase()
       document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block .value").setAttribute('checked', globalResult[t]);
       if (['0', '2', '4', '6', '7'].includes(globalResult[t])) {
