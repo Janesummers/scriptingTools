@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.21
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -278,7 +278,7 @@ function listHandle(box, callback) {
       if (item.querySelector('.watchedVideoText') || item.querySelector('.watchedVideo') || codeList.includes(code)) {
         item.querySelector('.title a').setAttribute('checked', '1')
         if (item.querySelector('.watchedVideoText')) {
-          item.querySelector('.watchedVideoText').innerHTML = ''
+          // item.querySelector('.watchedVideoText').innerHTML = ''
           item.querySelector('.watchedVideoText').innerText = `已观看 - for record`
         } else {
           const node = document.createElement('div')

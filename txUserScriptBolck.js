@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 万花筒
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      0.6
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh049.com/movie/block/*
@@ -244,6 +244,7 @@ const txUserConfig = {
   "井川里野": "https://txh049.com/user/16747156",
   "琪琪有理（接1v1）": "https://txh049.com/user/87740291",
   "小辣椒": "https://txh049.com/user/67195623",
+  "不是丸子": "https://txh049.com/user/84383830",
 }
 // const dataSource = GM_getResourceText("dataSource");
 GM_addStyle(css);
