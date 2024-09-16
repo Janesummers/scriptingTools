@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.28
+// @version      1.29
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -197,7 +197,7 @@ function handleData() {
     // }
 
     viewPageListHandle()
-
+    console.log('code', code, codeList);
     if (codeList.includes(code)) {
       if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
         document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('oldChecked', '1')
