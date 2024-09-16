@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.35
+// @version      1.36
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -188,6 +188,7 @@ function getData() {
  * @description: 处理页面数据
  * @return {*}
  */
+let detailTimer = null
 function handleData() {
   // 视频详情页面处理
   if (location.pathname.indexOf('/watch') !== -1) {
@@ -205,10 +206,13 @@ function handleData() {
       if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
         document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('oldChecked', '1')
       } else {
-        console.log('再次尝试');
-        setTimeout(() => {
+        detailTimer = setInterval(() => {
+          console.log('再次尝试');
           if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
             document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('oldChecked', '1')
+            console.log('重试完成');
+            clearInterval(detailTimer)
+            detailTimer = null
           }
         }, 1000);
       }
