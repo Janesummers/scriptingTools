@@ -434,8 +434,10 @@
 			$content.appendChild($count);
 		}
 		
+		// console.log('yyuuiidd', oMsg.count, $count);
 
-		$count.innerHTML = DOMPurify.sanitize(oMsg.count, {RETURN_TRUSTED_TYPE: true});
+		// $count.innerHTML = oMsg.count;
+		$count.innerText = oMsg.count;
 		$count.style.animationName = "";
 		$count.style.animationName = "MessageShake";
 		oMsg.timeout = oMsg.settings.timeout || DEFAULTS.timeout;
