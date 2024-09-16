@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.33
+// @version      1.34
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @resource     customCSS https://chiens.cn/recordApi/message.css
-// @resource     customYoutubeCSS https://chiens.cn/recordApi/message.css
+// @resource     customYoutubeCSS https://chiens.cn/recordApi/youtube.css
 
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
