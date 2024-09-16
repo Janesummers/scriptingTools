@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.27
+// @version      1.28
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -25,7 +25,6 @@
 // 'use strict';
 // newElement.innerHTML = DOMPurify.sanitize(innerHTMLText, {RETURN_TRUSTED_TYPE: true});
 // document.body.appendChild(newElement);
-/* // @-requir-e      https://chiens.cn/recordApi/message.js*/
 const css = GM_getResourceText("customCSS");
 const customYoutubeCSS = GM_getResourceText("customYoutubeCSS");
 GM_addStyle(css);
