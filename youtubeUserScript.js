@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.32
+// @version      1.33
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -129,12 +129,6 @@ function record() {
           // Qmsg.success("成功记录", {autoClose: true, onClose: () => {  }});
           if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
             document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('checked', '1')
-          } else {
-            setTimeout(() => {
-              if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
-                document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('checked', '1')
-              }
-            }, 1000);
           }
           isRecord = false
           isChecked = true
@@ -210,6 +204,13 @@ function handleData() {
       console.log('已在okk', document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata"));
       if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
         document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('oldChecked', '1')
+      } else {
+        console.log('再次尝试');
+        setTimeout(() => {
+          if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
+            document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('checked', '1')
+          }
+        }, 1000);
       }
       isChecked = true
     } else {
