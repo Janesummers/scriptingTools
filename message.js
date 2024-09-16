@@ -129,16 +129,129 @@
 		html: false
 	}, global && global.QMSG_GLOBALS && global.QMSG_GLOBALS.DEFAULTS);
 
+	function infoHandle() {
+		let svgBox = document.createElement('svg')
+		svgBox.setAttribute('viewBox', '0 0 1024 1024')
+		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		svgBox.setAttribute('width', '16')
+		svgBox.setAttribute('height', '16')
+		let svgPath = document.createElement('path')
+		svgPath.setAttribute('d', 'M512 64q190.016 4.992 316.512 131.488T960 512q-4.992 190.016-131.488 316.512T512 960q-190.016-4.992-316.512-131.488T64 512q4.992-190.016 131.488-316.512T512 64zm67.008 275.008q26.016 0 43.008-15.488t16.992-41.504-16.992-41.504-42.496-15.488-42.496 15.488-16.992 41.504 16.992 41.504 42.016 15.488zm12 360q0-6.016.992-16T592 664l-52.992 60.992q-8 8.992-16.512 14.016T508 742.016q-8.992-4-8-14.016l88-276.992q4.992-28-8.992-48t-44.992-24q-35.008.992-76.512 29.504t-72.512 72.512v15.008q-.992 10.016 0 19.008l52.992-60.992q8-8.992 16.512-14.016T468 437.024q10.016 4.992 7.008 16l-87.008 276q-7.008 24.992 7.008 44.512T444 800.032q50.016-.992 84-28.992t63.008-72z')
+		svgPath.setAttribute('fill', '#909399')
+		svgBox.appendChild(svgPath)
+		return svgBox
+	}
+	function warningHandle() {
+		let svgBox = document.createElement('svg')
+		svgBox.setAttribute('viewBox', '0 0 1024 1024')
+		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		svgBox.setAttribute('width', '16')
+		svgBox.setAttribute('height', '16')
+		let svgPath = document.createElement('path')
+		svgPath.setAttribute('d', 'M512 64C264.64 64 64 264.64 64 512c0 247.424 200.64 448 448 448 247.488 0 448-200.576 448-448 0-247.36-200.512-448-448-448zm0 704c-26.432 0-48-21.504-48-48s21.568-48 48-48c26.624 0 48 21.504 48 48s-21.376 48-48 48zm48-240c0 26.56-21.376 48-48 48-26.432 0-48-21.44-48-48V304c0-26.56 21.568-48 48-48 26.624 0 48 21.44 48 48v224z')
+		svgPath.setAttribute('fill', '#E6A23C')
+		svgBox.appendChild(svgPath)
+		return svgBox
+	}
+	function errorHandle() {
+		let svgBox = document.createElement('svg')
+		svgBox.setAttribute('viewBox', '0 0 1024 1024')
+		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		svgBox.setAttribute('width', '16')
+		svgBox.setAttribute('height', '16')
+		let svgPath = document.createElement('path')
+		svgPath.setAttribute('d', 'M512 64C264.58 64 64 264.58 64 512s200.58 448 448 448 448-200.57 448-448S759.42 64 512 64zm158.39 561.14a32 32 0 1 1-45.25 45.26L512 557.26 398.86 670.4a32 32 0 0 1-45.25-45.26L466.75 512 353.61 398.86a32 32 0 0 1 45.25-45.25L512 466.74l113.14-113.13a32 32 0 0 1 45.25 45.25L557.25 512z')
+		svgPath.setAttribute('fill', '#F56C6C')
+		svgBox.appendChild(svgPath)
+		return svgBox
+	}
+	function successHandle() {
+		let svgBox = document.createElement('svg')
+		svgBox.setAttribute('viewBox', '0 0 1024 1024')
+		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		svgBox.setAttribute('width', '16')
+		svgBox.setAttribute('height', '16')
+		let svgPath = document.createElement('path')
+		svgPath.setAttribute('d', 'M512 64q190.016 4.992 316.512 131.488T960 512q-4.992 190.016-131.488 316.512T512 960q-190.016-4.992-316.512-131.488T64 512q4.992-190.016 131.488-316.512T512 64zm-56 536l-99.008-99.008q-12-11.008-27.488-11.008t-27.008 11.488-11.488 26.496 11.008 27.008l127.008 127.008q11.008 11.008 27.008 11.008t27.008-11.008l263.008-263.008q15.008-15.008 9.504-36.512t-27.008-27.008-36.512 9.504z')
+		svgPath.setAttribute('fill', '#67C23A')
+		svgBox.appendChild(svgPath)
+		return svgBox
+	}
+	function loadingHandle() {
+		let svgBox = document.createElement('svg')
+		svgBox.className = 'animate-turn'
+		svgBox.setAttribute('viewBox', '0 0 48 48')
+		svgBox.setAttribute('fill', 'none')
+		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		svgBox.setAttribute('width', '16')
+		svgBox.setAttribute('height', '16')
+		let svgPath = document.createElement('path')
+		svgPath.setAttribute('fill', '#fff')
+		svgPath.setAttribute('fill-opacity', '.01')
+		svgPath.setAttribute('d', 'M0 0h48v48H0z')
+		svgBox.appendChild(svgPath)
+		let svgPath2 = document.createElement('path')
+		svgPath2.setAttribute('stroke-width', '4')
+		svgPath2.setAttribute('stroke-linecap', 'round')
+		svgPath2.setAttribute('stroke', '#409eff')
+		svgPath2.setAttribute('stroke-linejoin', 'round')
+		svgPath2.setAttribute('d', 'M4 24c0 11.046 8.954 20 20 20s20-8.954 20-20S35.046 4 24 4')
+		svgBox.appendChild(svgPath2)
+		let svgPath3 = document.createElement('path')
+		svgPath3.setAttribute('stroke-width', '4')
+		svgPath3.setAttribute('stroke-linecap', 'round')
+		svgPath3.setAttribute('stroke', '#409eff')
+		svgPath3.setAttribute('stroke-linejoin', 'round')
+		svgPath3.setAttribute('d', 'M36 24c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12')
+		svgBox.appendChild(svgPath3)
+		return svgBox
+	}
+	function closeHandle() {
+		let svgBox = document.createElement('svg')
+		svgBox.setAttribute('viewBox', '0 0 48 48')
+		svgBox.setAttribute('fill', 'none')
+		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		svgBox.setAttribute('width', '16')
+		svgBox.setAttribute('height', '16')
+		let svgRect = document.createElement('rect')
+		svgBox.setAttribute('width', '48')
+		svgBox.setAttribute('height', '48')
+		svgRect.setAttribute('fill', 'white')
+		svgRect.setAttribute('fill-opacity', '0.01')
+		svgBox.appendChild(svgRect)
+		let svgPath = document.createElement('path')
+		svgPath.setAttribute('stroke-width', '4')
+		svgPath.setAttribute('stroke-linecap', 'round')
+		svgPath.setAttribute('stroke', '#909399')
+		svgPath.setAttribute('stroke-linejoin', 'round')
+		svgPath.setAttribute('d', 'M14 14L34 34')
+		svgBox.appendChild(svgPath)
+		let svgPath2 = document.createElement('path')
+		svgPath2.setAttribute('stroke-width', '4')
+		svgPath2.setAttribute('stroke-linecap', 'round')
+		svgPath2.setAttribute('stroke', '#909399')
+		svgPath2.setAttribute('stroke-linejoin', 'round')
+		svgPath2.setAttribute('d', 'M14 34L34 14')
+		svgBox.appendChild(svgPath2)
+		return svgBox
+	}
 	/**
 	 * 设置icon html代码
 	 */
 	var ICONS = {
-		info: '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M512 64q190.016 4.992 316.512 131.488T960 512q-4.992 190.016-131.488 316.512T512 960q-190.016-4.992-316.512-131.488T64 512q4.992-190.016 131.488-316.512T512 64zm67.008 275.008q26.016 0 43.008-15.488t16.992-41.504-16.992-41.504-42.496-15.488-42.496 15.488-16.992 41.504 16.992 41.504 42.016 15.488zm12 360q0-6.016.992-16T592 664l-52.992 60.992q-8 8.992-16.512 14.016T508 742.016q-8.992-4-8-14.016l88-276.992q4.992-28-8.992-48t-44.992-24q-35.008.992-76.512 29.504t-72.512 72.512v15.008q-.992 10.016 0 19.008l52.992-60.992q8-8.992 16.512-14.016T468 437.024q10.016 4.992 7.008 16l-87.008 276q-7.008 24.992 7.008 44.512T444 800.032q50.016-.992 84-28.992t63.008-72z" fill="#909399"/></svg>',
-		warning: '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M512 64C264.64 64 64 264.64 64 512c0 247.424 200.64 448 448 448 247.488 0 448-200.576 448-448 0-247.36-200.512-448-448-448zm0 704c-26.432 0-48-21.504-48-48s21.568-48 48-48c26.624 0 48 21.504 48 48s-21.376 48-48 48zm48-240c0 26.56-21.376 48-48 48-26.432 0-48-21.44-48-48V304c0-26.56 21.568-48 48-48 26.624 0 48 21.44 48 48v224z" fill="#E6A23C"/></svg>',
-		error: '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M512 64C264.58 64 64 264.58 64 512s200.58 448 448 448 448-200.57 448-448S759.42 64 512 64zm158.39 561.14a32 32 0 1 1-45.25 45.26L512 557.26 398.86 670.4a32 32 0 0 1-45.25-45.26L466.75 512 353.61 398.86a32 32 0 0 1 45.25-45.25L512 466.74l113.14-113.13a32 32 0 0 1 45.25 45.25L557.25 512z" fill="#F56C6C"/></svg>',
-		success: '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M512 64q190.016 4.992 316.512 131.488T960 512q-4.992 190.016-131.488 316.512T512 960q-190.016-4.992-316.512-131.488T64 512q4.992-190.016 131.488-316.512T512 64zm-56 536l-99.008-99.008q-12-11.008-27.488-11.008t-27.008 11.488-11.488 26.496 11.008 27.008l127.008 127.008q11.008 11.008 27.008 11.008t27.008-11.008l263.008-263.008q15.008-15.008 9.504-36.512t-27.008-27.008-36.512 9.504z" fill="#67C23A"/></svg>',
-		loading: '<svg class="animate-turn" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" fill-opacity=".01" d="M0 0h48v48H0z"/><path d="M4 24c0 11.046 8.954 20 20 20s20-8.954 20-20S35.046 4 24 4" stroke="#409eff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 24c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12" stroke="#409eff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-		close: '<svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M14 14L34 34" stroke="#909399" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 34L34 14" stroke="#909399" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+		// info: '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M512 64q190.016 4.992 316.512 131.488T960 512q-4.992 190.016-131.488 316.512T512 960q-190.016-4.992-316.512-131.488T64 512q4.992-190.016 131.488-316.512T512 64zm67.008 275.008q26.016 0 43.008-15.488t16.992-41.504-16.992-41.504-42.496-15.488-42.496 15.488-16.992 41.504 16.992 41.504 42.016 15.488zm12 360q0-6.016.992-16T592 664l-52.992 60.992q-8 8.992-16.512 14.016T508 742.016q-8.992-4-8-14.016l88-276.992q4.992-28-8.992-48t-44.992-24q-35.008.992-76.512 29.504t-72.512 72.512v15.008q-.992 10.016 0 19.008l52.992-60.992q8-8.992 16.512-14.016T468 437.024q10.016 4.992 7.008 16l-87.008 276q-7.008 24.992 7.008 44.512T444 800.032q50.016-.992 84-28.992t63.008-72z" fill="#909399"/></svg>',
+		info: infoHandle(),
+		// warning: '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M512 64C264.64 64 64 264.64 64 512c0 247.424 200.64 448 448 448 247.488 0 448-200.576 448-448 0-247.36-200.512-448-448-448zm0 704c-26.432 0-48-21.504-48-48s21.568-48 48-48c26.624 0 48 21.504 48 48s-21.376 48-48 48zm48-240c0 26.56-21.376 48-48 48-26.432 0-48-21.44-48-48V304c0-26.56 21.568-48 48-48 26.624 0 48 21.44 48 48v224z" fill="#E6A23C"/></svg>',
+		warning: warningHandle(),
+		// error: '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M512 64C264.58 64 64 264.58 64 512s200.58 448 448 448 448-200.57 448-448S759.42 64 512 64zm158.39 561.14a32 32 0 1 1-45.25 45.26L512 557.26 398.86 670.4a32 32 0 0 1-45.25-45.26L466.75 512 353.61 398.86a32 32 0 0 1 45.25-45.25L512 466.74l113.14-113.13a32 32 0 0 1 45.25 45.25L557.25 512z" fill="#F56C6C"/></svg>',
+		error: errorHandle(),
+		// success: '<svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M512 64q190.016 4.992 316.512 131.488T960 512q-4.992 190.016-131.488 316.512T512 960q-190.016-4.992-316.512-131.488T64 512q4.992-190.016 131.488-316.512T512 64zm-56 536l-99.008-99.008q-12-11.008-27.488-11.008t-27.008 11.488-11.488 26.496 11.008 27.008l127.008 127.008q11.008 11.008 27.008 11.008t27.008-11.008l263.008-263.008q15.008-15.008 9.504-36.512t-27.008-27.008-36.512 9.504z" fill="#67C23A"/></svg>',
+		success: successHandle(),
+		// loading: '<svg class="animate-turn" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" fill-opacity=".01" d="M0 0h48v48H0z"/><path d="M4 24c0 11.046 8.954 20 20 20s20-8.954 20-20S35.046 4 24 4" stroke="#409eff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 24c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12" stroke="#409eff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+		// loading: '<svg class="animate-turn" width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" fill-opacity=".01" d="M0 0h48v48H0z"/><path d="M4 24c0 11.046 8.954 20 20 20s20-8.954 20-20S35.046 4 24 4" stroke="#409eff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 24c0-6.627-5.373-12-12-12s-12 5.373-12 12 5.373 12 12 12" stroke="#409eff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+		loading: loadingHandle(),
+		closeHTML: '<svg width="16" height="16" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="white" fill-opacity="0.01"/><path d="M14 14L34 34" stroke="#909399" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 34L34 14" stroke="#909399" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+		close: closeHandle(),
 	}
 
 	/**
@@ -186,18 +299,42 @@
 		contentClassName += oMsg.settings.showClose ? ' ' + namespacify('content-with-close') : ''
 		var content = oMsg.settings.content || '';
 		var $closeSvg = ICONS['close'];
-		var $closeIcon = oMsg.settings.showClose ? '<i class="qmsg-icon qmsg-icon-close">' + $closeSvg + '</i>' : '';
+		var $closeIcon = null
+		if (oMsg.settings.showClose) {
+			let icon = document.createElement('i')
+			icon.className = 'qmsg-icon qmsg-icon-close'
+			icon.appendChild($closeSvg)
+			$closeIcon = icon
+		}
 		var $span = document.createElement("span");
 		if (oMsg.settings.html) {
-			$span.innerHTML = DOMPurify.sanitize(content, {RETURN_TRUSTED_TYPE: true});
+			// $span.innerHTML = content;
+			$span.appendChild(content)
 		} else {
-			$span.innerText = content;
+			// $span.innerText = content;
+			$span.appendChild(content)
 		}
-		$elem.innerHTML = DOMPurify.sanitize('<div class="qmsg-content">\
-            <div class="' + contentClassName + '">\
-                <i class="qmsg-icon">' + $svg + '</i>' + $span.outerHTML + $closeIcon +
-			'</div>\
-		</div>', {RETURN_TRUSTED_TYPE: true});
+		// $elem.innerHTML = '<div class="qmsg-content">\
+    //         <div class="' + contentClassName + '">\
+    //             <i class="qmsg-icon">' + $svg + '</i>' + $span.outerHTML + $closeIcon +
+		// 	'</div>\
+		// </div>';
+
+		let qmsgContent = document.createElement('div');
+		qmsgContent.className = 'qmsg-content'
+		let qmsgContentChild = document.createElement('div');
+		qmsgContentChild.className = contentClassName
+		let qmsgContentChildIcon = document.createElement('i');
+		qmsgContentChildIcon.className = 'qmsg-icon'
+		qmsgContentChildIcon.appendChild($svg)
+		qmsgContentChild.appendChild(qmsgContentChildIcon)
+		if ($closeIcon) {
+			qmsgContentChild.appendChild($closeIcon)
+		}
+		qmsgContent.appendChild(qmsgContentChild)
+
+		$elem.appendChild(qmsgContent)
+		
 
 		$elem.classList.add(namespacify('item'));
 		$elem.style.textAlign = oMsg.settings.position;
@@ -296,6 +433,8 @@
 			$count.classList.add(countClassName);
 			$content.appendChild($count);
 		}
+		
+
 		$count.innerHTML = DOMPurify.sanitize(oMsg.count, {RETURN_TRUSTED_TYPE: true});
 		$count.style.animationName = "";
 		$count.style.animationName = "MessageShake";
