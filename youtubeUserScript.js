@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.22
+// @version      1.23
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -9,7 +9,7 @@
 // @require      https://chiens.cn/recordApi/purify.min.js
 // @resource     customCSS https://chiens.cn/recordApi/message.css
 // @resource     customYoutubeCSS https://chiens.cn/recordApi/message.css
-// @require      https://chiens.cn/recordApi/message.min.js
+// @require      https://chiens.cn/recordApi/message.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
