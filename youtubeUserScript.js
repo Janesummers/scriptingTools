@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.21
+// @version      1.22
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
+// @require      https://chiens.cn/recordApi/purify.min.js
 // @resource     customCSS https://chiens.cn/recordApi/message.css
 // @resource     customYoutubeCSS https://chiens.cn/recordApi/message.css
 // @require      https://chiens.cn/recordApi/message.min.js
@@ -20,6 +21,12 @@
 /* globals GM_addStyle, GM_getResourceText, GM_xmlhttpRequest, Qmsg */
 
 // @connect * 表示允许任何域名的跨域请求
+
+// const newElement = document.createElement('div');
+// var innerHTMLText = 'Traduci';
+// 'use strict';
+// newElement.innerHTML = DOMPurify.sanitize(innerHTMLText, {RETURN_TRUSTED_TYPE: true});
+// document.body.appendChild(newElement);
 
 const css = GM_getResourceText("customCSS");
 const customYoutubeCSS = GM_getResourceText("customYoutubeCSS");
