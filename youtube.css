@@ -1,4 +1,4 @@
-.watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata[oldChecked]::before {
+.watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata[oldchecked]::before {
   content: '[早期已看]';
   font-size: 20px;
 }
