@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.37
+// @version      1.38
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -254,7 +254,7 @@ function handleData() {
         children.forEach(item => {
           let code = new URLSearchParams(item.search).get("v")
           if (codeList.includes(code)) {
-            item.setAttribute('checked', '1')
+            item.querySelector('#video-title').setAttribute('checked', '1')
           }
         })
       }

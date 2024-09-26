@@ -8,7 +8,7 @@
   font-size: 20px;
 }
 
-#contents #content #dismissible #details #meta .ytd-rich-grid-media #video-title-link.ytd-rich-grid-media[checked] #video-title::before {
+#contents #content #dismissible #details #meta .ytd-rich-grid-media #video-title-link.ytd-rich-grid-media #video-title[checked]::before {
   content: '[已看]';
   /* font-size: 20px; */
 }
