@@ -130,9 +130,9 @@
 	}, global && global.QMSG_GLOBALS && global.QMSG_GLOBALS.DEFAULTS);
 
 	function infoHandle() {
-		let svgBox = document.createElement('svg')
+		let svgBox = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
 		svgBox.setAttribute('viewBox', '0 0 1024 1024')
-		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		// svgBox.setAttribute('xmlns', )
 		svgBox.setAttribute('width', '16')
 		svgBox.setAttribute('height', '16')
 		let svgPath = document.createElement('path')
