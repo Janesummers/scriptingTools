@@ -312,7 +312,7 @@
 			$span.appendChild(content)
 		} else {
 			// $span.innerText = content;
-			$span.appendChild(content)
+			$span.innerText = content
 		}
 		// $elem.innerHTML = '<div class="qmsg-content">\
     //         <div class="' + contentClassName + '">\
