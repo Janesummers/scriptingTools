@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.42
+// @version      1.43
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -127,7 +127,7 @@ function record() {
         const result = JSON.parse(req.response)
         if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
           console.log("记录成功");
-          // Qmsg.success("成功记录", {autoClose: true, onClose: () => {  }});
+          Qmsg.success("成功记录", {autoClose: true, onClose: () => {  }});
           if (document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata")) {
             document.querySelector(".watch-active-metadata #above-the-fold #title h1.ytd-watch-metadata").setAttribute('checked', '1')
           }
@@ -136,7 +136,7 @@ function record() {
         }
       },
       onerror: function(){
-        // Qmsg.error("记录失败", {autoClose: true });
+        Qmsg.error("记录失败", {autoClose: true });
         isRecord = false
       }
     });
@@ -152,7 +152,7 @@ function getData() {
   if (isChecked) return
   if (codeList && codeList.length) {
     if (!skipUrls.includes(location.pathname)) {
-      // globalHint = Qmsg.success("获取本地数据成功，等待处理", {autoClose: false, onClose: () => {  }});
+      globalHint = Qmsg.success("获取本地数据成功，等待处理", {autoClose: false, onClose: () => {  }});
       handleData()
     }
   } else {
@@ -171,15 +171,15 @@ function getData() {
           const list = result.data.message === '' ? result.data.message : JSON.parse(result.data.message)
           codeList = list || []
           console.log('ddsss', list)
-          // globalHint.close()
-          // globalHint = Qmsg.success("获取数据成功，等待处理", {autoClose: false, onClose: () => {  }});
+          globalHint.close()
+          globalHint = Qmsg.success("获取数据成功，等待处理", {autoClose: false, onClose: () => {  }});
           handleData()
         }
       },
       onerror: function(response){
-        // globalHint.close()
+        globalHint.close()
         console.log('失败', response);
-        // Qmsg.error("获取数据请求失败", {autoClose: true });
+        Qmsg.error("获取数据请求失败", {autoClose: true });
       }
     });
   }
@@ -289,15 +289,15 @@ function homePageListHandle() {
             }
           })
           console.log('homeContents - 处理完成');
-          // Qmsg.success("homeContents - 处理完成", {autoClose: true, onClose: () => {  }});
+          Qmsg.success("homeContents - 处理完成", {autoClose: true, onClose: () => {  }});
         }
       })
       homeContents.observe(box)
     }
   }
   console.log('homePageListHandle - 处理完成');
-  // globalHint.close()
-  // globalHint = Qmsg.success("homePageListHandle - 处理完成", {autoClose: true, onClose: () => {  }});
+  globalHint.close()
+  globalHint = Qmsg.success("homePageListHandle - 处理完成", {autoClose: true, onClose: () => {  }});
 }
 
 /**
@@ -370,7 +370,7 @@ function viewPageListHandle() {
             }
           })
           console.log('itemsContents - 处理完成');
-          // Qmsg.success("itemsContents - 处理完成", {autoClose: true, onClose: () => {  }});
+          Qmsg.success("itemsContents - 处理完成", {autoClose: true, onClose: () => {  }});
         }
       })
       itemsContents.observe(box)
@@ -379,6 +379,6 @@ function viewPageListHandle() {
   }
   
   console.log('viewPageListHandle - 处理完成');
-  // globalHint.close()
-  // globalHint = Qmsg.success("viewPageListHandle - 处理完成", {autoClose: true, onClose: () => {  }});
+  globalHint.close()
+  globalHint = Qmsg.success("viewPageListHandle - 处理完成", {autoClose: true, onClose: () => {  }});
 }
