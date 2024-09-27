@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.40
+// @version      1.41
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
