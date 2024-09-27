@@ -142,62 +142,62 @@
 		return svgBox
 	}
 	function warningHandle() {
-		let svgBox = document.createElement('svg')
+		let svgBox = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
 		svgBox.setAttribute('viewBox', '0 0 1024 1024')
-		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		// svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
 		svgBox.setAttribute('width', '16')
 		svgBox.setAttribute('height', '16')
-		let svgPath = document.createElement('path')
+		let svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 		svgPath.setAttribute('d', 'M512 64C264.64 64 64 264.64 64 512c0 247.424 200.64 448 448 448 247.488 0 448-200.576 448-448 0-247.36-200.512-448-448-448zm0 704c-26.432 0-48-21.504-48-48s21.568-48 48-48c26.624 0 48 21.504 48 48s-21.376 48-48 48zm48-240c0 26.56-21.376 48-48 48-26.432 0-48-21.44-48-48V304c0-26.56 21.568-48 48-48 26.624 0 48 21.44 48 48v224z')
 		svgPath.setAttribute('fill', '#E6A23C')
 		svgBox.appendChild(svgPath)
 		return svgBox
 	}
 	function errorHandle() {
-		let svgBox = document.createElement('svg')
+		let svgBox = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
 		svgBox.setAttribute('viewBox', '0 0 1024 1024')
-		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		// svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
 		svgBox.setAttribute('width', '16')
 		svgBox.setAttribute('height', '16')
-		let svgPath = document.createElement('path')
+		let svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 		svgPath.setAttribute('d', 'M512 64C264.58 64 64 264.58 64 512s200.58 448 448 448 448-200.57 448-448S759.42 64 512 64zm158.39 561.14a32 32 0 1 1-45.25 45.26L512 557.26 398.86 670.4a32 32 0 0 1-45.25-45.26L466.75 512 353.61 398.86a32 32 0 0 1 45.25-45.25L512 466.74l113.14-113.13a32 32 0 0 1 45.25 45.25L557.25 512z')
 		svgPath.setAttribute('fill', '#F56C6C')
 		svgBox.appendChild(svgPath)
 		return svgBox
 	}
 	function successHandle() {
-		let svgBox = document.createElement('svg')
+		let svgBox = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
 		svgBox.setAttribute('viewBox', '0 0 1024 1024')
-		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		// svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
 		svgBox.setAttribute('width', '16')
 		svgBox.setAttribute('height', '16')
-		let svgPath = document.createElement('path')
+		let svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 		svgPath.setAttribute('d', 'M512 64q190.016 4.992 316.512 131.488T960 512q-4.992 190.016-131.488 316.512T512 960q-190.016-4.992-316.512-131.488T64 512q4.992-190.016 131.488-316.512T512 64zm-56 536l-99.008-99.008q-12-11.008-27.488-11.008t-27.008 11.488-11.488 26.496 11.008 27.008l127.008 127.008q11.008 11.008 27.008 11.008t27.008-11.008l263.008-263.008q15.008-15.008 9.504-36.512t-27.008-27.008-36.512 9.504z')
 		svgPath.setAttribute('fill', '#67C23A')
 		svgBox.appendChild(svgPath)
 		return svgBox
 	}
 	function loadingHandle() {
-		let svgBox = document.createElement('svg')
-		svgBox.className = 'animate-turn'
+		let svgBox = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+		svgBox.classList = 'animate-turn'
 		svgBox.setAttribute('viewBox', '0 0 48 48')
 		svgBox.setAttribute('fill', 'none')
-		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+		// svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
 		svgBox.setAttribute('width', '16')
 		svgBox.setAttribute('height', '16')
-		let svgPath = document.createElement('path')
+		let svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 		svgPath.setAttribute('fill', '#fff')
 		svgPath.setAttribute('fill-opacity', '.01')
 		svgPath.setAttribute('d', 'M0 0h48v48H0z')
 		svgBox.appendChild(svgPath)
-		let svgPath2 = document.createElement('path')
+		let svgPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 		svgPath2.setAttribute('stroke-width', '4')
 		svgPath2.setAttribute('stroke-linecap', 'round')
 		svgPath2.setAttribute('stroke', '#409eff')
 		svgPath2.setAttribute('stroke-linejoin', 'round')
 		svgPath2.setAttribute('d', 'M4 24c0 11.046 8.954 20 20 20s20-8.954 20-20S35.046 4 24 4')
 		svgBox.appendChild(svgPath2)
-		let svgPath3 = document.createElement('path')
+		let svgPath3 = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 		svgPath3.setAttribute('stroke-width', '4')
 		svgPath3.setAttribute('stroke-linecap', 'round')
 		svgPath3.setAttribute('stroke', '#409eff')
@@ -207,26 +207,26 @@
 		return svgBox
 	}
 	function closeHandle() {
-		let svgBox = document.createElement('svg')
+		let svgBox = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
 		svgBox.setAttribute('viewBox', '0 0 48 48')
 		svgBox.setAttribute('fill', 'none')
 		svgBox.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
 		svgBox.setAttribute('width', '16')
 		svgBox.setAttribute('height', '16')
-		let svgRect = document.createElement('rect')
+		let svgRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
 		svgBox.setAttribute('width', '48')
 		svgBox.setAttribute('height', '48')
 		svgRect.setAttribute('fill', 'white')
 		svgRect.setAttribute('fill-opacity', '0.01')
 		svgBox.appendChild(svgRect)
-		let svgPath = document.createElement('path')
+		let svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 		svgPath.setAttribute('stroke-width', '4')
 		svgPath.setAttribute('stroke-linecap', 'round')
 		svgPath.setAttribute('stroke', '#909399')
 		svgPath.setAttribute('stroke-linejoin', 'round')
 		svgPath.setAttribute('d', 'M14 14L34 34')
 		svgBox.appendChild(svgPath)
-		let svgPath2 = document.createElement('path')
+		let svgPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 		svgPath2.setAttribute('stroke-width', '4')
 		svgPath2.setAttribute('stroke-linecap', 'round')
 		svgPath2.setAttribute('stroke', '#909399')
@@ -328,6 +328,7 @@
 		qmsgContentChildIcon.className = 'qmsg-icon'
 		qmsgContentChildIcon.appendChild($svg)
 		qmsgContentChild.appendChild(qmsgContentChildIcon)
+		qmsgContentChild.appendChild($span)
 		if ($closeIcon) {
 			qmsgContentChild.appendChild($closeIcon)
 		}
