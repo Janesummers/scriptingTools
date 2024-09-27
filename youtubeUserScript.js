@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.38
+// @version      1.39
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @resource     customCSS https://chiens.cn/recordApi/message.css
 // @resource     customYoutubeCSS https://chiens.cn/recordApi/youtube.css
-
+// @require      https://chiens.cn/recordApi/message.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
@@ -89,6 +89,7 @@ window.onload = () => {
   if (!skipUrls.includes(location.pathname)) {
     if (document.visibilityState === 'visible') {
       getData()
+      console.log('dsdsds0-------');
     }
   }
 }
@@ -155,7 +156,7 @@ function getData() {
       handleData()
     }
   } else {
-    // globalHint = Qmsg.info("正在获取数据", {autoClose: false});
+    globalHint = Qmsg.info("正在获取数据", {autoClose: false});
     GM_xmlhttpRequest({
       method: "post",
       url: "https://chiens.cn/recordApi/getYoutubeLog",
