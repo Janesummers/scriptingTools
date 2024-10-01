@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer-YouTube
 // @namespace    http://tampermonkey.net/
-// @version      1.43
+// @version      1.44
 // @description  try to take over the world!
 // @author       You
 // @match        https://www.youtube.com/*
@@ -52,6 +52,8 @@ let codeList = []
 let globalHint = null
 // 首页视频列表高度
 let homePageListHeight = 0
+// 作者页面视频标签列表高度
+let authorVideoTagsPageListHeight = 0
 // 查看视频详情页面右侧列表高度
 let viewPageListHeight = 0
 let isRecord = false
@@ -62,6 +64,8 @@ let isChecked = false
 let search = ''
 // 首页列表
 let homeContents = null
+// 作者页面视频标签列表
+let authorVideoTagsContents = null
 // 详情页右侧列表
 let itemsContents = null
 
@@ -258,7 +262,33 @@ function handleData() {
             item.querySelector('#video-title').setAttribute('checked', '1')
           }
         })
+        isChecked = true
+
+        if (authorVideoTagsContents) {
+          console.log('authorVideoTagsContents - 已存在，无需再次监听');
+        } else {
+          authorVideoTagsContents = watchElementChange(box, (entries) => {
+            var newHeight = entries[0].target.scrollHeight;
+            console.log('newHeight !== authorVideoTagsPageListHeight', newHeight, authorVideoTagsPageListHeight);
+            if (newHeight !== authorVideoTagsPageListHeight) {
+              authorVideoTagsPageListHeight = newHeight;
+              const list = entries[0].target.querySelectorAll("div#dismissible.ytd-rich-grid-media")
+              list.forEach(item => {
+                let code = new URLSearchParams(item.querySelector('a#thumbnail').search).get("v")
+                if (codeList.includes(code)) {
+                  item.querySelector('#video-title').setAttribute('checked', '1')
+                }
+              })
+              console.log('authorVideoTagsContents - 处理完成');
+              Qmsg.success("authorVideoTagsContents - 处理完成", {autoClose: true, onClose: () => {  }});
+            }
+          })
+          authorVideoTagsContents.observe(box)
+        }
       }
+      
+      globalHint.close()
+      globalHint = Qmsg.success("作者页面 - 处理完成", {autoClose: true, onClose: () => {  }});
     }
   }
 
@@ -301,41 +331,6 @@ function homePageListHandle() {
 }
 
 /**
- * @description: 处理传过来的列表数据
- * @param {*} box
- * @param {*} callback
- * @return {*}
- */
-function listHandle(box, callback) {
-  if (box) {
-    let list = box.querySelectorAll('.pcVideoListItem')
-    list.forEach(item => { 
-      let code = new URLSearchParams(item.querySelector('.title a').href).get("viewkey")
-      if (!code) {
-        code = new URL(item.querySelector('.title a').href).searchParams.get("viewkey")
-      }
-      if (item.querySelector('.watchedVideoText') || item.querySelector('.watchedVideo') || codeList.includes(code)) {
-        item.querySelector('.title a').setAttribute('checked', '1')
-        if (item.querySelector('.watchedVideoText')) {
-          // item.querySelector('.watchedVideoText').innerHTML = ''
-          item.querySelector('.watchedVideoText').innerText = `已观看 - for record`
-        } else {
-          const node = document.createElement('div')
-          node.className = 'watchedVideoText'
-          node.innerText = '已观看 - for record'
-          item.querySelector('.phimage a').appendChild(node)
-        }
-
-      }
-      if (item.querySelector('.bg-spice-badge')) {
-        item.remove()
-      }
-    })
-    callback && callback()
-  }
-}
-
-/**
  * @description: 视频详情页面右侧列表增加监听
  * @return {*}
  */
@@ -375,7 +370,6 @@ function viewPageListHandle() {
       })
       itemsContents.observe(box)
     }
-    // listHandle(box)
   }
   
   console.log('viewPageListHandle - 处理完成');
