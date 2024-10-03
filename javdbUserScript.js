@@ -226,7 +226,7 @@ function checkDesignationHandle(code) {
         url: "https://chiens.cn/recordApi/checkDesignationLog",
         data: `code=${code.toString()}`,
         headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/x-www-form-urlencoded"
         },
 
         onload: function(req){
@@ -253,7 +253,7 @@ function checkDesignationHandle(code) {
   }
 }
 
-function listHandle () {
+function listHandle() {
   if (urlIncludes(homeList, location.pathname)) {
     let avDetailBox = document.querySelector(".movie-list")
     let avDetailBoxChildren = avDetailBox.children;
