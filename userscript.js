@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      1.31
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -242,7 +242,7 @@ window.onload = function () {
       }
     });
   }
-}
+};
 
 // “加亮今日帖子”、“移除viidii跳转”、“图片自动缩放”、“种子链接转磁力链”、“预览整页图片”、“游客站内搜索”、“返回顶部”等功能！
 (function() {
