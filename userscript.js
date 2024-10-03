@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      1.35
+// @version      1.36
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -363,6 +363,12 @@ window.onload = function () {
               Qmsg.success("okk", {autoClose: true});
               let text = helper.hash(torLink[0].href)
               if (text) {
+                let title = document.querySelector('.do_not_catch h4.f16')
+                let titleText = ''
+                if (title) {
+                  titleText = title.innerText
+                }
+                text = `magnet:?xt=urn:btih:${text} | ${titleText}`
                 // Qmsg.success(text, {autoClose: false});
                 GM_xmlhttpRequest({
                   method: "get",
