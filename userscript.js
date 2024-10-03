@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      1.33
+// @version      1.34
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -354,7 +354,7 @@ window.onload = function () {
           $('body').append('<div id="jsummer-top-info" style="position:fixed;top:0px;background:#def7d4;width:100%;padding:4px;text-align:center;"><details>' + tmpNode + '</details></div>');
 
           setTimeout(() => {
-            let btn = document.createElement('div') 
+            let btn = document.createElement('span') 
             btn.className = 'js-custom-btn-magnets'
             btn.innerText = '【Go】'
             btn.style.width = '60px'
