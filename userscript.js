@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      1.34
+// @version      1.35
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -355,19 +355,13 @@ window.onload = function () {
 
           setTimeout(() => {
             let btn = document.createElement('span') 
-            btn.className = 'js-custom-btn-magnets'
             btn.innerText = '【Go】'
-            btn.style.width = '60px'
-            btn.style.height = '30px'
-            btn.style.fontSize = '16px'
-            btn.style.textAlign = 'center'
-            btn.style.lineHeight = '30px'
-            btn.style.borderRadius = '2px'
+            btn.style.fontSize = '12px'
             btn.style.cursor = 'pointer'
             btn.style.color = '#2f5fa1'
             btn.addEventListener('click', () => {
               Qmsg.success("okk", {autoClose: true});
-              let text = child[i].querySelector('.copy-to-clipboard').getAttribute('data-clipboard-text')
+              let text = helper.hash(torLink[0].href)
               if (text) {
                 // Qmsg.success(text, {autoClose: false});
                 GM_xmlhttpRequest({
