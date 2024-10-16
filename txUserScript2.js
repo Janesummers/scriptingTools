@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 详情
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh049.com/movie/detail/*

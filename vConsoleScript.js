@@ -2,7 +2,7 @@
 // @name         JSummer - vConsole
 // @name:cn      vConsole
 // @namespace    http://tampermonkey.net/
-// @version      0.2
+// @version      0.3
 // @description  【使用前先看介绍/有问题可反馈】手机浏览器控制台 (vConsole)：在移动端手机浏览器中插入 vConsole 从而调用控制台，使用 via 浏览器进入该页面可添加脚本
 // @author       You
 // @grant        GM_addStyle
