@@ -8,9 +8,9 @@
 // @match        https://t66y.com/*
 // @match        *://cl.6387x.xyz/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=t66y.com
-// @resource     customCSS https://chiens.cn/recordApi/message.css
-// @require      https://chiens.cn/recordApi/message.min.js
-// @require      https://chiens.cn/recordApi/jquery-1.12.4.min.js
+// @resource     customCSS https://chiens.cn/recordApi/css/message.css
+// @require      https://chiens.cn/recordApi/js/message.min.js
+// @require      https://chiens.cn/recordApi/js/jquery-1.12.4.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
@@ -441,11 +441,11 @@ window.onload = function () {
         // helper.getScript('//cdn.jsdelivr.net/g/lg-fullscreen,lg-thumbnail,lg-autoplay,lg-zoom');
         // helper.getScript('//cdn.jsdelivr.net/mousewheel/3.1.13/jquery.mousewheel.min.js');
 
-        helper.getCss('https://chiens.cn/recordApi/lightgallery-1.3.7.min.css');
-        helper.getScript('https://chiens.cn/recordApi/picturefill-2.3.1.min.js');
-        helper.getScript('https://chiens.cn/recordApi/lightgallery-1.3.7.min.js');
-        helper.getScript('https://chiens.cn/recordApi/lg-fullscreen,lg-thumbnail,lg-autoplay,lg-zoom.js');
-        helper.getScript('https://chiens.cn/recordApi/jquery.mousewheel-3.1.13.min.js');
+        helper.getCss('https://chiens.cn/recordApi/css/lightgallery-1.3.7.min.css');
+        helper.getScript('https://chiens.cn/recordApi/js/picturefill-2.3.1.min.js');
+        helper.getScript('https://chiens.cn/recordApi/js/lightgallery-1.3.7.min.js');
+        helper.getScript('https://chiens.cn/recordApi/js/lg-fullscreen,lg-thumbnail,lg-autoplay,lg-zoom.js');
+        helper.getScript('https://chiens.cn/recordApi/js/jquery.mousewheel-3.1.13.min.js');
 
         helper.addCss('#viewer{max-width:1280px;margin:auto;display:none}#viewer > ul{margin-bottom:0;padding:0}#viewer > ul > li{float:left;margin-bottom:15px;margin-right:15px;width:240px;list-style-type:none}#viewer > ul > li a{border:3px solid #FFF;border-radius:3px;display:block;overflow:hidden;position:relative;float:left}#viewer > ul > li a > img{transition:transform .3s ease 0s;transform:scale3d(1, 1, 1);height:200px;width:240px}#viewer > ul > li a:hover > img{transform:scale3d(1.1, 1.1, 1.1);opacity:.9}');
         $('div#main').before('<div id="viewer"><ul id="lightgallery" class="list-unstyled row"></ul></div>');
@@ -478,6 +478,6 @@ window.onload = function () {
 
     /*-------------------------------------------------------------------------------------------------------------------------------------------*/
 
-    helper.getScript('https://chiens.cn/recordApi/jquery-1.12.4.min.js', t66y);
+    helper.getScript('https://chiens.cn/recordApi/js/jquery-1.12.4.min.js', t66y);
 
 })();

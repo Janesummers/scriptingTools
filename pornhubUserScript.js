@@ -7,9 +7,9 @@
 // @match        https://cn.pornhub.com/*
 // @match        https://www.pornhub.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=pornhub.com
-// @resource     customCSS https://chiens.cn/recordApi/message.css
+// @resource     customCSS https://chiens.cn/recordApi/css/message.css
 // @resource     customPornhubCSS https://chiens.cn/recordApi/pornhub.css
-// @require      https://chiens.cn/recordApi/message.min.js
+// @require      https://chiens.cn/recordApi/js/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText

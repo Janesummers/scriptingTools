@@ -424,7 +424,7 @@ app.get('*', (req: Recordable, resp: Recordable) => {
     resp.end(result)
   } else if (/[\.pdf]$/.test(req.params[0])) {
     const files = req.params[0].replace(/\/(.*)/, '$1')
-    const file = fs.createReadStream(path.resolve(__dirname, `/pdf/${files}`));
+    const file = fs.createReadStream(path.resolve(__dirname, `pdf/${files}`));
     resp.setHeader('Content-Type', 'application/pdf');
     // resp.setHeader('Content-Disposition', 'inline; filename="file.pdf"');
     file.pipe(resp);

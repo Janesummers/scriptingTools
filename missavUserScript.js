@@ -7,9 +7,9 @@
 // @match        https://missav.com/*
 // @match        https://thisav.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=missav.com
-// @resource     customCSS https://chiens.cn/recordApi/message.css
+// @resource     customCSS https://chiens.cn/recordApi/css/message.css
 // @resource     customMissAvCSS https://chiens.cn/recordApi/missAv.css
-// @require      https://chiens.cn/recordApi/message.min.js
+// @require      https://chiens.cn/recordApi/js/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText

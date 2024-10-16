@@ -27,7 +27,7 @@ GM_addStyle(`
 
 let script = document.createElement('script');
 script.type = 'text/javascript';
-script.src = 'https://chiens.cn/recordApi/vconsole.min.js';
+script.src = 'https://chiens.cn/recordApi/js/vconsole.min.js';
 document.body.appendChild(script);
 script = document.createElement('script');
 script.type = 'text/javascript';

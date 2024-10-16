@@ -6,8 +6,8 @@
 // @author       You
 // @match        https://*.txh049.com/movie/block/*
 // @match        https://txh049.com/movie/block/*
-// @resource     customCSS https://chiens.cn/recordApi/message.css
-// @require      https://chiens.cn/recordApi/message.min.js
+// @resource     customCSS https://chiens.cn/recordApi/css/message.css
+// @require      https://chiens.cn/recordApi/js/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText

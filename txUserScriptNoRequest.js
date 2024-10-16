@@ -6,7 +6,7 @@
 // @author       You
 // @match        https://*.txh049.com/user/*
 // @match        https://txh049.com/user/*
-// @resource     customCSS https://chiens.cn/recordApi/message.css
+// @resource     customCSS https://chiens.cn/recordApi/css/message.css
 // @resource     source https://chiens.cn/recordApi/tx_log.json
 // @grant        GM_getResourceText
 // @grant        GM_addStyle
@@ -19,7 +19,7 @@
 
 let messageScript = document.createElement('script');
 messageScript.type = 'text/javascript';
-messageScript.src = `https://chiens.cn/recordApi/message.min.js`;
+messageScript.src = `https://chiens.cn/recordApi/js/message.min.js`;
 document.body.appendChild(messageScript);
 
 let script = document.createElement('script');
