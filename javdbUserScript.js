@@ -1,14 +1,14 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.54
+// @version      2.55
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=javdb.com
-// @resource customCSS https://chiens.cn/recordApi/message.css
-// @require      https://chiens.cn/recordApi/message.min.js
-// @require      https://chiens.cn/recordApi/jquery-3.1.1.min.js
+// @resource customCSS https://chiens.cn/recordApi/css/message.css
+// @require      https://chiens.cn/recordApi/js/message.min.js
+// @require      https://chiens.cn/recordApi/js/jquery-3.1.1.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText

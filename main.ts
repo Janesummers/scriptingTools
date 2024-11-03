@@ -417,15 +417,26 @@ app.post('/getYoutubeLog', (_: Recordable, resp: Recordable) => {
 
 app.get('*', (req: Recordable, resp: Recordable) => {
   console.log(`req --> ${monent().format('YYYY-MM-DD HH:mm:ss')}`, req.params[0])
-  resp.writeHead(200, { "Content-Type": "text/plain;charset=utf-8" });
   if (/[\.js|\.css|\.json|\.out]$/.test(req.params[0])) {
+    resp.writeHead(200, { "Content-Type": "text/plain;charset=utf-8" });
     const file = req.params[0].replace(/\/(.*)/, '$1')
     const result = readFileFn(file)
     resp.end(result)
+  } else if (/[\.pdf]$/.test(req.params[0])) {
+    const files = req.params[0].replace(/\/(.*)/, '$1')
+    const file = fs.createReadStream(path.resolve(__dirname, `pdf/${files}`));
+    resp.setHeader('Content-Type', 'application/pdf');
+    // resp.setHeader('Content-Disposition', 'inline; filename="file.pdf"');
+    file.pipe(resp);
   } else {
     resp.status(404).end('什么也没有')
   }
 })
+
+// resp.writeHead(200, { "Content-Type": "text/plain;charset=utf-8" });
+//     const file = req.params[0].replace(/\/(.*)/, '$1')
+//     const result = readFileFn(`/js/${file}`)
+//     resp.end(result)
 
 app.listen(2048, () => {
   console.log(`开启成功(${monent().format('YYYY-MM-DD HH:mm:ss')})：http://${getLocalAddress()}:2048`);

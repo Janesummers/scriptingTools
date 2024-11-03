@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 用户
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh049.com/user/*
 // @match        https://txh049.com/user/*
-// @resource     customCSS https://chiens.cn/recordApi/message.css
-// @require      https://chiens.cn/recordApi/message.min.js
+// @resource     customCSS https://chiens.cn/recordApi/css/message.css
+// @require      https://chiens.cn/recordApi/js/message.min.js
 // @grant        GM_xmlhttpRequest
 // @grant        GM_addStyle
 // @grant        GM_getResourceText
