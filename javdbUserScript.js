@@ -25,6 +25,11 @@ GM_addStyle(`
 .movie-list .item a:visited {
   color: #d36141 !important;
 }
+.movie-list .item > a > div.meta {
+  color: #d83030 !important;
+  font-size: 1rem !important;
+  font-weight: bold;
+}
 .movie-list .box:visited .video-title {
   color: #d36141 !important;
 }
