@@ -65,10 +65,12 @@ function getCurrentPagePath() {
 // 视频详情页
 if (location.pathname) {
   let path = getCurrentPagePath()
-  path = path.length && path[0]
-  console.log('path', path);
-  if (detailRouterPathList.includes(path)) {
-    getCodeHandle()
+  if (path) {
+    path = path.length && path[0]
+    console.log('path', path);
+    if (detailRouterPathList.includes(path)) {
+      getCodeHandle()
+    }
   }
 }
 
@@ -319,6 +321,19 @@ window.onload = function () {
             $(this).addClass('newPost');
           }
         });
+      }
+
+      /*-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+      if (document.readyState === "complete") {
+        jump18();
+      } else {
+        window.addEventListener("load", jump18);
+      }
+      function jump18() {
+        if (document.body.innerHTML.includes(`__ 滿 18 歲, \n請按此 __`)) {
+          location.href = location.origin + "/index.php";
+        }
       }
 
       /*-------------------------------------------------------------------------------------------------------------------------------------------*/
