@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.56
+// @version      2.57
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -425,7 +425,7 @@ function magnetsHandle() {
       btn2.innerText = 'PikPak-Record'
       btn2.style.width = '100px'
       btn2.style.height = '30px'
-      btn2.style.fontSize = '16px'
+      btn2.style.fontSize = '12px'
       btn2.style.textAlign = 'center'
       btn2.style.lineHeight = '30px'
       btn2.style.backgroundColor = 'rgb(25, 137, 250)'
