@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.59
+// @version      2.60
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -325,6 +325,34 @@ function listHandle() {
         })
         document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").appendChild(btn)
       }
+      if (['0', '2', '4', '6', '7'].includes(globalResult[t])) {
+        let btn = document.createElement('span')
+        btn.className = 'record-code'
+        btn.innerText = 'PikPak'
+        btn.addEventListener('click', () => {
+          Qmsg.success("record", {autoClose: true});
+            GM_xmlhttpRequest({
+              method: "post",
+              url: "https://chiens.cn/recordApi/updateDesignationLog",
+              data: `code=${t}&type=7`,
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+
+              onload: function(req){
+                console.log('dd', req)
+                const result = JSON.parse(req.response)
+                if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+                  Qmsg.success("记录PikPak成功", {autoClose: true});
+                }
+              },
+              onerror: function(response){
+                Qmsg.error("记录PikPak失败", {autoClose: true });
+              }
+            })
+          
+        })
+      }
     }
     globalHint.close()
     globalHint = Qmsg.success("详情页数据 - 处理完成", {autoClose: true, onClose: () => {  }});
@@ -426,49 +454,9 @@ function magnetsHandle() {
 
       })
 
-      let btn2 = document.createElement('div') 
-      btn2.className = 'js-custom-btn-pik-pak'
-      btn2.innerText = 'PikPak-Record'
-      btn2.style.width = '100px'
-      btn2.style.height = '30px'
-      btn2.style.fontSize = '12px'
-      btn2.style.textAlign = 'center'
-      btn2.style.lineHeight = '30px'
-      btn2.style.backgroundColor = 'rgb(25, 137, 250)'
-      btn2.style.borderRadius = '2px'
-      btn2.style.cursor = 'pointer'
-      btn2.style.color = '#fff'
-      btn2.addEventListener('click', () => {
-        Qmsg.success("record", {autoClose: true});
-        let t = document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").innerText.match(numberExtraction);
-        t = t ? t[0] : "";
-        if (t != "") {
-          t = t.toUpperCase()
-          GM_xmlhttpRequest({
-            method: "post",
-            url: "https://chiens.cn/recordApi/updateDesignationLog",
-            data: `code=${t}&type=7`,
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded"
-            },
-
-            onload: function(req){
-              console.log('dd', req)
-              const result = JSON.parse(req.response)
-              if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
-                Qmsg.success("记录PikPak成功", {autoClose: true});
-              }
-            },
-            onerror: function(response){
-              Qmsg.error("记录PikPak失败", {autoClose: true });
-            }
-          })
-        }
-      })
       let box = document.createElement('div') 
       box.className = 'buttons column'
       box.appendChild(btn)
-      box.appendChild(btn2)
       child[i].appendChild(box)
     }
 
