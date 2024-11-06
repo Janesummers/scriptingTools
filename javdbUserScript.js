@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.57
+// @version      2.58
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -83,6 +83,11 @@ GM_addStyle(`
 .movie-panel-info .panel-block .value[checked='7']::before {
   content: '[星级未下]';
 }
+.video-title[checked='8']::before,
+.video-number[checked='8']::before,
+.movie-panel-info .panel-block .value[checked='7']::before {
+  content: '[PikPak]';
+}
 .video-title[exits='1'],
 .video-number[exits='1'] {
   color: #b58226 !important;
@@ -136,6 +141,7 @@ div[data-controller="movie-tab"] li[data-movie-tab-target="listTab"] {
   5：流出
   6：流出未下
   7：星级未下
+  8：PikPak
 */
 
 const numberExtraction = /([0-9A-Za-z][a-zA-Z0-9\_\-]+[0-9A-Za-z])|([n|k][0-9]+)/ig
