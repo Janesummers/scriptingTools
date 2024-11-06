@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.60
+// @version      2.61
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -352,6 +352,7 @@ function listHandle() {
             })
           
         })
+        document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").appendChild(btn)
       }
     }
     globalHint.close()
