@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.61
+// @version      2.62
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -344,6 +344,7 @@ function listHandle() {
                 const result = JSON.parse(req.response)
                 if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
                   Qmsg.success("记录PikPak成功", {autoClose: true});
+                  document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block .value").setAttribute('checked', '8');
                 }
               },
               onerror: function(response){
