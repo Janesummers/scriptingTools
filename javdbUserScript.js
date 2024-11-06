@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.58
+// @version      2.59
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -85,7 +85,7 @@ GM_addStyle(`
 }
 .video-title[checked='8']::before,
 .video-number[checked='8']::before,
-.movie-panel-info .panel-block .value[checked='7']::before {
+.movie-panel-info .panel-block .value[checked='8']::before {
   content: '[PikPak]';
 }
 .video-title[exits='1'],
@@ -297,7 +297,7 @@ function listHandle() {
     if (t != "" && !document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block .value[checked]")) {
       t = t.toUpperCase()
       document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block .value").setAttribute('checked', globalResult[t]);
-      if (['0', '2', '4', '6', '7'].includes(globalResult[t])) {
+      if (['0', '2', '4', '6', '7', '8'].includes(globalResult[t])) {
         let btn = document.createElement('span')
         btn.className = 'record-code'
         btn.innerText = '记录'
