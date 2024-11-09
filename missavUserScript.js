@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - missav
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  try to take over the world!
 // @author       You
 // @match        https://missav.com/*
@@ -36,6 +36,7 @@ GM_addStyle(customMissAvCSS);
   5：流出
   6：流出未下
   7：星级未下
+  8：PikPak
 */
 
 const numberExtraction = /([0-9A-Za-z][a-zA-Z0-9_-]+[0-9A-Za-z])|([n|k][0-9]+)/ig
