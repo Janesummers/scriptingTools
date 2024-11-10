@@ -246,6 +246,7 @@ const txUserConfig = {
   "小辣椒": "https://txh049.com/user/67195623",
   "不是丸子": "https://txh049.com/user/84383830",
   "菠萝啤beer": "https://txh049.com/user/89486120",
+  "菲欧娜": "https://txh049.com/user/84383852",
 }
 // const dataSource = GM_getResourceText("dataSource");
 GM_addStyle(css);
