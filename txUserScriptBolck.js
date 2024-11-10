@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 万花筒
 // @namespace    http://tampermonkey.net/
-// @version      0.93
+// @version      0.94
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh049.com/movie/block/*
@@ -262,6 +262,23 @@ const txUserConfig = {
   "苏美奈": "https://txh049.com/user/35445746",
   "宸荨樱桃": "https://txh049.com/user/55275725",
   "丽江夫妻": "https://txh049.com/user/57554976",
+  "Sweetie Fox(小狐狸)": "https://txh049.com/user/72305078",
+  "W神": "https://txh049.com/user/73156502",
+  "鱼香肉丝": "https://txh049.com/user/84718683",
+  "Pinkloves": "https://txh049.com/user/67195626",
+  "Yui🐰ゆい🍑": "https://txh049.com/user/70194517",
+  "米胡桃": "https://txh049.com/user/56996176",
+  "少女盟主": "https://txh049.com/user/77338050",
+  "淳儿": "https://txh049.com/user/65800303",
+  "浵卡Tokar": "https://txh049.com/user/74697442",
+  "反差日报": "https://txh049.com/user/81320503",
+  "nina_loveu": "https://txh049.com/user/80825991",
+  "QQ糖小朋友": "https://txh049.com/user/89637184",
+  "洛宝": "https://txh049.com/user/84383840",
+  "兔兔": "https://txh049.com/user/84423922",
+  "胡椒仔": "https://txh049.com/user/84383847",
+  "橙子橙子": "https://txh049.com/user/84383855",
+  "小鱼饭馆": "https://txh049.com/user/84383856",
 
 }
 // const dataSource = GM_getResourceText("dataSource");
