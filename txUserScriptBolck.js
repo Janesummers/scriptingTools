@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 万花筒
 // @namespace    http://tampermonkey.net/
-// @version      0.9
+// @version      0.92
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh049.com/movie/block/*
@@ -247,6 +247,7 @@ const txUserConfig = {
   "不是丸子": "https://txh049.com/user/84383830",
   "菠萝啤beer": "https://txh049.com/user/89486120",
   "菲欧娜": "https://txh049.com/user/84383852",
+  "派大星": "https://txh049.com/user/84383834",
 }
 // const dataSource = GM_getResourceText("dataSource");
 GM_addStyle(css);
