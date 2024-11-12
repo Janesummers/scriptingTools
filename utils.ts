@@ -132,16 +132,49 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
     if (originText !== '') {
       originData = JSON.parse(originText)
       if (originData[reqData.type]) {
-        if (originData[reqData.type].indexOf(reqData.title.toString()) !== -1) {
+        if (originData[reqData.type][reqData.code]) {
           return JSON.stringify(originData);
         }
-        originData[reqData.type].push(reqData.title.toString())
+        switch (reqData.type) {
+          case 'tags':
+            originData[reqData.type][reqData.code] = { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
+            break;
+        
+          default:
+            originData[reqData.type][reqData.code] = { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.code.toString()}` }
+            break;
+        }
       } else {
-        originData[reqData.type] = { code: reqData.code.toString(), title: reqData.title.toString(), link: reqData.link.toString() }
+         switch (reqData.type) {
+          case 'tags':
+            originData[reqData.type] = {
+              [reqData.code]: { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
+            }
+            break;
+            
+          default:
+            originData[reqData.type][reqData.code] = {
+              [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.code.toString()}` }
+            }
+            break;
+        }
       }
       writeText = JSON.stringify(originData)
     } else {
-      writeText = JSON.stringify({[reqData.type]: [reqData.title.toString()]})
+      switch (reqData.type) {
+        case 'tags':
+          writeText = JSON.stringify({[reqData.type]: {
+            [reqData.code]: { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
+          }})
+          break;
+      
+        default:
+          writeText = JSON.stringify({[reqData.type]: {
+            [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.code.toString()}` }
+          }})
+          break;
+      }
+      
     }
     _fs.writeFileSync(_path.resolve(__dirname, `${fileFullName}`), writeText);
     // console.log('writeText',writeText);

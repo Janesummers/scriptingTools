@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const msgResult = require('./msgResult.ts');
 const fs = require("fs");
 const path = require('path');
-const {getTime , getLocalAddress, fileIsExist, writeFileFn, readFileFn, writeTxFileFn, jsonToString} = require('./utils.ts');
+const {getTime , getLocalAddress, fileIsExist, writeFileFn, readFileFn, writeTxFileFn, jsonToString, writeJavRecordFileFn} = require('./utils.ts');
 const monent = require('moment')
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -430,10 +430,11 @@ app.all('/javRecordLog', (req: Recordable, resp: Recordable) => {
   let result = ''
   const _fileIsExist = fileIsExist('javRecord', 'json')
   if (_fileIsExist) {
+    console.log('reqData', param);
     const text = readFileFn('javRecord.json')
     if (text || text === '') {
       // result = `文件已存在，内容：${readFileFn('javRecord.js')}`
-      const writeResult = writeTxFileFn('javRecord.json', text, param)
+      const writeResult = writeJavRecordFileFn('javRecord.json', text, param)
       if (writeResult) {
         // console.log('writeResult', writeResult);
         if (writeResult === true) {
@@ -448,7 +449,7 @@ app.all('/javRecordLog', (req: Recordable, resp: Recordable) => {
       resp.json(msgResult.error({status: 500, message: '文件读取异常'}));
     }
   } else {
-    const fileWrite = writeTxFileFn('javRecord.json', '', param)
+    const fileWrite = writeJavRecordFileFn('javRecord.json', '', param)
     if (fileWrite) {
       result = '文件不存在，已创建文件并写入数据'
     } else {
