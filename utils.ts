@@ -24,15 +24,12 @@ exports.getLocalAddress = () => {
 exports.fileIsExist = (fileName = '', suffix = '') => {
   if (fileName === '' || suffix === '') {
     throw('缺少文件名或文件后缀参数')
-    return false
   }
   if (typeof fileName !== 'string') {
     throw('文件名必须为字符串')
-    return false
   }
   if (typeof suffix !== 'string') {
     throw('文件后缀名必须为字符串')
-    return false
   }
   try {
     const result = _fs.statSync(_path.resolve(__dirname, `${fileName}.${suffix}`));
@@ -45,7 +42,6 @@ exports.fileIsExist = (fileName = '', suffix = '') => {
 exports.writeFileFn = (fileFullName: string, originText = '', text = '') => {
   if (fileFullName === '') {
     throw('缺少完整的文件名')
-    return false
   }
   try {
     let writeText = ''
@@ -86,7 +82,6 @@ exports.writeFileFn = (fileFullName: string, originText = '', text = '') => {
 exports.readFileFn = (fileFullName: string) => {
   if (fileFullName === '') {
     throw('缺少完整的文件名')
-    return false
   }
   try {
     const result = _fs.readFileSync(_path.resolve(__dirname, `${fileFullName}`));
@@ -100,7 +95,6 @@ exports.readFileFn = (fileFullName: string) => {
 exports.writeTxFileFn = (fileFullName: string, originText = '', reqData: Recordable = {}) => {
   if (fileFullName === '') {
     throw('缺少完整的文件名')
-    return false
   }
   try {
     let writeText = ''
@@ -118,6 +112,36 @@ exports.writeTxFileFn = (fileFullName: string, originText = '', reqData: Recorda
       writeText = JSON.stringify(originData)
     } else {
       writeText = JSON.stringify({[reqData.userCode]: [reqData.title.toString()]})
+    }
+    _fs.writeFileSync(_path.resolve(__dirname, `${fileFullName}`), writeText);
+    // console.log('writeText',writeText);
+    return writeText;
+  } catch (error) {
+    console.log('文件写入错误：', error);
+    return false;
+  }
+}
+
+exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: Recordable = {}) => {
+  if (fileFullName === '') {
+    throw('缺少完整的文件名')
+  }
+  try {
+    let writeText = ''
+    let originData;
+    if (originText !== '') {
+      originData = JSON.parse(originText)
+      if (originData[reqData.type]) {
+        if (originData[reqData.type].indexOf(reqData.title.toString()) !== -1) {
+          return JSON.stringify(originData);
+        }
+        originData[reqData.type].push(reqData.title.toString())
+      } else {
+        originData[reqData.type] = { code: reqData.code.toString(), title: reqData.title.toString(), link: reqData.link.toString() }
+      }
+      writeText = JSON.stringify(originData)
+    } else {
+      writeText = JSON.stringify({[reqData.type]: [reqData.title.toString()]})
     }
     _fs.writeFileSync(_path.resolve(__dirname, `${fileFullName}`), writeText);
     // console.log('writeText',writeText);
