@@ -83,6 +83,14 @@ a:visited {
   content: '[星级未下]';
 }
 
+.text-sm[checked='8']::before,
+.text-sm>a[checked='8']::before,
+.text-base[checked='8']::before,
+.video-number[checked='8']::before,
+.movie-panel-info .panel-block .value[checked='8']::before {
+  content: '[PikPak]';
+}
+
 .text-sm[exits='1'],
 .text-sm[exits='1']>a,
 .video-number[exits='1'] {

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 糖心 - 万花筒
 // @namespace    http://tampermonkey.net/
-// @version      0.7
+// @version      0.94
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh049.com/movie/block/*
@@ -168,7 +168,7 @@ const txUserConfig = {
   "北野爱": "https://txh049.com/user/84287904",
   "黑椒盖饭": "https://txh049.com/user/73638167",
   "鸡教练": "https://txh049.com/user/61169047",
-  "桃乃沐香奈": "https://txh049.com/user/75542892",
+  "大G先生": "https://txh049.com/user/75542892",
   "芋泥啵啵": "https://txh049.com/user/72839539",
   "啵啵小兔": "https://txh049.com/user/73027379",
   "小敏儿": "https://txh049.com/user/60007367",
@@ -245,6 +245,41 @@ const txUserConfig = {
   "琪琪有理（接1v1）": "https://txh049.com/user/87740291",
   "小辣椒": "https://txh049.com/user/67195623",
   "不是丸子": "https://txh049.com/user/84383830",
+  "菠萝啤beer": "https://txh049.com/user/89486120",
+  "菲欧娜": "https://txh049.com/user/84383852",
+  "派大星": "https://txh049.com/user/84383834",
+  "Tame凛": "https://txh049.com/user/87851346",
+  "西奶": "https://txh049.com/user/88244986",
+  "媛媛酱": "https://txh049.com/user/84383846",
+  "反差婊基地": "https://txh049.com/user/81984043",
+  "DAEMONE万": "https://txh049.com/user/88174131",
+  "悠悠米": "https://txh049.com/user/88536648",
+  "京都雨": "https://txh049.com/user/80825989",
+  "学姐": "https://txh049.com/user/85436445",
+  "兔崽": "https://txh049.com/user/75320919",
+  "白桃少女": "https://txh049.com/user/8898095",
+  "香菜公主": "https://txh049.com/user/36455840",
+  "苏美奈": "https://txh049.com/user/35445746",
+  "宸荨樱桃": "https://txh049.com/user/55275725",
+  "丽江夫妻": "https://txh049.com/user/57554976",
+  "Sweetie Fox(小狐狸)": "https://txh049.com/user/72305078",
+  "W神": "https://txh049.com/user/73156502",
+  "鱼香肉丝": "https://txh049.com/user/84718683",
+  "Pinkloves": "https://txh049.com/user/67195626",
+  "Yui🐰ゆい🍑": "https://txh049.com/user/70194517",
+  "米胡桃": "https://txh049.com/user/56996176",
+  "少女盟主": "https://txh049.com/user/77338050",
+  "淳儿": "https://txh049.com/user/65800303",
+  "浵卡Tokar": "https://txh049.com/user/74697442",
+  "反差日报": "https://txh049.com/user/81320503",
+  "nina_loveu": "https://txh049.com/user/80825991",
+  "QQ糖小朋友": "https://txh049.com/user/89637184",
+  "洛宝": "https://txh049.com/user/84383840",
+  "兔兔": "https://txh049.com/user/84423922",
+  "胡椒仔": "https://txh049.com/user/84383847",
+  "橙子橙子": "https://txh049.com/user/84383855",
+  "小鱼饭馆": "https://txh049.com/user/84383856",
+
 }
 // const dataSource = GM_getResourceText("dataSource");
 GM_addStyle(css);

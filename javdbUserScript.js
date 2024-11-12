@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.55
+// @version      2.62
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -24,6 +24,11 @@ GM_addStyle(css);
 GM_addStyle(`
 .movie-list .item a:visited {
   color: #d36141 !important;
+}
+.movie-list .item > a > div.meta {
+  color: #d83030 !important;
+  font-size: 1rem !important;
+  font-weight: bold;
 }
 .movie-list .box:visited .video-title {
   color: #d36141 !important;
@@ -78,6 +83,11 @@ GM_addStyle(`
 .movie-panel-info .panel-block .value[checked='7']::before {
   content: '[星级未下]';
 }
+.video-title[checked='8']::before,
+.video-number[checked='8']::before,
+.movie-panel-info .panel-block .value[checked='8']::before {
+  content: '[PikPak]';
+}
 .video-title[exits='1'],
 .video-number[exits='1'] {
   color: #b58226 !important;
@@ -131,6 +141,7 @@ div[data-controller="movie-tab"] li[data-movie-tab-target="listTab"] {
   5：流出
   6：流出未下
   7：星级未下
+  8：PikPak
 */
 
 const numberExtraction = /([0-9A-Za-z][a-zA-Z0-9\_\-]+[0-9A-Za-z])|([n|k][0-9]+)/ig
@@ -286,7 +297,7 @@ function listHandle() {
     if (t != "" && !document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block .value[checked]")) {
       t = t.toUpperCase()
       document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block .value").setAttribute('checked', globalResult[t]);
-      if (['0', '2', '4', '6', '7'].includes(globalResult[t])) {
+      if (['0', '2', '4', '6', '7', '8'].includes(globalResult[t])) {
         let btn = document.createElement('span')
         btn.className = 'record-code'
         btn.innerText = '记录'
@@ -311,6 +322,36 @@ function listHandle() {
               Qmsg.error("记录失败", {autoClose: true });
             }
           })
+        })
+        document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").appendChild(btn)
+      }
+      if (['0', '2', '4', '6', '7'].includes(globalResult[t])) {
+        let btn = document.createElement('span')
+        btn.className = 'record-code'
+        btn.innerText = 'PikPak'
+        btn.addEventListener('click', () => {
+          Qmsg.success("record", {autoClose: true});
+            GM_xmlhttpRequest({
+              method: "post",
+              url: "https://chiens.cn/recordApi/updateDesignationLog",
+              data: `code=${t}&type=7`,
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+
+              onload: function(req){
+                console.log('dd', req)
+                const result = JSON.parse(req.response)
+                if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+                  Qmsg.success("记录PikPak成功", {autoClose: true});
+                  document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block .value").setAttribute('checked', '8');
+                }
+              },
+              onerror: function(response){
+                Qmsg.error("记录PikPak失败", {autoClose: true });
+              }
+            })
+          
         })
         document.querySelector(".video-meta-panel").querySelector(".movie-panel-info .panel-block").appendChild(btn)
       }
@@ -414,6 +455,7 @@ function magnetsHandle() {
         }
 
       })
+
       let box = document.createElement('div') 
       box.className = 'buttons column'
       box.appendChild(btn)

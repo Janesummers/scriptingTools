@@ -289,6 +289,9 @@ app.all('/checkDesignationLog', (req: Recordable, resp: Recordable) => {
     if (data.starUnDown.includes(item)) {
       check = '7'
     }
+    if (data.pikpak.includes(item)) {
+      check = '8'
+    }
     result[item] = check
   })
   resp.json(msgResult.msg({status: 200, message: result}));
@@ -318,7 +321,7 @@ app.post('/updateDesignationLog', (req: Recordable, resp: Recordable) => {
     code = code.split(',')
   }
 
-  const keyArray = ['unDown', 'read', 'wm', 'wmUnDown', 'lc', 'lcUnDown', 'starUnDown']
+  const keyArray = ['unDown', 'read', 'wm', 'wmUnDown', 'lc', 'lcUnDown', 'starUnDown', 'pikpak']
 
   let changeKey = keyArray[type]
 
@@ -331,6 +334,7 @@ app.post('/updateDesignationLog', (req: Recordable, resp: Recordable) => {
     data.lc = data.lc.filter((codes: string) => codes !== item)
     data.lcUnDown = data.lcUnDown.filter((codes: string) => codes !== item)
     data.starUnDown = data.starUnDown.filter((codes: string) => codes !== item)
+    data.pikpak = data.pikpak.filter((codes: string) => codes !== item)
   })
 
   code = code.map((item: string) => item.toUpperCase())

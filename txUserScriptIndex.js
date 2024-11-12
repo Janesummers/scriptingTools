@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 糖心
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.4
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.txh049.com/*
@@ -14,6 +14,7 @@
 sessionStorage.setItem('dialogAd', 'sonofbitch');
 sessionStorage.setItem('noticeDialog', 'sonofbitch');
 sessionStorage.setItem('splashAd', 'sonofbitch');
+sessionStorage.setItem('appAd', 'sonofbitch');
 
 var style = document.createElement('style');
 let sheet = style.sheet;
