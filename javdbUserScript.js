@@ -216,6 +216,7 @@ function homePageListHandle() {
   //   text = document.querySelector(".section-title").innerText.match(numberExtraction);
   // }
   // text = text ? text[0] : "";
+  checkRecordHandle()
   let checkList = []
   for (let i = 0; i < avDetailBoxChildren.length; i++) {
       let x = avDetailBoxChildren[i].querySelector(".video-title").innerText.match(numberExtraction)[0];
@@ -224,6 +225,29 @@ function homePageListHandle() {
       checkList.push(x)
   }
   checkDesignationHandle(checkList)
+}
+
+function checkRecordHandle() {
+  let text = ''
+  let target = null
+  let code = ''
+  let pathname = location.pathname.split('/').filter(item => item)
+  let type = pathname[0]
+  switch (pathname[0]) {
+    case 'series':
+      if (document.querySelector('.section-name')) {
+        target = document.querySelector('.section-name')
+      }
+      break;
+  
+    default:
+      break;
+  }
+  if (target) {
+    text = target.innerText
+    code = pathname[1]
+  }
+  
 }
 
 function checkDesignationHandle(code) {
