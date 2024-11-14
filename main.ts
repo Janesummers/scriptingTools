@@ -521,7 +521,7 @@ app.post('/getJavRecordList', (req: Recordable, resp: Recordable) => {
     const res = JSON.parse(result)
     recordList = Object.keys(res)
   }
-  resp.json(msgResult.msg({status: 200, message: result}));
+  resp.json(msgResult.msg({status: 200, message: recordList}));
 })
 
 app.get('*', (req: Recordable, resp: Recordable) => {
