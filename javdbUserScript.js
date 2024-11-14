@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.62
+// @version      2.64
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -130,6 +130,10 @@ div[data-controller="movie-tab"] li[data-movie-tab-target="listTab"] {
   cursor: pointer;
   margin-left: 20px;
 }
+.record-jav {
+  cursor: pointer;
+  margin-left: 20px;
+}
 `);
 
 /*
@@ -230,6 +234,7 @@ function homePageListHandle() {
 function checkRecordHandle() {
   let text = ''
   let target = null
+  let parent = null
   let code = ''
   let pathname = location.pathname.split('/').filter(item => item)
   let type = pathname[0]
@@ -238,14 +243,68 @@ function checkRecordHandle() {
       if (document.querySelector('.section-name')) {
         target = document.querySelector('.section-name')
       }
+      if (document.querySelector('.section-title .title')) {
+        parent = document.querySelector('.section-title .title')
+      }
+      break;
+    case 'actors':
+      if (document.querySelector('.actor-section-name')) {
+        target = document.querySelector('.actor-section-name')
+      }
+      if (document.querySelector('.section-title .title')) {
+        parent = document.querySelector('.section-title .title')
+      }
+      break;
+    case 'directors':
+      if (document.querySelector('.section-name')) {
+        target = document.querySelector('.section-name')
+      }
+      if (document.querySelector('.section-title .title')) {
+        parent = document.querySelector('.section-title .title')
+      }
+      break;
+    case 'video_codes':
+      if (document.querySelector('.section-name')) {
+        target = document.querySelector('.section-name')
+      }
+      if (document.querySelector('.section-title .title')) {
+        parent = document.querySelector('.section-title .title')
+      }
       break;
   
     default:
       break;
   }
-  if (target) {
+  if (target && parent) {
     text = target.innerText
     code = pathname[1]
+
+
+    let btn = document.createElement('span')
+    btn.className = 'record-jav'
+    btn.innerText = '记录Jav'
+    btn.addEventListener('click', () => {
+      GM_xmlhttpRequest({
+        method: "post",
+        url: "https://chiens.cn/recordApi/javRecordLog",
+        data: `type=${type}&code=${code}&title=${text}`,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+
+        onload: function(req){
+          console.log('jav-record', req)
+          const result = JSON.parse(req.response)
+          if (req.readyState === 4 && req.status === 200 && result.code === 'ok') {
+            Qmsg.success("JAV记录成功", {autoClose: true});
+          }
+        },
+        onerror: function(response){
+          Qmsg.error("JAV记录失败", {autoClose: true });
+        }
+      })
+    })
+    parent.appendChild(btn)
   }
   
 }
