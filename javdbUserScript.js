@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.65
+// @version      2.66
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -279,7 +279,16 @@ function checkRecordHandle() {
         parent = document.querySelector('.section-title .title')
       }
       break;
+    case 'publishers':
+      if (document.querySelector('.section-name')) {
+        target = document.querySelector('.section-name')
+      }
+      if (document.querySelector('.section-title .title')) {
+        parent = document.querySelector('.section-title .title')
+      }
+      break;
   
+      
     default:
       break;
   }
