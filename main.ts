@@ -465,6 +465,65 @@ app.all('/javRecordLog', (req: Recordable, resp: Recordable) => {
   }
 })
 
+// javRecord 获取
+app.post('/getJavRecordLog', (req: Recordable, resp: Recordable) => {
+  let result = ''
+  const _fileIsExist = fileIsExist('javRecord', 'json')
+  if (_fileIsExist) {
+    const text = readFileFn('javRecord.json')
+    if (text || text === '') {
+      // result = `文件已存在，内容：${readFileFn('javRecord.json')}`
+      result = text
+    } else {
+      resp.json(msgResult.error({status: 500, message: '文件读取异常'}));
+    }
+  } else {
+    const fileWrite = writeFileFn('javRecord.json')
+    if (fileWrite) {
+      // 文件不存在，已创建文件并写入数据
+      result = ''
+    } else {
+      resp.json(msgResult.error({status: 500, message: '文件写入异常'}));
+    }
+  }
+  if (result !== '') {
+    const res = JSON.parse(result)
+    if (req.body.type && res[req.body.type]) {
+      result = res[req.body.type]
+    }
+  }
+  resp.json(msgResult.msg({status: 200, message: result}));
+})
+
+// javRecord 获取
+app.post('/getJavRecordList', (req: Recordable, resp: Recordable) => {
+  let result = ''
+  const _fileIsExist = fileIsExist('javRecord', 'json')
+  if (_fileIsExist) {
+    const text = readFileFn('javRecord.json')
+    if (text || text === '') {
+      // result = `文件已存在，内容：${readFileFn('javRecord.json')}`
+      result = text
+    } else {
+      resp.json(msgResult.error({status: 500, message: '文件读取异常'}));
+    }
+  } else {
+    const fileWrite = writeFileFn('javRecord.json')
+    if (fileWrite) {
+      // 文件不存在，已创建文件并写入数据
+      result = ''
+    } else {
+      resp.json(msgResult.error({status: 500, message: '文件写入异常'}));
+    }
+  }
+  let recordList = [] as string[]
+  if (result !== '') {
+    const res = JSON.parse(result)
+    recordList = Object.keys(res)
+  }
+  resp.json(msgResult.msg({status: 200, message: recordList}));
+})
+
 app.get('*', (req: Recordable, resp: Recordable) => {
   console.log(`req --> ${monent().format('YYYY-MM-DD HH:mm:ss')}`, req.params[0])
   if (/[\.js|\.css|\.json|\.out]$/.test(req.params[0])) {
