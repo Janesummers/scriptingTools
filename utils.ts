@@ -139,6 +139,11 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
           case 'tags':
             originData[reqData.type][reqData.code] = { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
             break;
+          case 'search':
+            writeText = JSON.stringify({[reqData.type]: {
+              [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
+            }})
+            break;
         
           default:
             originData[reqData.type][reqData.code] = { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.code.toString()}` }
@@ -150,6 +155,11 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
             originData[reqData.type] = {
               [reqData.code]: { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
             }
+            break;
+          case 'search':
+            writeText = JSON.stringify({[reqData.type]: {
+              [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
+            }})
             break;
             
           default:
@@ -165,6 +175,11 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
         case 'tags':
           writeText = JSON.stringify({[reqData.type]: {
             [reqData.code]: { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
+          }})
+          break;
+        case 'search':
+          writeText = JSON.stringify({[reqData.type]: {
+            [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
           }})
           break;
       

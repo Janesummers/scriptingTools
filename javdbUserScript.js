@@ -238,7 +238,7 @@ function checkRecordHandle() {
   let code = ''
   let pathname = location.pathname.split('/').filter(item => item)
   let type = pathname[0]
-  switch (pathname[0]) {
+  switch (type) {
     case 'series':
       if (document.querySelector('.section-name')) {
         target = document.querySelector('.section-name')
@@ -287,14 +287,32 @@ function checkRecordHandle() {
         parent = document.querySelector('.section-title')
       }
       break;
+    case 'search':
+      if (document.querySelector('.section-title')) {
+        parent = document.querySelector('.section-title')
+      }
+      break;
   
       
     default:
       break;
   }
-  if (target && parent) {
-    text = target.innerText
-    code = pathname[1]
+  let data = ''
+  if (parent) {
+    switch (type) {
+      case 'search':
+        text = new URLSearchParams(location.search).get('q')
+        code = new URLSearchParams(location.search).get('q')
+        data = `type=${type}&code=${code}&title=${text}&params=${location.search}`
+        break;
+      default:
+        if (target) {
+          text = target.innerText
+          code = pathname[1]
+          data = `type=${type}&code=${code}&title=${text}`
+        }
+        break;
+    }
 
 
     let btn = document.createElement('span')
@@ -304,7 +322,7 @@ function checkRecordHandle() {
       GM_xmlhttpRequest({
         method: "post",
         url: "https://chiens.cn/recordApi/javRecordLog",
-        data: `type=${type}&code=${code}&title=${text}`,
+        data,
         headers: {
           "Content-Type": "application/x-www-form-urlencoded"
         },
