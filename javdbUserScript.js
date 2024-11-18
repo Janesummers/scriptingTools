@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.68
+// @version      2.69
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -303,7 +303,7 @@ function checkRecordHandle() {
       case 'search':
         text = new URLSearchParams(location.search).get('q')
         code = new URLSearchParams(location.search).get('q')
-        data = `type=${type}&code=${code}&title=${text}&params=${location.search}`
+        data = `type=${type}&code=${code}&title=${text}&params=(${location.search})`
         break;
       default:
         if (target) {
