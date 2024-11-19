@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.77
+// @version      2.78
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -321,7 +321,7 @@ function checkRecordHandle() {
             textList.push(target[i].innerText)
           }
         }
-        text = textList.join('、')
+        text = textList.join('、') || document.querySelector('.tabs .is-active').innerText
         parent.innerText = `${parent.innerText} ${text}`
         code = pathname[1] ? `${pathname[1]}${encodeURIComponent(location.search)}` : encodeURIComponent(location.search)
         data = `type=${type}&code=${code}&title=${text}&params=${encodeURIComponent(location.search)}&extend=${pathname[1] ? pathname[1] : ''}`
