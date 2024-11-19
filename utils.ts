@@ -137,7 +137,7 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
         }
         switch (reqData.type) {
           case 'tags':
-            originData[reqData.type][reqData.code] = { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}${reqData.extend ? `/${reqData.extend.toString()}` : ''}/${reqData.params.toString()}` }
+            originData[reqData.type][reqData.code] = { code: `${reqData.extend ? `${reqData.extend.toString()}` : ''}${reqData.params.toString()}`, title: reqData.title.toString(), link: `/${reqData.type.toString()}${reqData.extend ? `/${reqData.extend.toString()}` : ''}/${reqData.params.toString()}` }
             break;
           case 'search':
             originData[reqData.type][reqData.code] = { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
@@ -150,7 +150,7 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
       } else {
          switch (reqData.type) {
           case 'tags':
-            originData[reqData.type][reqData.code] = { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}${reqData.extend ? `/${reqData.extend.toString()}` : ''}/${reqData.params.toString()}` }
+            originData[reqData.type][reqData.code] = { code: `${reqData.extend ? `${reqData.extend.toString()}` : ''}${reqData.params.toString()}`, title: reqData.title.toString(), link: `/${reqData.type.toString()}${reqData.extend ? `/${reqData.extend.toString()}` : ''}/${reqData.params.toString()}` }
             break;
           case 'search':
             originData[reqData.type][reqData.code] = { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
@@ -168,7 +168,7 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
       switch (reqData.type) {
         case 'tags':
           writeText = JSON.stringify({[reqData.type]: {
-            [reqData.code]: { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}${reqData.extend ? `/${reqData.extend.toString()}` : ''}/${reqData.params.toString()}` }
+            [reqData.code]: { code: `${reqData.extend ? `${reqData.extend.toString()}` : ''}${reqData.params.toString()}`, title: reqData.title.toString(), link: `/${reqData.type.toString()}${reqData.extend ? `/${reqData.extend.toString()}` : ''}/${reqData.params.toString()}` }
           }})
           break;
         case 'search':
