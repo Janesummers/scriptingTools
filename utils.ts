@@ -135,6 +135,8 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
         if (originData[reqData.type][reqData.code]) {
           return JSON.stringify(originData);
         }
+        console.log('olll', reqData.params);
+        
         switch (reqData.type) {
           case 'tags':
             originData[reqData.type][reqData.code] = { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
@@ -143,6 +145,8 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
             writeText = JSON.stringify({[reqData.type]: {
               [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString() ? reqData.params.toString().replace('/\(|\)/g', '') : ''}` }
             }})
+            console.log('reqData.params', reqData.params);
+            
             break;
         
           default:
