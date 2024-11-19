@@ -143,7 +143,7 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
             break;
           case 'search':
             writeText = JSON.stringify({[reqData.type]: {
-              [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString() ? reqData.params.toString().replace('/\(|\)/g', '') : ''}` }
+              [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
             }})
             console.log('reqData.params', reqData.params);
             
@@ -162,7 +162,7 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
             break;
           case 'search':
             writeText = JSON.stringify({[reqData.type]: {
-              [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString() ? reqData.params.toString().replace('/\(|\)/g', '') : ''}` }
+              [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
             }})
             break;
             
@@ -183,7 +183,7 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
           break;
         case 'search':
           writeText = JSON.stringify({[reqData.type]: {
-            [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString() ? reqData.params.toString().replace('/\(|\)/g', '') : ''}` }
+            [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
           }})
           break;
       
