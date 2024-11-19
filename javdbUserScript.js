@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - JavDB
 // @namespace    http://tampermonkey.net/
-// @version      2.72
+// @version      2.73
 // @description  try to take over the world!
 // @author       You
 // @match        https://javdb.com/*
@@ -294,8 +294,9 @@ function checkRecordHandle() {
       }
       break;
     case 'tags':
-      if (document.querySelectorAll('div.tag.is-info')) {
-        parent = document.querySelectorAll('div.tag.is-info')
+      if (document.querySelector('.main-title')) {
+        parent = document.querySelector('.main-title')
+        target = document.querySelectorAll('div.tag.is-info')
       }
       break;
       
@@ -315,9 +316,9 @@ function checkRecordHandle() {
         break;
       case 'tags':
         textList = []
-        for (let i = 0; i < parent.length; i++) {
-          if (!['含磁鏈', '含字幕'].includes(parent[i].innerText)) {
-            textList.push(parent[i].innerText)
+        for (let i = 0; i < target.length; i++) {
+          if (!['含磁鏈', '含字幕'].includes(target[i].innerText)) {
+            textList.push(target[i].innerText)
           }
         }
         text = textList.join('、')
