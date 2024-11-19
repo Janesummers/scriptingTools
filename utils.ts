@@ -135,16 +135,12 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
         if (originData[reqData.type][reqData.code]) {
           return JSON.stringify(originData);
         }
-        console.log('olll', reqData.params);
-        
         switch (reqData.type) {
           case 'tags':
             originData[reqData.type][reqData.code] = { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
             break;
           case 'search':
             originData[reqData.type][reqData.code] = { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
-            console.log('reqData.params', reqData.params);
-            
             break;
         
           default:
@@ -154,14 +150,10 @@ exports.writeJavRecordFileFn = (fileFullName: string, originText = '', reqData: 
       } else {
          switch (reqData.type) {
           case 'tags':
-            originData[reqData.type] = {
-              [reqData.code]: { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
-            }
+            originData[reqData.type][reqData.code] = { code: reqData.params.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
             break;
           case 'search':
-            originData[reqData.type] = {
-              [reqData.code]: { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
-            }
+            originData[reqData.type][reqData.code] = { code: reqData.code.toString(), title: reqData.title.toString(), link: `/${reqData.type.toString()}/${reqData.params.toString()}` }
             break;
             
           default:
