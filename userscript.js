@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         JSummer - 草榴
 // @namespace    http://tampermonkey.net/
-// @version      1.38
+// @version      1.39
 // @description  try to take over the world!
 // @author       You
 // @match        https://*.t66y.com/*
@@ -150,7 +150,7 @@ function listHandle() {
     for (let i = 0; i < child.length; i++) {
       let item = child[i].querySelector('.tal a[id]')
       if (location.pathname.indexOf('thread0806') !== -1) {
-        item = child[i].querySelector('a')
+        item = child[i].querySelector('.tal a') ? child[i].querySelector('.tal a') : child[i].querySelector('a')
       }
       if (!item) {
         item = child[i].querySelector('th a')
